@@ -6,53 +6,156 @@
     android:layout_height="match_parent"
     android:padding="32dp">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Your Movie Info"
+        android:gravity="center"
+        android:textSize="18sp"
+        android:textStyle="bold"/>
+
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        >
+        android:layout_height="wrap_content">
 
     <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tv_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Enter item title"/>
+            android:textSize="12sp"
+            android:hint="Movie name"/>
     </com.google.android.material.textfield.TextInputLayout>
-    <com.google.android.material.textfield.TextInputLayout
-        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
+
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        >
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/tv_item_desc"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:hint="Enter item description"
-            android:layout_marginTop="20dp"/>
-    </com.google.android.material.textfield.TextInputLayout>
-    <Button
+        android:layout_marginTop="15dp"
+        android:text="Genre"
+        android:textSize="12sp" />
+
+    <GridLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="16dp"
-        android:text="Pick image"
-        android:id="@+id/btn_pick_image"
+        android:columnCount="4"
+        android:rowCount="4">
+
+
+    <CheckBox android:id="@+id/checkbox_comedy"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Comedy"
+        android:textSize="10sp"
         />
+
+    <CheckBox android:id="@+id/checkbox_family"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Family"
+        android:textSize="10sp"/>
+
+    <CheckBox android:id="@+id/checkbox_drama"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Drama"
+        android:textSize="10sp"
+        />
+
+    <CheckBox android:id="@+id/checkbox_horror"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Horor"
+        android:textSize="10sp"/>
+
+    <CheckBox android:id="@+id/checkbox_action"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Action"
+        android:textSize="10sp"
+        />
+
+    <CheckBox android:id="@+id/checkbox_thriller"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Thriller"
+        android:textSize="10sp"/>
+
+    <CheckBox android:id="@+id/checkbox_scienceFiction"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Science Fiction"
+        android:textSize="10sp"
+        />
+
+    <CheckBox android:id="@+id/checkbox_romance"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="Romance"
+        android:textSize="10sp"/>
+
+        <CheckBox android:id="@+id/checkbox_adventure"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Adventure"
+            android:textSize="10sp"
+            />
+
+        <CheckBox android:id="@+id/checkbox_war"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="War"
+            android:textSize="10sp"/>
+
+        <CheckBox android:id="@+id/checkbox_animation"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Animation"
+            android:textSize="10sp"
+            />
+
+        <CheckBox android:id="@+id/checkbox_doco"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="Doco"
+            android:textSize="10sp"/>
+
+    </GridLayout>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:lines="5"
+        android:maxLines="5"
+        android:inputType="textMultiLine"
+        android:hint="Plot"
+        android:gravity="top|start"/>
+
+    <RatingBar
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"/>
+
     <ImageView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:src="@mipmap/ic_launcher"
         android:layout_gravity="center"
         android:layout_marginTop="32dp"
-        android:id="@+id/iv_selected_image"
-        />
+        android:id="@+id/iv_selected_image" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="12dp"
+        android:text="Pick image"
+        android:id="@+id/btn_pick_image"
+        android:textSize="12sp"/>
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Add item"
+        android:text="Add movie"
         android:id="@+id/btn_add_item"
         android:layout_marginTop="32dp"
 
