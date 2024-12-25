@@ -9,34 +9,46 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
+        android:orientation="horizontal">
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@mipmap/ic_launcher"
-            android:id="@+id/item_image"/>
+            android:id="@+id/item_movie_image"
+            android:contentDescription="@string/item_movie_image"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginStart="15dp"
-            >
+            android:layout_marginStart="15dp">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Movie Title"
+                android:text="@string/movie_title_label"
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:id="@+id/item_title"/>
+                android:id="@+id/item_movie_title"/>
+
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Movie description!!!"
+                android:layout_height="wrap_content"
+                android:text="@string/movie_genre_label"
                 android:layout_gravity="center"
-                android:id="@+id/item_desc"
-                />
+                android:id="@+id/item_movie_genre" />
+
+            <RatingBar
+                android:id="@+id/item_movie_rating"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:scaleX="0.4"
+                android:scaleY="0.4"
+                android:stepSize="1"
+                android:numStars="5"
+                android:rating="3"
+                android:layout_gravity="center" />
+
         </LinearLayout>
 
     </LinearLayout>

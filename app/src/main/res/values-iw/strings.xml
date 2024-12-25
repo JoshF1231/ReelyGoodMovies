@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">אפליקציית מידע על סרטים מדהימה</string>
+    <string name="movie_info">מידע על הסרט שלך</string>
+    <string name="movie_name_label">שם הסרט</string>
+    <string name="genre_label">ז'אנר:</string>
+    <string name="comedy_label">קומדיה</string>
+    <string name="family_label">משפחה</string>
+    <string name="drama_label">דרמה</string>
+    <string name="horror_label">אימה</string>
+    <string name="action_label">אקשן</string>
+    <string name="thriller_label">מותחן</string>
+    <string name="science_fiction_label">מדע בדיוני</string>
+    <string name="romance_label">רומנטיקה</string>
+    <string name="adventure_label">הרפתקה</string>
+    <string name="war_label">מלחמה</string>
+    <string name="animation_label">אנימציה</string>
+    <string name="doco_label">דוקו</string>
+    <string name="plot_label">עלילה</string>
+    <string name="movie_length_label">אורך הסרט:</string>
+    <string name="hours_label">שעות</string>
+    <string name="minutes_label">דקות</string>
+    <string name="movie_year_label">שנת הסרט:</string>
+    <string name="calendar_year_icon">אייקון שנה בלוח שנה</string>
+    <string name="selected_year_label">שנה שנבחרה</string>
+    <string name="movie_rate_label">דירוג הסרט:</string>
+    <string name="movie_image_label">תמונת הסרט:</string>
+    <string name="add_photo_icon">אייקון הוספת תמונה</string>
+    <string name="add_movie_label">הוסף סרט!</string>
+    <string name="movie_photo">תמונת סרט</string>
+    <string name="item_movie_image">פריט שם הסרט</string>
+    <string name="movie_title_label">כותרת הסרט</string>
+    <string name="movie_genre_label">ז'אנר הסרט</string>
+</resources>

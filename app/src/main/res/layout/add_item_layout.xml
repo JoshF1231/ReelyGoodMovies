@@ -4,161 +4,315 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="32dp">
+    android:padding="20dp">
 
     <TextView
+        android:id="@+id/tv_movie_info_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Your Movie Info"
+        android:text="@string/movie_info"
         android:gravity="center"
         android:textSize="18sp"
         android:textStyle="bold"/>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_movie_name"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-    <com.google.android.material.textfield.TextInputEditText
+        <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tv_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="12sp"
-            android:hint="Movie name"/>
+            android:hint="@string/movie_name_label"/>
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
+        android:id="@+id/tv_genre_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        android:text="Genre"
+        android:layout_marginTop="7dp"
+        android:text="@string/genre_label"
         android:textSize="12sp" />
 
     <GridLayout
+        android:id="@+id/gl_genre_choices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:columnCount="4"
         android:rowCount="4">
 
-
-    <CheckBox android:id="@+id/checkbox_comedy"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Comedy"
-        android:textSize="10sp"
-        />
-
-    <CheckBox android:id="@+id/checkbox_family"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Family"
-        android:textSize="10sp"/>
-
-    <CheckBox android:id="@+id/checkbox_drama"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Drama"
-        android:textSize="10sp"
-        />
-
-    <CheckBox android:id="@+id/checkbox_horror"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Horor"
-        android:textSize="10sp"/>
-
-    <CheckBox android:id="@+id/checkbox_action"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Action"
-        android:textSize="10sp"
-        />
-
-    <CheckBox android:id="@+id/checkbox_thriller"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Thriller"
-        android:textSize="10sp"/>
-
-    <CheckBox android:id="@+id/checkbox_scienceFiction"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Science Fiction"
-        android:textSize="10sp"
-        />
-
-    <CheckBox android:id="@+id/checkbox_romance"
-        android:layout_width="wrap_content"
-        android:layout_height="30dp"
-        android:text="Romance"
-        android:textSize="10sp"/>
-
-        <CheckBox android:id="@+id/checkbox_adventure"
+        <CheckBox
+            android:id="@+id/checkbox_comedy"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="Adventure"
-            android:textSize="10sp"
-            />
+            android:layout_height="wrap_content"
+            android:text="@string/comedy_label"
+            android:textSize="12sp" />
 
-        <CheckBox android:id="@+id/checkbox_war"
+        <CheckBox
+            android:id="@+id/checkbox_family"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="War"
-            android:textSize="10sp"/>
+            android:layout_height="wrap_content"
+            android:text="@string/family_label"
+            android:textSize="12sp" />
 
-        <CheckBox android:id="@+id/checkbox_animation"
+        <CheckBox
+            android:id="@+id/checkbox_drama"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="Animation"
-            android:textSize="10sp"
-            />
+            android:layout_height="wrap_content"
+            android:text="@string/drama_label"
+            android:textSize="12sp" />
 
-        <CheckBox android:id="@+id/checkbox_doco"
+        <CheckBox
+            android:id="@+id/checkbox_horror"
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:text="Doco"
-            android:textSize="10sp"/>
+            android:layout_height="wrap_content"
+            android:text="@string/horror_label"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_action"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/action_label"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_thriller"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/thriller_label"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_scienceFiction"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/science_fiction_label"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_romance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/romance_label"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_adventure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/adventure_label"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_war"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/war_label"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_animation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/animation_label"
+            android:textSize="12sp" />
+
+        <CheckBox
+            android:id="@+id/checkbox_doco"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/doco_label"
+            android:textSize="12sp" />
+
 
     </GridLayout>
 
     <EditText
+        android:id="@+id/et_movie_plot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:lines="5"
         android:maxLines="5"
         android:inputType="textMultiLine"
-        android:hint="Plot"
-        android:gravity="top|start"/>
+        android:hint="@string/plot_label"
+        android:gravity="top|start"
+        android:textSize="15sp"
+        android:layout_marginTop="7dp"
+        android:autofillHints=""/>
 
-    <RatingBar
+    <LinearLayout
+        android:id="@+id/ll_movie_length"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"/>
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp">
 
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_gravity="center"
-        android:layout_marginTop="32dp"
-        android:id="@+id/iv_selected_image" />
+        <TextView
+            android:id="@+id/tv_movie_length_label"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:paddingBottom="8dp"
+            android:text="@string/movie_length_label"
+            android:textSize="12sp"
+            android:layout_marginEnd="25dp"/>
 
-    <Button
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <NumberPicker
+                android:id="@+id/np_hours_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:wrapSelectorWheel="true"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:minValue="0"
+                android:maxValue="4" />
+
+            <TextView
+                android:id="@+id/tv_hours_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="12sp"
+                android:text="@string/hours_label" />
+
+            <NumberPicker
+                android:id="@+id/np_minutes_picker"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:wrapSelectorWheel="true"
+                android:scaleX="0.8"
+                android:scaleY="0.8"
+                android:minValue="0"
+                android:maxValue="59" />
+
+            <TextView
+                android:id="@+id/tv_minutes_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="8dp"
+                android:textSize="12sp"
+                android:text="@string/minutes_label" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_movie_year"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp">
+
+        <TextView
+            android:id="@+id/tv_movie_year_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_year_label"
+            android:textSize="12sp"
+            android:layout_marginEnd="10dp"/>
+
+        <ImageButton
+            android:id="@+id/btn_select_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:src="@drawable/calendar_year_icon"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:background="null"
+            android:layout_marginEnd="20dp"
+            android:contentDescription="@string/calendar_year_icon"/>
+
+        <TextView
+            android:id="@+id/tv_selected_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/selected_year_label"
+            android:textSize="12sp"
+            android:layout_marginTop="10dp"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_movie_rating"
         android:layout_width="wrap_content"
         android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="12dp"
-        android:text="Pick image"
-        android:id="@+id/btn_pick_image"
-        android:textSize="12sp"/>
-    <Button
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp">
+
+        <TextView
+            android:id="@+id/tv_movie_rate_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_rate_label"
+            android:textSize="12sp"/>
+
+        <RatingBar
+            android:id="@+id/rb_movie_rating"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:stepSize="1"
+            android:numStars="5"
+            android:rating="3" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_movie_image"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:text="Add movie"
-        android:id="@+id/btn_add_item"
-        android:layout_marginTop="32dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="7dp">
 
-        />
+        <TextView
+            android:id="@+id/tv_movie_image_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/movie_image_label"
+            android:paddingEnd="40dp"
+            android:paddingStart="0dp"
+            android:textSize="12sp" />
+
+        <ImageView
+            android:id="@+id/iv_selected_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher"
+            android:contentDescription="@string/movie_photo"/>
+
+        <ImageButton
+            android:id="@+id/btn_add_photo"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/baseline_add_photo_alternate_24"
+            android:scaleType="fitCenter"
+            android:scaleX="0.5"
+            android:scaleY="0.5"
+            android:background="null"
+            android:layout_gravity="bottom"
+            android:contentDescription="@string/add_photo_icon"/>
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_add_movie"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_gravity="center"
+        android:text="@string/add_movie_label"
+        android:textSize="12sp"
+        android:backgroundTint="@color/black"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/white"
+        android:elevation="4dp"
+        app:cornerRadius="16dp" />
 
 </LinearLayout>

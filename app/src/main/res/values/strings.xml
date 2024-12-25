@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Incredible Movie Info App</string>
+    <string name="movie_info">Your Movie Info</string>
+    <string name="movie_name_label">Movie name</string>
+    <string name="genre_label">Genre:</string>
+    <string name="comedy_label">Comedy</string>
+    <string name="family_label">Family</string>
+    <string name="drama_label">Drama</string>
+    <string name="horror_label">Horror</string>
+    <string name="action_label">Action</string>
+    <string name="thriller_label">Thriller</string>
+    <string name="science_fiction_label">Science Fiction</string>
+    <string name="romance_label">Romance</string>
+    <string name="adventure_label">Adventure</string>
+    <string name="war_label">War</string>
+    <string name="animation_label">Animation</string>
+    <string name="doco_label">Doco</string>
+    <string name="plot_label">Plot</string>
+    <string name="movie_length_label">Movie length:</string>
+    <string name="hours_label">hours</string>
+    <string name="minutes_label">minutes</string>
+    <string name="movie_year_label">Movie year:</string>
+    <string name="calendar_year_icon">calendar year icon</string>
+    <string name="selected_year_label">Selected Year</string>
+    <string name="movie_rate_label">Movie rate:</string>
+    <string name="movie_image_label">Movie image:</string>
+    <string name="add_photo_icon">add photo icon</string>
+    <string name="add_movie_label">Add movie!</string>
+    <string name="movie_photo">movie photo</string>
+    <string name="item_movie_image">item movie image</string>
+    <string name="movie_title_label">Movie title</string>
+    <string name="movie_genre_label">Movie genre</string>
 </resources>
