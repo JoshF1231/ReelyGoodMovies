@@ -2,7 +2,7 @@
     <string name="app_name">אפליקציית מידע על סרטים מדהימה</string>
     <string name="movie_info">מידע על הסרט שלך</string>
     <string name="movie_name_label">שם הסרט</string>
-    <string name="genre_label">ז'אנר:</string>
+    <string name="genre_label">זאנר:</string>
     <string name="comedy_label">קומדיה</string>
     <string name="family_label">משפחה</string>
     <string name="drama_label">דרמה</string>
@@ -29,5 +29,9 @@
     <string name="movie_photo">תמונת סרט</string>
     <string name="item_movie_image">פריט שם הסרט</string>
     <string name="movie_title_label">כותרת הסרט</string>
-    <string name="movie_genre_label">ז'אנר הסרט</string>
+    <string name="movie_genre_label">זאנר הסרט</string>
+    <string name="movies_list_label">רשימת סרטים</string>
+    <string name="title_icon">אייקון סרט כותרת</string>
+    <string name="list_of_items">רשימת פריטים</string>
+    <string name="edit_movie_bt">כפתור עריכת סרט</string>
 </resources>

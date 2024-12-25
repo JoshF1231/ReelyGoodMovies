@@ -30,4 +30,8 @@
     <string name="item_movie_image">item movie image</string>
     <string name="movie_title_label">Movie title</string>
     <string name="movie_genre_label">Movie genre</string>
+    <string name="movies_list_label">Movies list</string>
+    <string name="title_icon">Title movie icon</string>
+    <string name="list_of_items">List of items</string>
+    <string name="edit_movie_bt">edit_movie_bt</string>
 </resources>
