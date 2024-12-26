@@ -1,12 +1,15 @@
-plugins {
+ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
 }
 
 android {
-    namespace = "com.example.incrediblemovieinfoapp"
-    compileSdk = 34
 
+    namespace = "com.example.incrediblemovieinfoapp"
+    compileSdk = 35
+    buildFeatures{
+        viewBinding = true
+    }
     defaultConfig {
         applicationId = "com.example.incrediblemovieinfoapp"
         minSdk = 24
@@ -33,6 +36,7 @@ android {
     kotlinOptions {
         jvmTarget = "11"
     }
+
 }
 
 dependencies {
