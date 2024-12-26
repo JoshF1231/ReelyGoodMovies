@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.incrediblemovieinfoapp.databinding.AllItemsLayoutBinding
 
 class AllItemsFragment : Fragment(){
@@ -16,6 +17,9 @@ class AllItemsFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         _binding = AllItemsLayoutBinding.inflate(inflater,container,false)
+        binding.fabAddItem.setOnClickListener{
+            findNavController().navigate(R.id.action_allItemsFragment2_to_addItemFragment)
+        }
         return binding.root
     }
 

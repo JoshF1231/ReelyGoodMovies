@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.fragment.findNavController
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
 
 class AddItemFragment : Fragment(){
@@ -16,6 +17,9 @@ class AddItemFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         _binding = AddItemLayoutBinding.inflate(inflater,container,false)
+        binding.btnAddMovie.setOnClickListener{
+            findNavController().navigate(R.id.action_addItemFragment_to_allItemsFragment2)
+        }
         return binding.root
     }
 

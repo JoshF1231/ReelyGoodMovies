@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/allItemsFragment2">
+    <fragment
+        android:id="@+id/allItemsFragment2"
+        android:name="com.example.incrediblemovieinfoapp.AllItemsFragment"
+        android:label="all_items_layout"
+        tools:layout="@layout/all_items_layout" >
+        <action
+            android:id="@+id/action_allItemsFragment2_to_addItemFragment"
+            app:destination="@id/addItemFragment" />
+        <action
+            android:id="@+id/action_allItemsFragment2_to_detailedItemFragment"
+            app:destination="@id/detailedItemFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addItemFragment"
+        android:name="com.example.incrediblemovieinfoapp.AddItemFragment"
+        android:label="add_item_layout"
+        tools:layout="@layout/add_item_layout" >
+        <action
+            android:id="@+id/action_addItemFragment_to_allItemsFragment2"
+            app:destination="@id/allItemsFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/detailedItemFragment"
+        android:name="com.example.incrediblemovieinfoapp.DetailedItemFragment"
+        android:label="detailed_item_layout"
+        tools:layout="@layout/detailed_item_layout" >
+        <action
+            android:id="@+id/action_detailedItemFragment_to_allItemsFragment2"
+            app:destination="@id/allItemsFragment2" />
+    </fragment>
+</navigation>
