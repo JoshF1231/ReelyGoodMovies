@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
     tools:context=".AddItemFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageButton
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/baseline_arrow_back_24"
+            android:background="@null"
+            android:contentDescription="@string/back_button"/>
 
     <TextView
         android:id="@+id/tv_movie_info_title"
@@ -14,20 +25,21 @@
         android:layout_height="wrap_content"
         android:text="@string/movie_info"
         android:gravity="center"
-        android:textSize="18sp"
+        android:textSize="24sp"
         android:textStyle="bold"/>
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/til_movie_name"
         style="@style/Widget.Material3.TextInputLayout.OutlinedBox.Dense"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/tv_item_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:hint="@string/movie_name_label"/>
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -35,102 +47,101 @@
         android:id="@+id/tv_genre_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="7dp"
+        android:layout_marginTop="12dp"
         android:text="@string/genre_label"
-        android:textSize="12sp" />
+        android:textSize="16sp" />
 
     <GridLayout
         android:id="@+id/gl_genre_choices"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:columnCount="4"
-        android:rowCount="4">
+        android:columnCount="3"
+        android:rowCount="4"
+        android:layout_marginTop="12dp">
 
         <CheckBox
             android:id="@+id/checkbox_comedy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/comedy_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_family"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/family_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_drama"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/drama_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_horror"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/horror_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_action"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_thriller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/thriller_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_scienceFiction"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/science_fiction_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_romance"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/romance_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_adventure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/adventure_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_war"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/war_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_animation"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/animation_label"
-            android:textSize="12sp" />
+            android:textSize="14sp" />
 
         <CheckBox
             android:id="@+id/checkbox_doco"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/doco_label"
-            android:textSize="12sp" />
-
-
+            android:textSize="14sp" />
     </GridLayout>
 
     <EditText
@@ -142,8 +153,8 @@
         android:inputType="textMultiLine"
         android:hint="@string/plot_label"
         android:gravity="top|start"
-        android:textSize="15sp"
-        android:layout_marginTop="7dp"
+        android:textSize="16sp"
+        android:layout_marginTop="12dp"
         android:autofillHints=""/>
 
     <LinearLayout
@@ -151,7 +162,7 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:orientation="horizontal"
-        android:layout_marginTop="7dp">
+        android:layout_marginTop="12dp">
 
         <TextView
             android:id="@+id/tv_movie_length_label"
@@ -159,7 +170,7 @@
             android:layout_height="40dp"
             android:paddingBottom="8dp"
             android:text="@string/movie_length_label"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:layout_marginEnd="25dp"/>
 
         <LinearLayout
@@ -180,7 +191,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:text="@string/hours_label" />
 
             <NumberPicker
@@ -196,7 +207,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="8dp"
-                android:textSize="12sp"
+                android:textSize="14sp"
                 android:text="@string/minutes_label" />
         </LinearLayout>
     </LinearLayout>
@@ -206,14 +217,14 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:orientation="horizontal"
-        android:layout_marginTop="7dp">
+        android:layout_marginTop="12dp">
 
         <TextView
             android:id="@+id/tv_movie_year_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/movie_year_label"
-            android:textSize="12sp"
+            android:textSize="16sp"
             android:layout_marginEnd="10dp"/>
 
         <ImageButton
@@ -226,6 +237,7 @@
             android:scaleType="fitCenter"
             android:adjustViewBounds="true"
             android:layout_marginEnd="20dp"
+            android:background="@null"
             android:contentDescription="@string/calendar_year_icon"/>
 
         <TextView
@@ -233,7 +245,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/selected_year_label"
-            android:textSize="12sp"
+            android:textSize="14sp"
             android:layout_marginTop="10dp"/>
     </LinearLayout>
 
@@ -242,21 +254,21 @@
         android:layout_width="wrap_content"
         android:layout_height="40dp"
         android:orientation="horizontal"
-        android:layout_marginTop="7dp">
+        android:layout_marginTop="12dp">
 
         <TextView
             android:id="@+id/tv_movie_rate_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/movie_rate_label"
-            android:textSize="12sp"/>
+            android:textSize="16sp"/>
 
         <RatingBar
             android:id="@+id/rb_movie_rating"
             android:layout_width="240dp"
             android:layout_height="wrap_content"
-            android:scaleX="0.5"
-            android:scaleY="0.5"
+            android:scaleX="0.6"
+            android:scaleY="0.6"
             android:stepSize="1"
             android:numStars="5"
             android:rating="3" />
@@ -267,7 +279,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginTop="7dp">
+        android:layout_marginTop="12dp">
 
         <TextView
             android:id="@+id/tv_movie_image_label"
@@ -276,12 +288,12 @@
             android:text="@string/movie_image_label"
             android:paddingEnd="40dp"
             android:paddingStart="0dp"
-            android:textSize="12sp" />
+            android:textSize="16sp" />
 
         <ImageView
             android:id="@+id/iv_selected_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
             android:src="@mipmap/ic_launcher"
             android:contentDescription="@string/movie_photo"/>
 
@@ -294,7 +306,8 @@
             android:scaleX="0.5"
             android:scaleY="0.5"
             android:layout_gravity="bottom"
-            android:contentDescription="@string/add_photo_icon"/>
+            android:contentDescription="@string/add_photo_icon"
+            android:background="@null"/>
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton
@@ -303,11 +316,12 @@
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:text="@string/add_movie_label"
-        android:textSize="12sp"
+        android:textSize="16sp"
         android:backgroundTint="@color/black"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="16dp"
         android:textColor="@color/white"
         android:elevation="4dp"
         app:cornerRadius="16dp" />
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

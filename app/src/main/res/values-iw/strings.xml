@@ -34,4 +34,8 @@
     <string name="title_icon">אייקון סרט כותרת</string>
     <string name="list_of_items">רשימת פריטים</string>
     <string name="edit_movie_bt">כפתור עריכת סרט</string>
+    <string name="back_button">חזור</string>
+    <string name="choose_year">בחר שנה</string>
+    <string name="ok">אוקיי</string>
+    <string name="cancel">ביטול</string>
 </resources>
