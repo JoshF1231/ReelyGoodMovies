@@ -14,7 +14,7 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@mipmap/ic_launcher"
-            android:id="@+id/item_movie_image"
+            android:id="@+id/iv_item_movie_image"
             android:contentDescription="@string/item_movie_image"/>
 
         <LinearLayout
@@ -29,17 +29,17 @@
                 android:layout_gravity="center"
                 android:textStyle="bold"
                 android:textSize="18sp"
-                android:id="@+id/item_movie_title"/>
+                android:id="@+id/tv_item_movie_title"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_genre_label"
                 android:layout_gravity="center"
-                android:id="@+id/item_movie_genre" />
+                android:id="@+id/tv_item_movie_genre" />
 
             <RatingBar
-                android:id="@+id/item_movie_rating"
+                android:id="@+id/rb_item_movie_rating"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:scaleX="0.4"
@@ -52,7 +52,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/item_edit_"
+            android:id="@+id/ib_item_edit_"
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/baseline_edit_24"
