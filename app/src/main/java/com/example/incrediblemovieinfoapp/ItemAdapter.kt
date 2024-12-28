@@ -15,6 +15,8 @@ class ItemAdapter(val items: LiveData<List<Movie>>) : RecyclerView.Adapter<ItemA
             fun bind(movie: Movie){
                 binding.tvItemMovieTitle.text = movie.movieTitle
                 binding.ivItemMovieImage.setImageURI(movie.movieImageUri)
+                binding.rbItemMovieRating.rating = movie.movieRate
+                binding.tvItemMovieGenre.text = movie.movieGenres.joinToString(", ")
             }
         }
 

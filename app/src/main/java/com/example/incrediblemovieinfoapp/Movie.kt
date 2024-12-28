@@ -11,7 +11,8 @@ data class Movie (
     var movieTitle: String = "",
     var moviePlot: String = "",
     var movieLength : Duration  = 0.toDuration(DurationUnit.SECONDS),
-    var movieYear : Date = Date(0),
+    var movieYear : Int = 1900,
     var movieRate : Float = 0f,
+    var movieGenres: List<String> = listOf(),
     var movieImageUri : Uri? = null) {
 }

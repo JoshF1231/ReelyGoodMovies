@@ -18,6 +18,8 @@ import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
 import java.util.Calendar
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 class AddItemFragment : Fragment(){
     private var _binding : AddItemLayoutBinding? = null
@@ -43,7 +45,16 @@ class AddItemFragment : Fragment(){
         binding.btnAddMovie.setOnClickListener{
             if (isFormValid()) {
                 currentMovie.movieTitle = binding.tvItemTitle.text.toString()
-                // TODO - ADD THE REST OF THE ATTRIBUTES
+                currentMovie.movieGenres = getSelectedGenres()
+                currentMovie.movieRate = binding.rbMovieRating.rating
+                currentMovie.movieImageUri = imageUri
+                currentMovie.moviePlot = binding.etMoviePlot.text.toString()
+                currentMovie.movieYear = binding.tvSelectedYear.text.toString().toIntOrNull() ?: 1900
+                val hours = binding.npHoursPicker.value
+                val minutes = binding.npMinutesPicker.value
+                currentMovie.movieLength = (hours * 60 + minutes).toDuration(DurationUnit.MINUTES)
+
+
                 viewModel.addMovie(currentMovie)
                 findNavController().navigate(R.id.action_addItemFragment_to_allItemsFragment2)
             } else {
@@ -89,6 +100,23 @@ class AddItemFragment : Fragment(){
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
+    }
+
+    private fun getSelectedGenres(): List<String> {
+        val genres = mutableListOf<String>()
+        if (binding.checkboxDoco.isChecked) genres.add(getString(R.string.doco_label))
+        if (binding.checkboxWar.isChecked) genres.add(getString(R.string.war_label))
+        if (binding.checkboxDrama.isChecked) genres.add(getString(R.string.drama_label))
+        if (binding.checkboxAction.isChecked) genres.add(getString(R.string.action_label))
+        if (binding.checkboxFamily.isChecked) genres.add(getString(R.string.family_label))
+        if (binding.checkboxRomance.isChecked) genres.add(getString(R.string.romance_label))
+        if (binding.checkboxAdventure.isChecked) genres.add(getString(R.string.adventure_label))
+        if (binding.checkboxAnimation.isChecked) genres.add(getString(R.string.animation_label))
+        if (binding.checkboxScienceFiction.isChecked) genres.add(getString(R.string.science_fiction_label))
+        if (binding.checkboxHorror.isChecked) genres.add(getString(R.string.horror_label))
+        if (binding.checkboxThriller.isChecked) genres.add(getString(R.string.thriller_label))
+
+        return genres
     }
 
     private fun isFormValid(): Boolean {
