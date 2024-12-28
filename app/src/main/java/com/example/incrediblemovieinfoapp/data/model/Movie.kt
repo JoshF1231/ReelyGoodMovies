@@ -1,9 +1,7 @@
-package com.example.incrediblemovieinfoapp
+package com.example.incrediblemovieinfoapp.data.model
 
-import android.media.Image
 import android.net.Uri
 import kotlin.time.Duration
-import java.util.Date
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 

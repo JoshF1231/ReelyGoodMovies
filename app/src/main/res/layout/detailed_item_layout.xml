@@ -54,23 +54,40 @@
             android:layout_marginBottom="16dp"
             android:contentDescription="@string/item_movie_image"
             android:src="@mipmap/ic_launcher" />
-
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Genres:"
+            android:textSize="16sp"
+            android:layout_marginBottom="8dp" />
         <TextView
             android:id="@+id/tv_movie_genres"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Genres: Action, Comedy"
             android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
-
-        <TextView
-            android:id="@+id/tv_movie_year"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Year: 2024"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
-
+            android:layout_marginStart="10dp" />
+    </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Year:"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_movie_year"
+                android:layout_marginStart="10dp"
+                />
+        </LinearLayout>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -96,24 +113,41 @@
                 android:layout_marginStart="8dp" />
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/tv_movie_plot"
-            android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Plot: This is a detailed description of the movie's storyline."
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Plot:"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/tv_movie_plot"
+                android:layout_marginStart="10dp"
+                />
 
-
-        <TextView
-            android:id="@+id/tv_movie_length"
-            android:layout_width="match_parent"
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Length: 2 hours 15 minutes"
-            android:textSize="16sp"
-            android:layout_marginBottom="16dp" />
-
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Length:"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
+            <TextView
+                android:id="@+id/tv_movie_length"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginStart="10dp"/>
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp
+package com.example.incrediblemovieinfoapp.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -19,6 +19,12 @@ class DetailedItemFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         _binding = DetailedItemLayoutBinding.inflate(inflater,container,false)
+        binding.tvMovieTitle.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.movieTitle
+        binding.tvMovieGenres.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.movieGenres?.joinToString(", ")
+        binding.tvMoviePlot.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.moviePlot
+        binding.rbMovieRating.rating = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())!!.movieRate
+        binding.tvMovieYear.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.movieYear.toString()
+        binding.tvMovieLength.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.movieLength.toString()
         return binding.root
     }
 
