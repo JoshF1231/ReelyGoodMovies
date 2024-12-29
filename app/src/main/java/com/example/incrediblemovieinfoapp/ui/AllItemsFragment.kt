@@ -1,9 +1,11 @@
 package com.example.incrediblemovieinfoapp.ui
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -60,8 +62,7 @@ class AllItemsFragment : Fragment(){
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                viewModel.removeMovie(viewHolder.adapterPosition)
-                binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
+                dialogCreator(viewHolder)
             }
         }).attachToRecyclerView(binding.recycler)
     }
@@ -70,4 +71,25 @@ class AllItemsFragment : Fragment(){
         super.onDestroyView()
         _binding = null
     }
+
+
+    fun dialogCreator(viewHolder: RecyclerView.ViewHolder): Unit {
+        val builder = AlertDialog.Builder(requireContext())
+        val dialogView = layoutInflater.inflate(R.layout.delete_item_dialog, null)
+
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        dialog.setCancelable(false)
+
+        dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+        dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
+            Toast.makeText(requireContext(), getString(R.string.item_deletion), Toast.LENGTH_SHORT).show()
+            viewModel.removeMovie(viewHolder.adapterPosition)
+            binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
+        }
+        dialog.show()
+    }
+
 }

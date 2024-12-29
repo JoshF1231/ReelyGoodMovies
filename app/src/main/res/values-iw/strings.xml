@@ -38,4 +38,5 @@
     <string name="choose_year">בחר שנה</string>
     <string name="ok">אוקיי</string>
     <string name="cancel">ביטול</string>
+    <string name="item_deletion">האובייקט ימחק עכשיו</string>
 </resources>

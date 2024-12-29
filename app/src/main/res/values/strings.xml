@@ -38,4 +38,5 @@
     <string name="choose_year">choose year</string>
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
+    <string name="item_deletion">Item will be deleted now</string>
 </resources>
