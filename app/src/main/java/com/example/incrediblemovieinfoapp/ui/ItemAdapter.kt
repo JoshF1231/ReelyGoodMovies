@@ -1,41 +1,42 @@
-package com.example.incrediblemovieinfoapp
+package com.example.incrediblemovieinfoapp.ui
 
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.OnClickListener
+import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.LiveData
 import androidx.recyclerview.widget.RecyclerView
-import androidx.recyclerview.widget.RecyclerView.Recycler
+import com.example.incrediblemovieinfoapp.data.model.Movie
 import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
 
-class ItemAdapter(val items: LiveData<List<Movie>>,
-                  val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(val items: LiveData<List<Movie>>, val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     interface ItemListener {
-        fun onItemClicked(index: Int)
-        fun onItemLongClicked(index: Int)
+        fun onItemClicked(index : Int)
+        fun onItemLongClicked(index : Int)
     }
 
     inner class ItemViewHolder(private val binding : ItemLayoutBinding)
-        : RecyclerView.ViewHolder(binding.root), View.OnClickListener, View.OnLongClickListener{
-
-        init {
-            binding.root.setOnClickListener(this)
-            binding.root.setOnLongClickListener(this)
-        }
-        override fun onClick(v: View?) {
+        : RecyclerView.ViewHolder(binding.root) ,OnClickListener,OnLongClickListener{
+            init {
+                binding.root.setOnClickListener (this)
+                binding.root.setOnLongClickListener(this)
+            }
+        override fun onClick(p0: View?) {
             callBack.onItemClicked(adapterPosition)
         }
 
-        override fun onLongClick(v: View?): Boolean {
+        override fun onLongClick(p0: View?): Boolean {
             callBack.onItemLongClicked(adapterPosition)
-            return false
+            return true
         }
 
-            fun bind(movie: Movie){
+        fun bind(movie: Movie){
                 binding.tvItemMovieTitle.text = movie.movieTitle
                 binding.ivItemMovieImage.setImageURI(movie.movieImageUri)
+                binding.rbItemMovieRating.rating = movie.movieRate
+                binding.tvItemMovieGenre.text = movie.movieGenres.joinToString(", ")
             }
         }
 

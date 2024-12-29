@@ -47,7 +47,8 @@
                 android:stepSize="1"
                 android:numStars="5"
                 android:rating="3"
-                android:layout_gravity="center" />
+                android:layout_gravity="center"
+                android:isIndicator="true"/>
 
         </LinearLayout>
 

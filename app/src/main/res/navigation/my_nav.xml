@@ -6,7 +6,7 @@
     app:startDestination="@id/allItemsFragment2">
     <fragment
         android:id="@+id/allItemsFragment2"
-        android:name="com.example.incrediblemovieinfoapp.AllItemsFragment"
+        android:name="com.example.incrediblemovieinfoapp.ui.AllItemsFragment"
         android:label="all_items_layout"
         tools:layout="@layout/all_items_layout" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
-        android:name="com.example.incrediblemovieinfoapp.AddItemFragment"
+        android:name="com.example.incrediblemovieinfoapp.ui.AddItemFragment"
         android:label="add_item_layout"
         tools:layout="@layout/add_item_layout" >
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedItemFragment"
-        android:name="com.example.incrediblemovieinfoapp.DetailedItemFragment"
+        android:name="com.example.incrediblemovieinfoapp.ui.DetailedItemFragment"
         android:label="detailed_item_layout"
         tools:layout="@layout/detailed_item_layout" >
         <action
@@ -50,6 +50,8 @@
             app:enterAnim="@anim/from_right"
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
-            app:popExitAnim="@anim/to_right" />
+            app:popExitAnim="@anim/to_right"
+            app:popUpTo="@id/allItemsFragment2"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>
