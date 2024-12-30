@@ -40,8 +40,7 @@ class AllItemsFragment : Fragment(){
             binding.recycler.adapter =
                 ItemAdapter(it, object : ItemAdapter.ItemListener {
                     override fun onItemClicked(index: Int) {
-                        val item = (binding.recycler.adapter as ItemAdapter).itemAt(index)
-                        viewModel.setMovie(item)
+                        viewModel.setMovie(it[index])
 
                         findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment)
                     }
@@ -49,7 +48,7 @@ class AllItemsFragment : Fragment(){
                     override fun onItemLongClicked(index: Int) {
                         Toast.makeText(
                             requireContext(),
-                            viewModel.getMovieAt(index)?.movieTitle,
+                            "${it[index]}",
                             Toast.LENGTH_SHORT
                         ).show()
                     }
