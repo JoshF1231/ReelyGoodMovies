@@ -39,4 +39,7 @@
     <string name="ok">אוקיי</string>
     <string name="cancel">ביטול</string>
     <string name="item_deletion">האובייקט ימחק עכשיו</string>
+    <string name="year_label">שנה:</string>
+    <string name="rating_label">דירוג:</string>
+    <string name="length_label">אורך:</string>
 </resources>

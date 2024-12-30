@@ -26,7 +26,6 @@ class AddItemFragment : Fragment(){
     private val binding get() = _binding!!
     private val viewModel : ActivityViewModel by activityViewModels()
     private var imageUri: Uri?= null
-    private lateinit var currentMovie : Movie
 
     private val pickImageLauncher: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) {
@@ -41,19 +40,17 @@ class AddItemFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         _binding = AddItemLayoutBinding.inflate(inflater,container,false)
-        currentMovie = Movie()
+
         binding.btnAddMovie.setOnClickListener{
             if (isFormValid()) {
-                currentMovie.movieTitle = binding.tvItemTitle.text.toString()
-                currentMovie.movieGenres = getSelectedGenres()
-                currentMovie.movieRate = binding.rbMovieRating.rating
-                currentMovie.movieImageUri = imageUri
-                currentMovie.moviePlot = binding.etMoviePlot.text.toString()
-                currentMovie.movieYear = binding.tvSelectedYear.text.toString().toIntOrNull() ?: 1900
-                val hours = binding.npHoursPicker.value
-                val minutes = binding.npMinutesPicker.value
-                currentMovie.movieLength = (hours * 60 + minutes).toDuration(DurationUnit.MINUTES)
-
+                val currentMovie = Movie(
+                    binding.tvItemTitle.text.toString(),
+                    binding.etMoviePlot.text.toString(),
+                    (binding.npHoursPicker.value * 60 + binding.npMinutesPicker.value).toDuration(DurationUnit.MINUTES),
+                    binding.tvSelectedYear.text.toString().toIntOrNull() ?: 1900,
+                    binding.rbMovieRating.rating,
+                    getSelectedGenres(),
+                    imageUri)
 
                 viewModel.addMovie(currentMovie)
                 findNavController().navigate(R.id.action_addItemFragment_to_allItemsFragment2)

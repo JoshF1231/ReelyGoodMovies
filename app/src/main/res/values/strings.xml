@@ -39,4 +39,7 @@
     <string name="ok">ok</string>
     <string name="cancel">cancel</string>
     <string name="item_deletion">Item will be deleted now</string>
+    <string name="year_label">Year:</string>
+    <string name="rating_label">Rating:</string>
+    <string name="length_label">Length:</string>
 </resources>

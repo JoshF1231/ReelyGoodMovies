@@ -61,7 +61,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Genres:"
+            android:text="@string/genre_label"
             android:textSize="16sp"
             android:layout_marginBottom="8dp" />
         <TextView
@@ -78,7 +78,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Year:"
+                android:text="@string/year_label"
                 android:textSize="16sp"
                 android:layout_marginBottom="8dp" />
             <TextView
@@ -98,7 +98,7 @@
                 android:id="@+id/tv_movie_rating_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rating: "
+                android:text="@string/rating_label"
                 android:textSize="16sp" />
 
             <RatingBar
@@ -110,7 +110,8 @@
                 android:rating="3"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
-                android:layout_marginStart="8dp" />
+                android:layout_marginStart="8dp"
+                android:isIndicator="true"/>
         </LinearLayout>
 
         <LinearLayout
@@ -120,7 +121,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Plot:"
+                android:text="@string/plot_label"
                 android:textSize="16sp"
                 android:layout_marginBottom="16dp" />
             <TextView
@@ -138,7 +139,7 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Length:"
+                android:text="@string/length_label"
                 android:textSize="16sp"
                 android:layout_marginBottom="16dp" />
             <TextView

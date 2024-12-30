@@ -6,6 +6,7 @@ import android.view.View.OnClickListener
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import androidx.lifecycle.LiveData
+import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.data.model.Movie
 import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
@@ -34,7 +35,7 @@ class ItemAdapter(val items: LiveData<List<Movie>>, val callBack: ItemListener) 
 
         fun bind(movie: Movie){
                 binding.tvItemMovieTitle.text = movie.movieTitle
-                binding.ivItemMovieImage.setImageURI(movie.movieImageUri)
+                Glide.with(binding.root).load(movie.movieImageUri).circleCrop().into(binding.ivItemMovieImage)
                 binding.rbItemMovieRating.rating = movie.movieRate
                 binding.tvItemMovieGenre.text = movie.movieGenres.joinToString(", ")
             }
