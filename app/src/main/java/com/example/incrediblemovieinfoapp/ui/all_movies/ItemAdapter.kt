@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.ui
+package com.example.incrediblemovieinfoapp.ui.all_movies
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
-import com.example.incrediblemovieinfoapp.data.model.Movie
+import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
 
 class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
@@ -34,15 +34,13 @@ class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : Recycler
         }
 
         fun bind(movie: Movie){
-                binding.tvItemMovieTitle.text = movie.movieTitle
-                Glide.with(binding.root).load(movie.movieImageUri ?: R.drawable.ic_launcher_background).circleCrop().into(binding.ivItemMovieImage)
-                binding.rbItemMovieRating.rating = movie.movieRate
-                binding.tvItemMovieGenre.text = movie.movieGenres.joinToString(", ")
+                binding.tvItemMovieTitle.text = movie.plot
+                Glide.with(binding.root).load(movie.photo ?: R.drawable.ic_launcher_background).circleCrop().into(binding.ivItemMovieImage)
+                binding.rbItemMovieRating.rating = movie.rate
+                binding.tvItemMovieGenre.text = movie.genre
             }
         }
-
     fun itemAt(position: Int) = items[position]
-
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false))

@@ -1,14 +1,19 @@
 package com.example.incrediblemovieinfoapp.ui
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.incrediblemovieinfoapp.data.model.Movie
+import com.example.incrediblemovieinfoapp.data.models.Movie
+import com.example.incrediblemovieinfoapp.data.repositories.movieRepository
 
-class ActivityViewModel : ViewModel() {
-    private var _movieList :MutableLiveData<List<Movie>> = MutableLiveData(emptyList())
-    val movieList : LiveData<List<Movie>> get() = _movieList
-    private var selectedItemIndex = -1
+
+class ActivityViewModel(application: Application) : AndroidViewModel(application) {
+
+
+    private val repository = movieRepository(application)
+    val movieList: LiveData<List<Movie>>? = repository.getMovies()
+
 
 
     private val _chosenMovie = MutableLiveData<Movie>()
@@ -19,27 +24,16 @@ class ActivityViewModel : ViewModel() {
     }
 
 
-    fun addMovie(movie : Movie){
-        _movieList.value = _movieList.value?.plus(movie)
-    }
-    fun removeMovie(index: Int) {
-        _movieList.value = _movieList.value?.toMutableList()?.apply {
-            removeAt(index)
-        }
-    }
-    fun removeMovie(movie : Movie){
-        _movieList.value = _movieList.value?.minus(movie)
+    fun addMovie(movie: Movie){
+        repository.addMovie(movie)
     }
 
-    fun getMovieAt(index: Int) : Movie?{
-        return movieList.value?.get(index)
+    fun deleteMovie(movie: Movie){
+        repository.deleteMovie(movie)
     }
 
-    fun getSelectedMovieIndex() : Int {
-        return selectedItemIndex
-    }
-    fun setSelectedMovieIndex(index : Int) {
-        selectedItemIndex = index
+    fun deleteAllMovies(){
+        repository.deleteAllMovies()
     }
 
 

@@ -1,4 +1,5 @@
-package com.example.incrediblemovieinfoapp.ui
+package com.example.incrediblemovieinfoapp.ui.add_movie
+
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -14,9 +15,10 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.incrediblemovieinfoapp.data.model.Movie
+import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
+import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 import java.util.Calendar
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -43,14 +45,15 @@ class AddItemFragment : Fragment(){
 
         binding.btnAddMovie.setOnClickListener{
             if (isFormValid()) {
+                val genres = getSelectedGenres()
                 val currentMovie = Movie(
                     binding.tvItemTitle.text.toString(),
                     binding.etMoviePlot.text.toString(),
-                    (binding.npHoursPicker.value * 60 + binding.npMinutesPicker.value).toDuration(DurationUnit.MINUTES),
-                    binding.tvSelectedYear.text.toString().toIntOrNull() ?: 1900,
+                    (binding.npHoursPicker.value * 60 + binding.npMinutesPicker.value),
+                    binding.tvSelectedYear.text.toString().toInt(),
                     binding.rbMovieRating.rating,
-                    getSelectedGenres(),
-                    imageUri)
+                    genres,
+                    imageUri.toString())
 
                 viewModel.addMovie(currentMovie)
                 findNavController().navigate(R.id.action_addItemFragment_to_allItemsFragment2)
@@ -99,27 +102,41 @@ class AddItemFragment : Fragment(){
             .show()
     }
 
-    private fun getSelectedGenres(): List<String> {
-        val genres = mutableListOf<String>()
-        if (binding.checkboxDoco.isChecked) genres.add(getString(R.string.doco_label))
-        if (binding.checkboxWar.isChecked) genres.add(getString(R.string.war_label))
-        if (binding.checkboxDrama.isChecked) genres.add(getString(R.string.drama_label))
-        if (binding.checkboxAction.isChecked) genres.add(getString(R.string.action_label))
-        if (binding.checkboxFamily.isChecked) genres.add(getString(R.string.family_label))
-        if (binding.checkboxRomance.isChecked) genres.add(getString(R.string.romance_label))
-        if (binding.checkboxAdventure.isChecked) genres.add(getString(R.string.adventure_label))
-        if (binding.checkboxAnimation.isChecked) genres.add(getString(R.string.animation_label))
-        if (binding.checkboxScienceFiction.isChecked) genres.add(getString(R.string.science_fiction_label))
-        if (binding.checkboxHorror.isChecked) genres.add(getString(R.string.horror_label))
-        if (binding.checkboxThriller.isChecked) genres.add(getString(R.string.thriller_label))
+    private fun getSelectedGenres(): String {
+        val checkboxesToLabels = listOf(
+            binding.checkboxDoco to getString(R.string.doco_label),
+            binding.checkboxWar to getString(R.string.war_label),
+            binding.checkboxDrama to getString(R.string.drama_label),
+            binding.checkboxAction to getString(R.string.action_label),
+            binding.checkboxFamily to getString(R.string.family_label),
+            binding.checkboxRomance to getString(R.string.romance_label),
+            binding.checkboxAdventure to getString(R.string.adventure_label),
+            binding.checkboxAnimation to getString(R.string.animation_label),
+            binding.checkboxScienceFiction to getString(R.string.science_fiction_label),
+            binding.checkboxHorror to getString(R.string.horror_label),
+            binding.checkboxThriller to getString(R.string.thriller_label)
+        )
 
-        return genres
+        return checkboxesToLabels
+            .filter { it.first.isChecked }
+            .joinToString(", ") { it.second }
     }
+
+
 
     private fun isFormValid(): Boolean {
-        val movieName = binding.tvItemTitle.text.toString()
-        return movieName.isNotEmpty()
+        val selectedGenres = getSelectedGenres()
+
+        return binding.tvItemTitle.text.toString().isNotEmpty() &&
+                binding.etMoviePlot.text.toString().isNotEmpty() &&
+                binding.tvSelectedYear.text.toString().isNotEmpty() &&
+                binding.npHoursPicker.value >= 0 &&
+                binding.npMinutesPicker.value >= 0 &&
+                binding.rbMovieRating.rating > 0 &&
+                selectedGenres.isNotEmpty()
     }
+
+
 
     private fun showError(message: String) {
         Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()

@@ -1,4 +1,5 @@
-package com.example.incrediblemovieinfoapp.ui
+package com.example.incrediblemovieinfoapp.ui.all_movies
+
 
 import android.app.AlertDialog
 import android.os.Bundle
@@ -15,19 +16,21 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.databinding.AllItemsLayoutBinding
+import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 
-class AllItemsFragment : Fragment(){
-    private var _binding : AllItemsLayoutBinding? = null
-    private val binding get () = _binding!!
-    private val viewModel : ActivityViewModel by activityViewModels()
+
+class AllItemsFragment : Fragment() {
+    private var _binding: AllItemsLayoutBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: ActivityViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = AllItemsLayoutBinding.inflate(inflater,container,false)
-        binding.fabAddItem.setOnClickListener{
+        _binding = AllItemsLayoutBinding.inflate(inflater, container, false)
+        binding.fabAddItem.setOnClickListener {
             findNavController().navigate(R.id.action_allItemsFragment2_to_addItemFragment)
         }
         return binding.root
@@ -36,39 +39,37 @@ class AllItemsFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.movieList?.observe(viewLifecycleOwner) {
-            binding.recycler.adapter =
-                ItemAdapter(it, object : ItemAdapter.ItemListener {
-                    override fun onItemClicked(index: Int) {
-                        viewModel.setMovie(it[index])
+        viewModel.movieList?.observe(viewLifecycleOwner) { movies ->
+            if (movies.isNullOrEmpty()) {
+                Toast.makeText(requireContext(), "No movies available", Toast.LENGTH_SHORT).show()
+            } else {
+                binding.recycler.adapter = ItemAdapter(movies, object : ItemAdapter.ItemListener {
 
+                    override fun onItemClicked(index: Int) {
+                        viewModel.setMovie(movies[index])
                         findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment)
                     }
 
                     override fun onItemLongClicked(index: Int) {
-                        Toast.makeText(
-                            requireContext(),
-                            "${it[index]}",
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(requireContext(), "${movies[index]}", Toast.LENGTH_SHORT).show()
                     }
                 })
-
+            }
             binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         }
 
-        ItemTouchHelper(object : ItemTouchHelper.Callback(){
+        ItemTouchHelper(object : ItemTouchHelper.Callback() {
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
-            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE,ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
 
             override fun onMove(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder,
                 target: RecyclerView.ViewHolder
             ): Boolean {
-                TODO("Not yet implemented")
+                return false
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
@@ -82,8 +83,7 @@ class AllItemsFragment : Fragment(){
         _binding = null
     }
 
-
-    fun dialogCreator(viewHolder: RecyclerView.ViewHolder): Unit {
+    fun dialogCreator(viewHolder: RecyclerView.ViewHolder) {
         val builder = AlertDialog.Builder(requireContext())
         val dialogView = layoutInflater.inflate(R.layout.delete_item_dialog, null)
 
@@ -92,14 +92,17 @@ class AllItemsFragment : Fragment(){
         dialog.setCancelable(false)
 
         dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            binding.recycler.adapter?.notifyItemChanged(viewHolder.adapterPosition)
             dialog.dismiss()
         }
+
         dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
             Toast.makeText(requireContext(), getString(R.string.item_deletion), Toast.LENGTH_SHORT).show()
-            viewModel.removeMovie(viewHolder.adapterPosition)
-            binding.recycler.adapter!!.notifyItemRemoved(viewHolder.adapterPosition)
+            val movie = (binding.recycler.adapter as ItemAdapter).itemAt(viewHolder.adapterPosition)
+            viewModel.deleteMovie(movie)
+            binding.recycler.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
+            dialog.dismiss()
         }
         dialog.show()
     }
-
 }

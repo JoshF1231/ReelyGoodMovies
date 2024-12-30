@@ -42,4 +42,5 @@
     <string name="year_label">שנה:</string>
     <string name="rating_label">דירוג:</string>
     <string name="length_label">אורך:</string>
+    <string name="minutes">דקות</string>
 </resources>

@@ -42,4 +42,5 @@
     <string name="year_label">Year:</string>
     <string name="rating_label">Rating:</string>
     <string name="length_label">Length:</string>
+    <string name="minutes">minutes</string>
 </resources>

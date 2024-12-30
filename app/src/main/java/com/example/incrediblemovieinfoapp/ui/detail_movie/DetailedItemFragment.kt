@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.ui
+package com.example.incrediblemovieinfoapp.ui.detail_movie
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,6 +8,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.example.incrediblemovieinfoapp.databinding.DetailedItemLayoutBinding
+import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+
 
 class DetailedItemFragment : Fragment(){
     private var _binding : DetailedItemLayoutBinding? = null
@@ -27,13 +29,13 @@ class DetailedItemFragment : Fragment(){
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.chosenMovie.observe(viewLifecycleOwner){
-            binding.tvMovieTitle.text = it.movieTitle
-            binding.tvMovieGenres.text = it.movieGenres.joinToString(", ")
-            binding.tvMoviePlot.text = it.moviePlot
-            binding.rbMovieRating.rating = it.movieRate
-            binding.tvMovieYear.text = it.movieYear.toString()
-            binding.tvMovieLength.text =it.movieLength.toString()
-            Glide.with(requireContext()).load(it.movieImageUri).circleCrop().into(binding.ivMoviePoster)
+            binding.tvMovieTitle.text = it.title
+            binding.tvMovieGenres.text = it.genre
+            binding.tvMoviePlot.text = it.plot
+            binding.rbMovieRating.rating = it.rate
+            binding.tvMovieYear.text = it.year?.toString()
+            binding.tvMovieLength.text =it.length?.toString()
+            Glide.with(requireContext()).load(it.photo).circleCrop().into(binding.ivMoviePoster)
         }
     }
 
