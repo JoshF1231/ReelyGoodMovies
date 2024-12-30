@@ -5,13 +5,13 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import androidx.lifecycle.LiveData
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
+import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.model.Movie
 import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
 
-class ItemAdapter(val items: LiveData<List<Movie>>, val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     interface ItemListener {
         fun onItemClicked(index : Int)
@@ -35,21 +35,24 @@ class ItemAdapter(val items: LiveData<List<Movie>>, val callBack: ItemListener) 
 
         fun bind(movie: Movie){
                 binding.tvItemMovieTitle.text = movie.movieTitle
-                Glide.with(binding.root).load(movie.movieImageUri).circleCrop().into(binding.ivItemMovieImage)
+                Glide.with(binding.root).load(movie.movieImageUri ?: R.drawable.ic_launcher_background).circleCrop().into(binding.ivItemMovieImage)
                 binding.rbItemMovieRating.rating = movie.movieRate
                 binding.tvItemMovieGenre.text = movie.movieGenres.joinToString(", ")
             }
         }
+
+    fun itemAt(position: Int) = items[position]
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false))
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
-        holder.bind(items.value!![position])
+        holder.bind(items[position])
     }
 
     override fun getItemCount(): Int {
-        return items.value!!.size
+        return items.size
     }
 }

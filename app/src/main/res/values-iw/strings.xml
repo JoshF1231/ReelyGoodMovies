@@ -15,7 +15,7 @@
     <string name="war_label">מלחמה</string>
     <string name="animation_label">אנימציה</string>
     <string name="doco_label">דוקו</string>
-    <string name="plot_label">עלילה</string>
+    <string name="plot_label">עלילה:</string>
     <string name="movie_length_label">אורך הסרט:</string>
     <string name="hours_label">שעות</string>
     <string name="minutes_label">דקות</string>

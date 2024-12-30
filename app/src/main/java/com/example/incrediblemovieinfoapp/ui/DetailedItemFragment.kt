@@ -20,17 +20,21 @@ class DetailedItemFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         _binding = DetailedItemLayoutBinding.inflate(inflater,container,false)
-        binding.tvMovieTitle.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.movieTitle
-        binding.tvMovieGenres.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.movieGenres?.joinToString(", ")
-        binding.tvMoviePlot.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.moviePlot
-        binding.rbMovieRating.rating = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())!!.movieRate
-        binding.tvMovieYear.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.movieYear.toString()
-        binding.tvMovieLength.text = viewModel.getMovieAt(viewModel.getSelectedMovieIndex())?.movieLength.toString()
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        viewModel.chosenMovie.observe(viewLifecycleOwner){
+            binding.tvMovieTitle.text = it.movieTitle
+            binding.tvMovieGenres.text = it.movieGenres.joinToString(", ")
+            binding.tvMoviePlot.text = it.moviePlot
+            binding.rbMovieRating.rating = it.movieRate
+            binding.tvMovieYear.text = it.movieYear.toString()
+            binding.tvMovieLength.text =it.movieLength.toString()
+            Glide.with(requireContext()).load(it.movieImageUri).circleCrop().into(binding.ivMoviePoster)
+        }
     }
 
     override fun onDestroyView() {

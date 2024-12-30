@@ -12,13 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <ImageButton
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:src="@drawable/baseline_arrow_back_24"
-            android:background="@null"
-            android:contentDescription="@string/back_button"/>
-
     <TextView
         android:id="@+id/tv_movie_info_title"
         android:layout_width="match_parent"

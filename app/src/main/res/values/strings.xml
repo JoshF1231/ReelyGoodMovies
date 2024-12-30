@@ -15,7 +15,7 @@
     <string name="war_label">War</string>
     <string name="animation_label">Animation</string>
     <string name="doco_label">Doco</string>
-    <string name="plot_label">Plot</string>
+    <string name="plot_label">Plot:</string>
     <string name="movie_length_label">Movie length:</string>
     <string name="hours_label">hours</string>
     <string name="minutes_label">minutes</string>

@@ -36,16 +36,27 @@ class AllItemsFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recycler.adapter = ItemAdapter(viewModel.movieList,object : ItemAdapter.ItemListener {
-            override fun onItemClicked(index: Int) {
-                viewModel.setSelectedMovieIndex(index)
-                findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment)
-            }
-            override fun onItemLongClicked(index: Int) {
-                Toast.makeText(requireContext(),viewModel.getMovieAt(index)?.movieTitle,Toast.LENGTH_SHORT).show()
-            }
-        })
-        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        viewModel.movieList?.observe(viewLifecycleOwner) {
+            binding.recycler.adapter =
+                ItemAdapter(it, object : ItemAdapter.ItemListener {
+                    override fun onItemClicked(index: Int) {
+                        val item = (binding.recycler.adapter as ItemAdapter).itemAt(index)
+                        viewModel.setMovie(item)
+
+                        findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment)
+                    }
+
+                    override fun onItemLongClicked(index: Int) {
+                        Toast.makeText(
+                            requireContext(),
+                            viewModel.getMovieAt(index)?.movieTitle,
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                })
+
+            binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        }
 
         ItemTouchHelper(object : ItemTouchHelper.Callback(){
             override fun getMovementFlags(
