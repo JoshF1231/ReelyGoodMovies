@@ -31,6 +31,7 @@ class AllItemsFragment : Fragment() {
     ): View? {
         _binding = AllItemsLayoutBinding.inflate(inflater, container, false)
         binding.fabAddItem.setOnClickListener {
+            clearAllData()
             findNavController().navigate(R.id.action_allItemsFragment2_to_addItemFragment)
         }
         return binding.root
@@ -110,5 +111,12 @@ class AllItemsFragment : Fragment() {
             dialog.dismiss()
         }
         dialog.show()
+    }
+
+    private fun clearAllData(){
+        viewModel.setSelectedImageURI(null)
+        viewModel.setSelectedRuntimeHours(0)
+        viewModel.setSelectedRuntimeMinutes(0)
+        viewModel.setSelectedYear(0)
     }
 }

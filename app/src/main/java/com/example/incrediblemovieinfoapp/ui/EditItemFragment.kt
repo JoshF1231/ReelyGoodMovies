@@ -115,6 +115,7 @@ class EditItemFragment : Fragment() {
 
     private fun getSelectedGenres(): List<String> {
         val genres = mutableListOf<String>()
+        if (binding.checkboxComedy.isChecked) genres.add(getString(R.string.comedy_label))
         if (binding.checkboxDoco.isChecked) genres.add(getString(R.string.doco_label))
         if (binding.checkboxWar.isChecked) genres.add(getString(R.string.war_label))
         if (binding.checkboxDrama.isChecked) genres.add(getString(R.string.drama_label))

@@ -139,6 +139,7 @@ class AddItemFragment : Fragment(){
 
     private fun getSelectedGenres(): String {
         val checkboxesToLabels = listOf(
+            binding.checkboxComedy to getString(R.string.comedy_label),
             binding.checkboxDoco to getString(R.string.doco_label),
             binding.checkboxWar to getString(R.string.war_label),
             binding.checkboxDrama to getString(R.string.drama_label),
