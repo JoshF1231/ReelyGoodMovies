@@ -101,6 +101,7 @@ class AllItemsFragment : Fragment() {
             val movie = (binding.recycler.adapter as ItemAdapter).itemAt(viewHolder.adapterPosition)
             viewModel.deleteMovie(movie)
             binding.recycler.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
+
             dialog.dismiss()
         }
         dialog.show()

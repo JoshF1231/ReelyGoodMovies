@@ -12,6 +12,7 @@ import android.widget.NumberPicker
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -27,13 +28,14 @@ class AddItemFragment : Fragment(){
     private var _binding : AddItemLayoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel : ActivityViewModel by activityViewModels()
-    private var imageUri: Uri?= null
+    private var _genres : String?=null
+    private val genres get () = _genres!!
 
     private val pickImageLauncher: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) {
-            binding.ivSelectedImage.setImageURI((it))
-            requireActivity().contentResolver.takePersistableUriPermission(it!!, Intent.FLAG_GRANT_READ_URI_PERMISSION)
-            imageUri = it
+            viewModel.setSelectedImageURI(it.toString())
+            if (it!= null)
+            requireActivity().contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
     override fun onCreateView(
@@ -42,19 +44,16 @@ class AddItemFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         _binding = AddItemLayoutBinding.inflate(inflater,container,false)
-
         binding.btnAddMovie.setOnClickListener{
             if (isFormValid()) {
-                val genres = getSelectedGenres()
                 val currentMovie = Movie(
                     binding.tvItemTitle.text.toString(),
                     binding.etMoviePlot.text.toString(),
-                    (binding.npHoursPicker.value * 60 + binding.npMinutesPicker.value),
-                    binding.tvSelectedYear.text.toString().toInt(),
+                    (viewModel.selectedRuntimeHours.value!! * 60 + viewModel.selectedRuntimeMinutes.value!!),
+                    viewModel.selectedYear.value!!,
                     binding.rbMovieRating.rating,
                     genres,
-                    imageUri.toString())
-
+                    viewModel.selectedImageURI.value)
                 viewModel.addMovie(currentMovie)
                 findNavController().navigate(R.id.action_addItemFragment_to_allItemsFragment2)
             } else {
@@ -70,6 +69,41 @@ class AddItemFragment : Fragment(){
 
         binding.btnAddPhoto.setOnClickListener{
             pickImageLauncher.launch(arrayOf("image/*"))
+        }
+
+        binding.npHoursPicker.setOnValueChangedListener { _, _, value ->
+            viewModel.setSelectedRuntimeHours(value)
+        }
+        binding.npMinutesPicker.setOnValueChangedListener { _, _, value ->
+            viewModel.setSelectedRuntimeMinutes(value)
+        }
+
+        viewModel.selectedYear.observe(requireActivity()){
+            if (_binding != null) {
+                if (binding.tvSelectedYear.text != null) {
+                    binding.tvSelectedYear.text = viewModel.selectedYear.value.toString()
+                }
+            }
+        }
+        viewModel.selectedRuntimeHours.observe(requireActivity()) {
+            if (_binding != null) {
+                if (viewModel.selectedRuntimeHours.value == null) {
+                    binding.npHoursPicker.value = 0
+                } else
+                    binding.npHoursPicker.value = viewModel.selectedRuntimeHours.value!!
+            }
+        }
+        viewModel.selectedRuntimeMinutes.observe(requireActivity()){
+            if (_binding != null) {
+                if (viewModel.selectedRuntimeMinutes.value == null) {
+                    binding.npMinutesPicker.value = 0
+                } else
+                    binding.npMinutesPicker.value = viewModel.selectedRuntimeMinutes.value!!
+            }
+        }
+
+        viewModel.selectedImageURI.observe(requireActivity()){
+            binding.ivSelectedImage.setImageURI(viewModel.selectedImageURI.value?.toUri())
         }
 
         return binding.root
@@ -96,6 +130,7 @@ class AddItemFragment : Fragment(){
             .setTitle(R.string.choose_year)
             .setView(numberPicker)
             .setPositiveButton(R.string.ok) { _, _ ->
+                viewModel.setSelectedYear(numberPicker.value.toString().toInt())
                 binding.tvSelectedYear.text = numberPicker.value.toString()
             }
             .setNegativeButton(R.string.cancel, null)
@@ -125,15 +160,17 @@ class AddItemFragment : Fragment(){
 
 
     private fun isFormValid(): Boolean {
-        val selectedGenres = getSelectedGenres()
-
+        _genres = getSelectedGenres()
         return binding.tvItemTitle.text.toString().isNotEmpty() &&
                 binding.etMoviePlot.text.toString().isNotEmpty() &&
-                binding.tvSelectedYear.text.toString().isNotEmpty() &&
-                binding.npHoursPicker.value >= 0 &&
-                binding.npMinutesPicker.value >= 0 &&
+                viewModel.selectedYear.value != null &&
+                viewModel.selectedYear.value?.toString()!!.isNotEmpty() &&
+                viewModel.selectedRuntimeHours.value  != null &&
+                viewModel.selectedRuntimeHours.value!! >= 0 &&
+                viewModel.selectedRuntimeMinutes.value != null &&
+                viewModel.selectedRuntimeMinutes.value!! >= 0 &&
                 binding.rbMovieRating.rating > 0 &&
-                selectedGenres.isNotEmpty()
+                genres.isNotEmpty()
     }
 
 
