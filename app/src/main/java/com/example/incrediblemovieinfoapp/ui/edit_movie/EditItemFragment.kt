@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.ui
+package com.example.incrediblemovieinfoapp.ui.edit_movie
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -18,6 +18,7 @@ import androidx.navigation.fragment.findNavController
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
+import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 import java.util.Calendar
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -70,7 +71,7 @@ class EditItemFragment : Fragment() {
 
                 findNavController().navigate(R.id.action_editItemFragment_to_allItemsFragment2)
             } else {
-                showError("Please fill in all the required fields.")
+                showError(getString(R.string.please_fill_in_all_the_required_fields))
             }
         }
 
@@ -154,7 +155,7 @@ class EditItemFragment : Fragment() {
     private fun setParameters(movie: Movie) {
         binding.tvItemTitle.setText(movie.title)
         binding.etMoviePlot.setText(movie.plot)
-        binding.npHoursPicker.value = movie.length.div(60) ?: 0
+        binding.npHoursPicker.value = movie.length.div(60)
         binding.npMinutesPicker.value = (movie.length - binding.npHoursPicker.value.times(60))
         binding.tvSelectedYear.text = movie.year.toString()
         binding.rbMovieRating.rating = movie.rate

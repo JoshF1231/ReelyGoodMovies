@@ -41,9 +41,7 @@ class AllItemsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.movieList?.observe(viewLifecycleOwner) { movies ->
-            if (movies.isNullOrEmpty()) {
-                Toast.makeText(requireContext(), "No movies available", Toast.LENGTH_SHORT).show()
-            } else {
+            if (!movies.isNullOrEmpty()) {
                 binding.recycler.adapter = ItemAdapter(movies, object : ItemAdapter.ItemListener {
 
                     override fun onItemClicked(index: Int) {
@@ -52,7 +50,11 @@ class AllItemsFragment : Fragment() {
                     }
 
                     override fun onItemLongClicked(index: Int) {
-                        Toast.makeText(requireContext(), "${movies[index].title}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            requireContext(),
+                            movies[index].title,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
 
                     override fun onButtonClick(index: Int) {
@@ -68,7 +70,10 @@ class AllItemsFragment : Fragment() {
             override fun getMovementFlags(
                 recyclerView: RecyclerView,
                 viewHolder: RecyclerView.ViewHolder
-            ) = makeFlag(ItemTouchHelper.ACTION_STATE_SWIPE, ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT)
+            ) = makeFlag(
+                ItemTouchHelper.ACTION_STATE_SWIPE,
+                ItemTouchHelper.LEFT or ItemTouchHelper.RIGHT
+            )
 
             override fun onMove(
                 recyclerView: RecyclerView,
@@ -103,7 +108,8 @@ class AllItemsFragment : Fragment() {
         }
 
         dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-            Toast.makeText(requireContext(), getString(R.string.item_deletion), Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.item_deletion), Toast.LENGTH_SHORT)
+                .show()
             val movie = (binding.recycler.adapter as ItemAdapter).itemAt(viewHolder.adapterPosition)
             viewModel.deleteMovie(movie)
             binding.recycler.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
@@ -113,10 +119,10 @@ class AllItemsFragment : Fragment() {
         dialog.show()
     }
 
-    private fun clearAllData(){
+    private fun clearAllData() {
         viewModel.setSelectedImageURI(null)
         viewModel.setSelectedRuntimeHours(0)
         viewModel.setSelectedRuntimeMinutes(0)
-        viewModel.setSelectedYear(0)
+        viewModel.setSelectedYear(1900)
     }
 }

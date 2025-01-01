@@ -59,7 +59,7 @@
     </fragment>
     <fragment
         android:id="@+id/editItemFragment"
-        android:name="com.example.incrediblemovieinfoapp.ui.EditItemFragment"
+        android:name="com.example.incrediblemovieinfoapp.ui.edit_movie.EditItemFragment"
         android:label="EditItemFragment" >
         <action
             android:id="@+id/action_editItemFragment_to_allItemsFragment2"

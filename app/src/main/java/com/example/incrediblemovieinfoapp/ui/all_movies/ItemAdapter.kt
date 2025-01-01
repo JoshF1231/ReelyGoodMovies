@@ -44,6 +44,7 @@ class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : Recycler
                 binding.tvItemMovieGenre.text = movie.genre
             }
         }
+
     fun itemAt(position: Int) = items[position]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {

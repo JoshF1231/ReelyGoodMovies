@@ -33,7 +33,7 @@
     <string name="movies_list_label">רשימת סרטים</string>
     <string name="title_icon">אייקון סרט כותרת</string>
     <string name="list_of_items">רשימת פריטים</string>
-    <string name="edit_movie_bt">כפתור עריכת סרט</string>
+    <string name="edit_movie_bt">עריכת סרט</string>
     <string name="back_button">חזור</string>
     <string name="choose_year">בחר שנה</string>
     <string name="ok">אוקיי</string>
@@ -43,4 +43,5 @@
     <string name="rating_label">דירוג:</string>
     <string name="length_label">אורך:</string>
     <string name="minutes">דקות</string>
+    <string name="please_fill_in_all_the_required_fields">יש למלא את כל השדות בבקשה</string>
 </resources>
