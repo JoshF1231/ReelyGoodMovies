@@ -1,16 +1,14 @@
 package com.example.incrediblemovieinfoapp.ui
 
 import android.app.Application
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.map
-import com.bumptech.glide.load.Transformation
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.data.repositories.movieRepository
-import kotlin.time.Duration.Companion.minutes
+
 
 
 class ActivityViewModel(
@@ -74,6 +72,10 @@ class ActivityViewModel(
 
     fun deleteAllMovies(){
         repository.deleteAllMovies()
+    }
+
+    fun updateMovie(movie: Movie){
+        repository.updateMovie(movie)
     }
 
 

@@ -51,7 +51,12 @@ class AllItemsFragment : Fragment() {
                     }
 
                     override fun onItemLongClicked(index: Int) {
-                        Toast.makeText(requireContext(), "${movies[index]}", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "${movies[index].title}", Toast.LENGTH_SHORT).show()
+                    }
+
+                    override fun onButtonClick(index: Int) {
+                        viewModel.setMovie(movies[index])
+                        findNavController().navigate(R.id.action_allItemsFragment2_to_editItemFragment)
                     }
                 })
             }

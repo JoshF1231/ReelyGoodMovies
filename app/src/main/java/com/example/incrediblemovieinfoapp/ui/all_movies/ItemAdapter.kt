@@ -16,6 +16,7 @@ class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : Recycler
     interface ItemListener {
         fun onItemClicked(index : Int)
         fun onItemLongClicked(index : Int)
+        fun onButtonClick(index: Int)
     }
 
     inner class ItemViewHolder(private val binding : ItemLayoutBinding)
@@ -23,6 +24,9 @@ class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : Recycler
             init {
                 binding.root.setOnClickListener (this)
                 binding.root.setOnLongClickListener(this)
+                binding.ibItemEdit.setOnClickListener{
+                    callBack.onButtonClick(adapterPosition)
+                }
             }
         override fun onClick(p0: View?) {
             callBack.onItemClicked(adapterPosition)
@@ -34,7 +38,7 @@ class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : Recycler
         }
 
         fun bind(movie: Movie){
-                binding.tvItemMovieTitle.text = movie.plot
+                binding.tvItemMovieTitle.text = movie.title
                 Glide.with(binding.root).load(movie.photo ?: R.drawable.ic_launcher_background).circleCrop().into(binding.ivItemMovieImage)
                 binding.rbItemMovieRating.rating = movie.rate
                 binding.tvItemMovieGenre.text = movie.genre

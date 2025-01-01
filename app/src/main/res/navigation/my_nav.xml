@@ -23,6 +23,9 @@
             app:exitAnim="@anim/to_left"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
+        <action
+            android:id="@+id/action_allItemsFragment2_to_editItemFragment"
+            app:destination="@id/editItemFragment" />
     </fragment>
     <fragment
         android:id="@+id/addItemFragment"
@@ -53,5 +56,13 @@
             app:popExitAnim="@anim/to_left"
             app:popUpTo="@id/allItemsFragment2"
             app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/editItemFragment"
+        android:name="com.example.incrediblemovieinfoapp.ui.EditItemFragment"
+        android:label="EditItemFragment" >
+        <action
+            android:id="@+id/action_editItemFragment_to_allItemsFragment2"
+            app:destination="@id/allItemsFragment2" />
     </fragment>
 </navigation>
