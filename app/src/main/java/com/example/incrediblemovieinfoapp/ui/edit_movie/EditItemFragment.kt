@@ -155,25 +155,26 @@ class EditItemFragment : Fragment() {
     private fun setParameters(movie: Movie) {
         binding.tvItemTitle.setText(movie.title)
         binding.etMoviePlot.setText(movie.plot)
-        binding.npHoursPicker.value = movie.length.div(60)
-        binding.npMinutesPicker.value = (movie.length - binding.npHoursPicker.value.times(60))
+        setNumberPickers(movie)
         binding.tvSelectedYear.text = movie.year.toString()
         binding.rbMovieRating.rating = movie.rate
         imageUri = movie.photo?.toUri()
         showGenres(movie)
     }
 
-    private fun showGenres(movie: Movie): Unit{
-        val list : List<String> = movie.genre.split(", ").toList<String>()
-        for(gen in list){
-            when(gen){
+    private fun showGenres(movie: Movie): Unit {
+        val list: List<String> = movie.genre.split(", ").toList<String>()
+        for (gen in list) {
+            when (gen) {
                 getString(R.string.horror_label) -> binding.checkboxHorror.isChecked = true
                 getString(R.string.family_label) -> binding.checkboxFamily.isChecked = true
                 getString(R.string.comedy_label) -> binding.checkboxComedy.isChecked = true
                 getString(R.string.drama_label) -> binding.checkboxDrama.isChecked = true
                 getString(R.string.action_label) -> binding.checkboxAction.isChecked = true
                 getString(R.string.thriller_label) -> binding.checkboxThriller.isChecked = true
-                getString(R.string.science_fiction_label) -> binding.checkboxScienceFiction.isChecked = true
+                getString(R.string.science_fiction_label) -> binding.checkboxScienceFiction.isChecked =
+                    true
+
                 getString(R.string.romance_label) -> binding.checkboxRomance.isChecked = true
                 getString(R.string.adventure_label) -> binding.checkboxAdventure.isChecked = true
                 getString(R.string.war_label) -> binding.checkboxWar.isChecked = true
@@ -181,5 +182,14 @@ class EditItemFragment : Fragment() {
                 getString(R.string.doco_label) -> binding.checkboxDoco.isChecked = true
             }
         }
+    }
+
+    private fun setNumberPickers(movie: Movie): Unit {
+        binding.npHoursPicker.minValue = 0
+        binding.npHoursPicker.maxValue = 4
+        binding.npMinutesPicker.minValue = 0
+        binding.npMinutesPicker.maxValue = 59
+        binding.npHoursPicker.value = movie.length.div(60)
+        binding.npMinutesPicker.value = (movie.length - binding.npHoursPicker.value.times(60))
     }
 }

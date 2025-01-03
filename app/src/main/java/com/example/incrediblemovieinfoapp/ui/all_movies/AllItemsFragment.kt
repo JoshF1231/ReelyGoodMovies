@@ -114,11 +114,15 @@ class AllItemsFragment : Fragment() {
             viewModel.deleteMovie(movie)
             binding.recycler.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
 
+
+
+
             dialog.dismiss()
         }
         dialog.show()
     }
 
+    //This function clears the data for the addItemFragment so it get a blank page
     private fun clearAllData() {
         viewModel.setSelectedImageURI(null)
         viewModel.setSelectedRuntimeHours(0)
