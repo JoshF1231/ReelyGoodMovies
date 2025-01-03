@@ -21,7 +21,7 @@
     <string name="minutes_label">דקות</string>
     <string name="movie_year_label">שנת הסרט:</string>
     <string name="calendar_year_icon">אייקון שנה בלוח שנה</string>
-    <string name="selected_year_label">שנה שנבחרה</string>
+    <string name="selected_year_label">0</string>
     <string name="movie_rate_label">דירוג הסרט:</string>
     <string name="movie_image_label">תמונת הסרט:</string>
     <string name="add_photo_icon">אייקון הוספת תמונה</string>

@@ -20,22 +20,22 @@ import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+
 
 class AddItemFragment : Fragment(){
     private var _binding : AddItemLayoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel : ActivityViewModel by activityViewModels()
-    private var _genres : String?=null
-    private val genres get () = _genres!!
+
 
     private val pickImageLauncher: ActivityResultLauncher<Array<String>> =
-        registerForActivityResult(ActivityResultContracts.OpenDocument()) {
-            viewModel.setSelectedImageURI(it.toString())
-            if (it!= null)
-            requireActivity().contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            uri?.let {
+                viewModel.setSelectedImageURI(it.toString())
+                requireActivity().contentResolver.takePersistableUriPermission(it, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            }
         }
 
     override fun onCreateView(
@@ -44,20 +44,39 @@ class AddItemFragment : Fragment(){
         savedInstanceState: Bundle?
     ): View? {
         _binding = AddItemLayoutBinding.inflate(inflater,container,false)
+
+        viewModel.selectedYear.observe(viewLifecycleOwner) {
+            binding.tvSelectedYear.text = it?.toString() ?: getString(R.string.selected_year_label)
+        }
+
+        viewModel.selectedRuntimeHours.observe(viewLifecycleOwner) {
+            binding.npHoursPicker.value = it ?: 0
+        }
+
+        viewModel.selectedRuntimeMinutes.observe(viewLifecycleOwner) {
+            binding.npMinutesPicker.value = it ?: 0
+        }
+
+        viewModel.selectedImageURI.observe(viewLifecycleOwner) {
+            binding.ivSelectedImage.setImageURI(it?.toUri())
+        }
+
+
+
         binding.btnAddMovie.setOnClickListener{
             if (isFormValid()) {
                 val currentMovie = Movie(
                     binding.tvItemTitle.text.toString(),
                     binding.etMoviePlot.text.toString(),
-                    (viewModel.selectedRuntimeHours.value!! * 60 + viewModel.selectedRuntimeMinutes.value!!),
+                    (viewModel.selectedRuntimeHours.value ?: 0) * 60 + (viewModel.selectedRuntimeMinutes.value ?: 0),
                     viewModel.selectedYear.value!!,
                     binding.rbMovieRating.rating,
-                    genres,
+                    getSelectedGenres(),
                     viewModel.selectedImageURI.value)
                 viewModel.addMovie(currentMovie)
+                Toast.makeText(requireContext(), "Movie added successfully!", Toast.LENGTH_SHORT).show()
+                clearAllData()
                 findNavController().navigate(R.id.action_addItemFragment_to_allItemsFragment2)
-            } else {
-                showError("Please fill in all the required fields.")
             }
         }
 
@@ -78,33 +97,6 @@ class AddItemFragment : Fragment(){
             viewModel.setSelectedRuntimeMinutes(value)
         }
 
-        viewModel.selectedYear.observe(requireActivity()){
-            if (_binding != null) {
-                if (binding.tvSelectedYear.text != null) {
-                    binding.tvSelectedYear.text = viewModel.selectedYear.value.toString()
-                }
-            }
-        }
-        viewModel.selectedRuntimeHours.observe(requireActivity()) {
-            if (_binding != null) {
-                if (viewModel.selectedRuntimeHours.value == null) {
-                    binding.npHoursPicker.value = 0
-                } else
-                    binding.npHoursPicker.value = viewModel.selectedRuntimeHours.value!!
-            }
-        }
-        viewModel.selectedRuntimeMinutes.observe(requireActivity()){
-            if (_binding != null) {
-                if (viewModel.selectedRuntimeMinutes.value == null) {
-                    binding.npMinutesPicker.value = 0
-                } else
-                    binding.npMinutesPicker.value = viewModel.selectedRuntimeMinutes.value!!
-            }
-        }
-
-        viewModel.selectedImageURI.observe(requireActivity()){
-            binding.ivSelectedImage.setImageURI(viewModel.selectedImageURI.value?.toUri())
-        }
 
         return binding.root
     }
@@ -161,19 +153,63 @@ class AddItemFragment : Fragment(){
 
 
     private fun isFormValid(): Boolean {
-        _genres = getSelectedGenres()
-        return binding.tvItemTitle.text.toString().isNotEmpty() &&
-                binding.etMoviePlot.text.toString().isNotEmpty() &&
-                viewModel.selectedYear.value != null &&
-                viewModel.selectedYear.value?.toString()!!.isNotEmpty() &&
-                viewModel.selectedRuntimeHours.value  != null &&
-                viewModel.selectedRuntimeHours.value!! >= 0 &&
-                viewModel.selectedRuntimeMinutes.value != null &&
-                viewModel.selectedRuntimeMinutes.value!! >= 0 &&
-                binding.rbMovieRating.rating > 0 &&
-                genres.isNotEmpty()
+        val genre = getSelectedGenres()
+        var isValid = true
+        var errorMessage = ""
+
+        when {
+            binding.tvItemTitle.text.toString().isEmpty() -> {
+                isValid = false
+                errorMessage = "Please enter a title."
+            }
+            genre.isEmpty() -> {
+                isValid = false
+                errorMessage = "Please select at least one genre."
+            }
+            binding.etMoviePlot.text.toString().isEmpty() -> {
+                isValid = false
+                errorMessage = "Please enter a plot."
+            }
+            binding.npHoursPicker.value == 0 && binding.npMinutesPicker.value == 0 -> {
+                isValid = false
+                errorMessage = "Please select valid movie length."
+            }
+            binding.tvSelectedYear.text.toString() == getString(R.string.selected_year_label) ||
+                    binding.tvSelectedYear.text.toString().toInt() < 1900 -> {
+                isValid = false
+                errorMessage = "Please select a year."
+            }
+            binding.rbMovieRating.rating <= 0 -> {
+                isValid = false
+                errorMessage = "Please select a rating."
+            }
+            viewModel.selectedImageURI.value.isNullOrEmpty() -> {
+                isValid = false
+                errorMessage = "Please add an image."
+            }
+        }
+
+        if (!isValid) {
+            showSnackbar(errorMessage)
+        }
+        return isValid
     }
 
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
+            .setAnchorView(binding.btnAddMovie)
+            .show()
+    }
+
+
+
+
+    private fun clearAllData() {
+        viewModel.setSelectedImageURI(null)
+        viewModel.setSelectedRuntimeHours(0)
+        viewModel.setSelectedRuntimeMinutes(0)
+        viewModel.setSelectedYear(0)
+    }
 
 
     private fun showError(message: String) {
@@ -191,3 +227,46 @@ class AddItemFragment : Fragment(){
         _binding = null
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//        viewModel.selectedYear.observe(requireActivity()){
+//            if (_binding != null) {
+//                if (binding.tvSelectedYear.text != null) {
+//                    binding.tvSelectedYear.text = viewModel.selectedYear.value.toString()
+//                }
+//            }
+//        }
+//        viewModel.selectedRuntimeHours.observe(requireActivity()) {
+//            if (_binding != null) {
+//                if (viewModel.selectedRuntimeHours.value == null) {
+//                    binding.npHoursPicker.value = 0
+//                } else
+//                    binding.npHoursPicker.value = viewModel.selectedRuntimeHours.value!!
+//            }
+//        }
+//        viewModel.selectedRuntimeMinutes.observe(requireActivity()){
+//            if (_binding != null) {
+//                if (viewModel.selectedRuntimeMinutes.value == null) {
+//                    binding.npMinutesPicker.value = 0
+//                } else
+//                    binding.npMinutesPicker.value = viewModel.selectedRuntimeMinutes.value!!
+//            }
+//        }
+//
+//        viewModel.selectedImageURI.observe(requireActivity()){
+//            binding.ivSelectedImage.setImageURI(viewModel.selectedImageURI.value?.toUri())
+//        }

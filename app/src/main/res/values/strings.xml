@@ -21,7 +21,7 @@
     <string name="minutes_label">minutes</string>
     <string name="movie_year_label">Movie year:</string>
     <string name="calendar_year_icon">calendar year icon</string>
-    <string name="selected_year_label">Selected Year</string>
+    <string name="selected_year_label">0</string>
     <string name="movie_rate_label">Movie rate:</string>
     <string name="movie_image_label">Movie image:</string>
     <string name="add_photo_icon">add photo icon</string>

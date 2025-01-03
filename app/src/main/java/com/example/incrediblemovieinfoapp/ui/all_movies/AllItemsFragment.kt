@@ -31,7 +31,6 @@ class AllItemsFragment : Fragment() {
     ): View? {
         _binding = AllItemsLayoutBinding.inflate(inflater, container, false)
         binding.fabAddItem.setOnClickListener {
-            clearAllData()
             findNavController().navigate(R.id.action_allItemsFragment2_to_addItemFragment)
         }
         return binding.root
@@ -41,7 +40,11 @@ class AllItemsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.movieList?.observe(viewLifecycleOwner) { movies ->
-            if (!movies.isNullOrEmpty()) {
+            if (movies.isEmpty()) {
+                binding.recycler.visibility = View.GONE
+            }
+            else {
+                binding.recycler.visibility = View.VISIBLE
                 binding.recycler.adapter = ItemAdapter(movies, object : ItemAdapter.ItemListener {
 
                     override fun onItemClicked(index: Int) {
@@ -108,25 +111,15 @@ class AllItemsFragment : Fragment() {
         }
 
         dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-            Toast.makeText(requireContext(), getString(R.string.item_deletion), Toast.LENGTH_SHORT)
-                .show()
+            Toast.makeText(requireContext(), getString(R.string.item_deletion), Toast.LENGTH_SHORT).show()
             val movie = (binding.recycler.adapter as ItemAdapter).itemAt(viewHolder.adapterPosition)
             viewModel.deleteMovie(movie)
-            binding.recycler.adapter?.notifyItemRemoved(viewHolder.adapterPosition)
-
-
-
+            (binding.recycler.adapter as ItemAdapter).notifyItemRemoved(viewHolder.adapterPosition)
 
             dialog.dismiss()
         }
+
         dialog.show()
     }
 
-    //This function clears the data for the addItemFragment so it get a blank page
-    private fun clearAllData() {
-        viewModel.setSelectedImageURI(null)
-        viewModel.setSelectedRuntimeHours(0)
-        viewModel.setSelectedRuntimeMinutes(0)
-        viewModel.setSelectedYear(1900)
-    }
 }

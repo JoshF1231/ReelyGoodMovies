@@ -100,7 +100,7 @@
                 android:layout_height="wrap_content"
                 android:numStars="5"
                 android:stepSize="1"
-                android:rating="3"
+                android:rating="0"
                 android:scaleX="0.7"
                 android:scaleY="0.7"
                 android:layout_marginStart="8dp"

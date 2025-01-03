@@ -264,7 +264,7 @@
             android:scaleY="0.6"
             android:stepSize="1"
             android:numStars="5"
-            android:rating="3" />
+            android:rating="0" />
     </LinearLayout>
 
     <LinearLayout

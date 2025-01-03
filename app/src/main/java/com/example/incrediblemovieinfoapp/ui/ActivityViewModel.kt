@@ -19,8 +19,7 @@ class ActivityViewModel(
 
     private val repository = movieRepository(application)
     val movieList: LiveData<List<Movie>>? = repository.getMovies()
-
-
+    
     private val _chosenMovie = MutableLiveData<Movie>()
     val chosenMovie: LiveData<Movie> get() = _chosenMovie
 
@@ -38,10 +37,8 @@ class ActivityViewModel(
     private val _selectedImageURI = MutableLiveData<String>()
     val selectedImageURI : LiveData<String> get() = _selectedImageURI
 
-    fun setSelectedImageURI(uri : String?){
-        if (uri!= null){
-            _selectedImageURI.value = uri!!
-        }
+    fun setSelectedImageURI(uri: String?) {
+        _selectedImageURI.value = uri ?: ""
     }
 
     fun setSelectedRuntimeHours(hours : Int){
