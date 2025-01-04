@@ -39,8 +39,13 @@ class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : Recycler
 
         fun bind(movie: Movie){
                 binding.tvItemMovieTitle.text = movie.title
-                Glide.with(binding.root).load(movie.photo ?: R.drawable.ic_launcher_background).circleCrop().into(binding.ivItemMovieImage)
-                binding.rbItemMovieRating.rating = movie.rate
+            Glide.with(binding.root)
+                .load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
+                .circleCrop()
+                .into(binding.ivItemMovieImage)
+
+
+            binding.rbItemMovieRating.rating = movie.rate
                 binding.tvItemMovieGenre.text = movie.genre
             }
         }

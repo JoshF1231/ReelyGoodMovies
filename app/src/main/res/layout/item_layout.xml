@@ -13,7 +13,7 @@
         <ImageView
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@mipmap/ic_launcher"
+            android:src="@drawable/movie_picture"
             android:id="@+id/iv_item_movie_image"
             android:contentDescription="@string/item_movie_image"/>
 

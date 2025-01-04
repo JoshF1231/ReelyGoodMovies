@@ -31,7 +31,8 @@ class AllItemsFragment : Fragment() {
     ): View? {
         _binding = AllItemsLayoutBinding.inflate(inflater, container, false)
         binding.fabAddItem.setOnClickListener {
-            findNavController().navigate(R.id.action_allItemsFragment2_to_addItemFragment)
+            viewModel.setEditMode(false)
+            findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
         }
         return binding.root
     }
@@ -62,7 +63,8 @@ class AllItemsFragment : Fragment() {
 
                     override fun onButtonClick(index: Int) {
                         viewModel.setMovie(movies[index])
-                        findNavController().navigate(R.id.action_allItemsFragment2_to_editItemFragment)
+                        viewModel.setEditMode(true)
+                        findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
                     }
                 })
             }

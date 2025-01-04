@@ -44,4 +44,13 @@
     <string name="length_label">Length:</string>
     <string name="minutes">minutes</string>
     <string name="please_fill_in_all_the_required_fields">Please fill in all the required fields.</string>
+    <string name="movie_added">Movie added successfully!</string>
+    <string name="valid_title">Please enter a title.</string>
+    <string name="valid_genre">Please select at least one genre.</string>
+    <string name="valid_plot">Please enter a plot.</string>
+    <string name="valid_ength">Please select valid movie length.</string>
+    <string name="valid_year">Please select a year.</string>
+    <string name="valid_rating">Please select a rating.</string>
+    <string name="button_mode">Add movie!</string>
+    <string name="edit_success">Movie edit success!</string>
 </resources>

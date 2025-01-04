@@ -37,6 +37,14 @@ class ActivityViewModel(
     private val _selectedImageURI = MutableLiveData<String>()
     val selectedImageURI : LiveData<String> get() = _selectedImageURI
 
+
+    private val _isEditMode = MutableLiveData<Boolean>(false)
+    val isEditMode: LiveData<Boolean> get() = _isEditMode
+
+    fun setEditMode(isEdit: Boolean) {
+        _isEditMode.value = isEdit
+    }
+
     fun setSelectedImageURI(uri: String?) {
         _selectedImageURI.value = uri ?: ""
     }
@@ -54,9 +62,9 @@ class ActivityViewModel(
     }
 
 
-    fun setMovie(movie: Movie){
-        _chosenMovie.value = movie
-    }
+   fun setMovie(movie: Movie){
+       _chosenMovie.value = movie
+   }
 
 
     fun addMovie(movie: Movie){

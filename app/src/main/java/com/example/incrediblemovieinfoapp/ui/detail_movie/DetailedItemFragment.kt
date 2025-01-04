@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.databinding.DetailedItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 
@@ -37,7 +39,14 @@ class DetailedItemFragment : Fragment(){
             binding.tvMovieLength.text =it.length?.toString()
             Glide.with(requireContext()).load(it.photo).circleCrop().into(binding.ivMoviePoster)
         }
+
+        binding.ibMovieEdit.setOnClickListener {
+            viewModel.setEditMode(true)
+            findNavController().navigate(R.id.action_detailedItemFragment_to_addOrEditItemFragment)
+
+        }
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
