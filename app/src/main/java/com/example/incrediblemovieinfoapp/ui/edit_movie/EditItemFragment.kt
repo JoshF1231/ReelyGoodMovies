@@ -19,11 +19,9 @@ import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
-import com.example.incrediblemovieinfoapp.ui.add_movie.AddItemFragment
 import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
+
 
 class EditItemFragment : Fragment() {
     private var _binding: AddItemLayoutBinding? = null
@@ -68,7 +66,6 @@ class EditItemFragment : Fragment() {
         setParameters(viewModel.chosenMovie.value!!)
 
 
-//        binding.ivSelectedImage.setImageURI(imageUri)
         binding.btnAddMovie.text = getString(R.string.edit_movie_bt)
         binding.btnAddMovie.setOnClickListener {
             if (isFormValid()) {
@@ -84,7 +81,7 @@ class EditItemFragment : Fragment() {
                 currentMovie.id = viewModel.chosenMovie.value!!.id
 
                 viewModel.updateMovie(currentMovie)
-
+                clearAllData()
                 findNavController().navigate(R.id.action_editItemFragment_to_allItemsFragment2)
             } else {
                 showError(getString(R.string.please_fill_in_all_the_required_fields))
@@ -232,9 +229,10 @@ class EditItemFragment : Fragment() {
         binding.tvItemTitle.setText(movie.title)
         binding.etMoviePlot.setText(movie.plot)
         setNumberPickers(movie)
-        binding.tvSelectedYear.text = movie.year.toString()
+        viewModel.setSelectedYear(movie.year)
         binding.rbMovieRating.rating = movie.rate
         showGenres(movie)
+        viewModel.setSelectedImageURI(movie.photo)
     }
 
     private fun showGenres(movie: Movie): Unit {
@@ -260,7 +258,14 @@ class EditItemFragment : Fragment() {
     }
 
     private fun setNumberPickers(movie: Movie): Unit {
-        binding.npHoursPicker.value = movie.length.div(60)
-        binding.npMinutesPicker.value = (movie.length - binding.npHoursPicker.value.times(60))
+        viewModel.setSelectedRuntimeHours(movie.length.div(60))
+        viewModel.setSelectedRuntimeMinutes(movie.length - (viewModel.selectedRuntimeHours.value?.times(60) ?: 0))
+    }
+
+    private fun clearAllData() {
+        viewModel.setSelectedImageURI(null)
+        viewModel.setSelectedRuntimeHours(0)
+        viewModel.setSelectedRuntimeMinutes(0)
+        viewModel.setSelectedYear(1900)
     }
 }

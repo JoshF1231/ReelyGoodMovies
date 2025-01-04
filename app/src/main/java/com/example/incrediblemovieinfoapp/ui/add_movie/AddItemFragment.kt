@@ -3,7 +3,6 @@ package com.example.incrediblemovieinfoapp.ui.add_movie
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -218,14 +217,8 @@ class AddItemFragment : Fragment() {
         viewModel.setSelectedImageURI(null)
         viewModel.setSelectedRuntimeHours(0)
         viewModel.setSelectedRuntimeMinutes(0)
-        viewModel.setSelectedYear(0)
+        viewModel.setSelectedYear(1900)
     }
-
-
-    private fun showError(message: String) {
-        Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-    }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -236,32 +229,3 @@ class AddItemFragment : Fragment() {
         _binding = null
     }
 }
-
-
-//        viewModel.selectedYear.observe(requireActivity()){
-//            if (_binding != null) {
-//                if (binding.tvSelectedYear.text != null) {
-//                    binding.tvSelectedYear.text = viewModel.selectedYear.value.toString()
-//                }
-//            }
-//        }
-//        viewModel.selectedRuntimeHours.observe(requireActivity()) {
-//            if (_binding != null) {
-//                if (viewModel.selectedRuntimeHours.value == null) {
-//                    binding.npHoursPicker.value = 0
-//                } else
-//                    binding.npHoursPicker.value = viewModel.selectedRuntimeHours.value!!
-//            }
-//        }
-//        viewModel.selectedRuntimeMinutes.observe(requireActivity()){
-//            if (_binding != null) {
-//                if (viewModel.selectedRuntimeMinutes.value == null) {
-//                    binding.npMinutesPicker.value = 0
-//                } else
-//                    binding.npMinutesPicker.value = viewModel.selectedRuntimeMinutes.value!!
-//            }
-//        }
-//
-//        viewModel.selectedImageURI.observe(requireActivity()){
-//            binding.ivSelectedImage.setImageURI(viewModel.selectedImageURI.value?.toUri())
-//        }
