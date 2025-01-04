@@ -19,6 +19,8 @@ import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import com.example.incrediblemovieinfoapp.ui.add_movie.AddItemFragment
+import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
@@ -27,16 +29,16 @@ class EditItemFragment : Fragment() {
     private var _binding: AddItemLayoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
-    private var imageUri: Uri? = null
 
     private val pickImageLauncher: ActivityResultLauncher<Array<String>> =
-        registerForActivityResult(ActivityResultContracts.OpenDocument()) {
-            binding.ivSelectedImage.setImageURI((it))
-            requireActivity().contentResolver.takePersistableUriPermission(
-                it!!,
-                Intent.FLAG_GRANT_READ_URI_PERMISSION
-            )
-            imageUri = it
+        registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
+            uri?.let {
+                viewModel.setSelectedImageURI(it.toString())
+                requireActivity().contentResolver.takePersistableUriPermission(
+                    it,
+                    Intent.FLAG_GRANT_READ_URI_PERMISSION
+                )
+            }
         }
 
     override fun onCreateView(
@@ -46,24 +48,38 @@ class EditItemFragment : Fragment() {
     ): View? {
         _binding = AddItemLayoutBinding.inflate(inflater, container, false)
 
+        viewModel.selectedYear.observe(viewLifecycleOwner) {
+            binding.tvSelectedYear.text = it?.toString() ?: getString(R.string.selected_year_label)
+        }
 
+        viewModel.selectedRuntimeHours.observe(viewLifecycleOwner) {
+            binding.npHoursPicker.value = it ?: 0
+        }
+
+        viewModel.selectedRuntimeMinutes.observe(viewLifecycleOwner) {
+            binding.npMinutesPicker.value = it ?: 0
+        }
+
+        viewModel.selectedImageURI.observe(viewLifecycleOwner) {
+            binding.ivSelectedImage.setImageURI(it?.toUri())
+        }
+
+        setupNumberPickers()
         setParameters(viewModel.chosenMovie.value!!)
 
 
-        binding.ivSelectedImage.setImageURI(imageUri)
+//        binding.ivSelectedImage.setImageURI(imageUri)
         binding.btnAddMovie.text = getString(R.string.edit_movie_bt)
         binding.btnAddMovie.setOnClickListener {
             if (isFormValid()) {
                 val currentMovie = Movie(
                     binding.tvItemTitle.text.toString(),
                     binding.etMoviePlot.text.toString(),
-                    (binding.npHoursPicker.value * 60 + binding.npMinutesPicker.value).toDuration(
-                        DurationUnit.MINUTES
-                    ).toInt(DurationUnit.MINUTES),
-                    binding.tvSelectedYear.text.toString().toIntOrNull() ?: 1900,
+                    (viewModel.selectedRuntimeHours.value ?: 0) * 60 + (viewModel.selectedRuntimeMinutes.value ?: 0),
+                    viewModel.selectedYear.value!!,
                     binding.rbMovieRating.rating,
-                    getSelectedGenres().joinToString(", "),
-                    imageUri.toString(),
+                    getSelectedGenres(),
+                    viewModel.selectedImageURI.value
                 )
                 currentMovie.id = viewModel.chosenMovie.value!!.id
 
@@ -75,8 +91,6 @@ class EditItemFragment : Fragment() {
             }
         }
 
-        setupNumberPickers()
-
         binding.btnSelectYear.setOnClickListener {
             showYearPickerDialog()
         }
@@ -84,6 +98,14 @@ class EditItemFragment : Fragment() {
         binding.btnAddPhoto.setOnClickListener {
             pickImageLauncher.launch(arrayOf("image/*"))
         }
+
+        binding.npHoursPicker.setOnValueChangedListener { _, _, value ->
+            viewModel.setSelectedRuntimeHours(value)
+        }
+        binding.npMinutesPicker.setOnValueChangedListener { _, _, value ->
+            viewModel.setSelectedRuntimeMinutes(value)
+        }
+
         return binding.root
     }
 
@@ -108,33 +130,87 @@ class EditItemFragment : Fragment() {
             .setTitle(R.string.choose_year)
             .setView(numberPicker)
             .setPositiveButton(R.string.ok) { _, _ ->
+                viewModel.setSelectedYear(numberPicker.value.toString().toInt())
                 binding.tvSelectedYear.text = numberPicker.value.toString()
             }
             .setNegativeButton(R.string.cancel, null)
             .show()
     }
 
-    private fun getSelectedGenres(): List<String> {
-        val genres = mutableListOf<String>()
-        if (binding.checkboxComedy.isChecked) genres.add(getString(R.string.comedy_label))
-        if (binding.checkboxDoco.isChecked) genres.add(getString(R.string.doco_label))
-        if (binding.checkboxWar.isChecked) genres.add(getString(R.string.war_label))
-        if (binding.checkboxDrama.isChecked) genres.add(getString(R.string.drama_label))
-        if (binding.checkboxAction.isChecked) genres.add(getString(R.string.action_label))
-        if (binding.checkboxFamily.isChecked) genres.add(getString(R.string.family_label))
-        if (binding.checkboxRomance.isChecked) genres.add(getString(R.string.romance_label))
-        if (binding.checkboxAdventure.isChecked) genres.add(getString(R.string.adventure_label))
-        if (binding.checkboxAnimation.isChecked) genres.add(getString(R.string.animation_label))
-        if (binding.checkboxScienceFiction.isChecked) genres.add(getString(R.string.science_fiction_label))
-        if (binding.checkboxHorror.isChecked) genres.add(getString(R.string.horror_label))
-        if (binding.checkboxThriller.isChecked) genres.add(getString(R.string.thriller_label))
+    private fun getSelectedGenres(): String {
+        val checkboxesToLabels = listOf(
+            binding.checkboxComedy to getString(R.string.comedy_label),
+            binding.checkboxDoco to getString(R.string.doco_label),
+            binding.checkboxWar to getString(R.string.war_label),
+            binding.checkboxDrama to getString(R.string.drama_label),
+            binding.checkboxAction to getString(R.string.action_label),
+            binding.checkboxFamily to getString(R.string.family_label),
+            binding.checkboxRomance to getString(R.string.romance_label),
+            binding.checkboxAdventure to getString(R.string.adventure_label),
+            binding.checkboxAnimation to getString(R.string.animation_label),
+            binding.checkboxScienceFiction to getString(R.string.science_fiction_label),
+            binding.checkboxHorror to getString(R.string.horror_label),
+            binding.checkboxThriller to getString(R.string.thriller_label)
+        )
 
-        return genres
+        return checkboxesToLabels
+            .filter { it.first.isChecked }
+            .joinToString(", ") { it.second }
     }
 
     private fun isFormValid(): Boolean {
-        val movieName = binding.tvItemTitle.text.toString()
-        return movieName.isNotEmpty() && binding.etMoviePlot.text.isNotEmpty()
+        val genre = getSelectedGenres()
+        var isValid = true
+        var errorMessage = ""
+
+        when {
+            binding.tvItemTitle.text.toString().isEmpty() -> {
+                isValid = false
+                errorMessage = "Please enter a title."
+            }
+
+            genre.isEmpty() -> {
+                isValid = false
+                errorMessage = "Please select at least one genre."
+            }
+
+            binding.etMoviePlot.text.toString().isEmpty() -> {
+                isValid = false
+                errorMessage = "Please enter a plot."
+            }
+
+            binding.npHoursPicker.value == 0 && binding.npMinutesPicker.value == 0 -> {
+                isValid = false
+                errorMessage = "Please select valid movie length."
+            }
+
+            binding.tvSelectedYear.text.toString() == getString(R.string.selected_year_label) ||
+                    binding.tvSelectedYear.text.toString().toInt() < 1900 -> {
+                isValid = false
+                errorMessage = "Please select a year."
+            }
+
+            binding.rbMovieRating.rating <= 0 -> {
+                isValid = false
+                errorMessage = "Please select a rating."
+            }
+
+            viewModel.selectedImageURI.value.isNullOrEmpty() -> {
+                isValid = false
+                errorMessage = "Please add an image."
+            }
+        }
+
+        if (!isValid) {
+            showSnackbar(errorMessage)
+        }
+        return isValid
+    }
+
+    private fun showSnackbar(message: String) {
+        Snackbar.make(binding.root, message, Snackbar.LENGTH_SHORT)
+            .setAnchorView(binding.btnAddMovie)
+            .show()
     }
 
     private fun showError(message: String) {
@@ -158,7 +234,6 @@ class EditItemFragment : Fragment() {
         setNumberPickers(movie)
         binding.tvSelectedYear.text = movie.year.toString()
         binding.rbMovieRating.rating = movie.rate
-        imageUri = movie.photo?.toUri()
         showGenres(movie)
     }
 
@@ -185,10 +260,6 @@ class EditItemFragment : Fragment() {
     }
 
     private fun setNumberPickers(movie: Movie): Unit {
-        binding.npHoursPicker.minValue = 0
-        binding.npHoursPicker.maxValue = 4
-        binding.npMinutesPicker.minValue = 0
-        binding.npMinutesPicker.maxValue = 59
         binding.npHoursPicker.value = movie.length.div(60)
         binding.npMinutesPicker.value = (movie.length - binding.npHoursPicker.value.times(60))
     }
