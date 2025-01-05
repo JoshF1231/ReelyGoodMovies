@@ -35,9 +35,14 @@ class DetailedItemFragment : Fragment(){
             binding.tvMovieGenres.text = it.genre
             binding.tvMoviePlot.text = it.plot
             binding.rbMovieRating.rating = it.rate
-            binding.tvMovieYear.text = it.year?.toString()
-            binding.tvMovieLength.text =it.length?.toString()
-            Glide.with(requireContext()).load(it.photo).circleCrop().into(binding.ivMoviePoster)
+            binding.tvMovieYear.text = it.year.toString()
+            binding.tvMovieLength.text =it.length.toString()
+            Glide.with(requireContext())
+                .load(it.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
+                .circleCrop()
+                .into(binding.ivMoviePoster)
+
+
         }
 
         binding.ibMovieEdit.setOnClickListener {
