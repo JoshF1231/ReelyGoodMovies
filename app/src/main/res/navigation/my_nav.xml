@@ -29,7 +29,7 @@
     </fragment>
     <fragment
         android:id="@+id/addOrEditItemFragment"
-        android:name="com.example.incrediblemovieinfoapp.ui.add_movie.AddOrEditItemFragment"
+        android:name="com.example.incrediblemovieinfoapp.ui.add_edit_movie.AddOrEditItemFragment"
         android:label="add_item_layout"
         tools:layout="@layout/add_item_layout" >
         <action

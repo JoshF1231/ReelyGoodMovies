@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="20dp"
-    tools:context=".ui.add_movie.AddOrEditItemFragment">
+    tools:context=".ui.add_edit_movie.AddOrEditItemFragment">
 
     <LinearLayout
         android:orientation="vertical"

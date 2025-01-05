@@ -38,19 +38,19 @@
     <string name="choose_year">בחר שנה</string>
     <string name="ok">אוקיי</string>
     <string name="cancel">ביטול</string>
-    <string name="item_deletion">האובייקט ימחק עכשיו</string>
+    <string name="item_deletion">"הסרט %1$s נמחק בהצלחה!"</string>
     <string name="year_label">שנה:</string>
     <string name="rating_label">דירוג:</string>
     <string name="length_label">אורך:</string>
     <string name="minutes">דקות</string>
     <string name="please_fill_in_all_the_required_fields">יש למלא את כל השדות בבקשה</string>
-    <string name="movie_added">הסרט נוסף בהצלחה!</string>
+    <string name="movie_added">הסרט %1$s נוסף בהצלחה!</string>
     <string name="valid_title">בבקשה יש לכתוב כותרת.</string>
     <string name="valid_genre">בבקשה יש לבחור לפחות זאנר אחד.</string>
     <string name="valid_plot">בבקשה יש לכתוב עלילה.</string>
-    <string name="valid_ength">בבקשה יש להזין זמן סרט תקין.</string>
+    <string name="valid_ength">בבקשה יש להזין אורך סרט תקין.</string>
     <string name="valid_year">בבקשה יש לבחור שנה.</string>
     <string name="valid_rating">בבקשה יש להזין דירוג.</string>
     <string name="button_mode">הוסף סרט!</string>
-    <string name="edit_success">הסרט נערך בהצלחה!</string>
+    <string name="edit_success">הסרט %1$s נערך בהצלחה!</string>
 </resources>

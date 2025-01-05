@@ -113,8 +113,9 @@ class AllItemsFragment : Fragment() {
         }
 
         dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-            Toast.makeText(requireContext(), getString(R.string.item_deletion), Toast.LENGTH_SHORT).show()
             val movie = (binding.recycler.adapter as ItemAdapter).itemAt(viewHolder.adapterPosition)
+            val deleteMessage = getString(R.string.item_deletion, movie.title)
+            Toast.makeText(requireContext(), deleteMessage, Toast.LENGTH_SHORT).show()
             viewModel.deleteMovie(movie)
             (binding.recycler.adapter as ItemAdapter).notifyItemRemoved(viewHolder.adapterPosition)
 

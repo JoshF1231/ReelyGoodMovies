@@ -36,15 +36,15 @@
     <string name="edit_movie_bt">edit movie</string>
     <string name="back_button">back button</string>
     <string name="choose_year">choose year</string>
-    <string name="ok">ok</string>
-    <string name="cancel">cancel</string>
-    <string name="item_deletion">Item will be deleted now</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="item_deletion">"The movie %1$s has been deleted successfully!"</string>
     <string name="year_label">Year:</string>
     <string name="rating_label">Rating:</string>
     <string name="length_label">Length:</string>
     <string name="minutes">minutes</string>
     <string name="please_fill_in_all_the_required_fields">Please fill in all the required fields.</string>
-    <string name="movie_added">Movie added successfully!</string>
+    <string name="movie_added">Movie %1$s has been added successfully!</string>
     <string name="valid_title">Please enter a title.</string>
     <string name="valid_genre">Please select at least one genre.</string>
     <string name="valid_plot">Please enter a plot.</string>
@@ -52,5 +52,5 @@
     <string name="valid_year">Please select a year.</string>
     <string name="valid_rating">Please select a rating.</string>
     <string name="button_mode">Add movie!</string>
-    <string name="edit_success">Movie edit success!</string>
+    <string name="edit_success">Movie %1$s successfully edited!</string>
 </resources>
