@@ -9,21 +9,22 @@
     <ImageView
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:contentDescription="Warning before item delete"
+        android:contentDescription="@string/warning_before_item_delete"
         android:src="@drawable/baseline_warning_red_24" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Delete?"
+        android:text="@string/delete"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
 
     <TextView
+        android:id="@+id/tv_delete_message"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Are you sure you want to delete selected item?"
+        android:text="@string/delete_message"
         android:textAlignment="center"
         android:textSize="30sp"
         android:textStyle="bold" />
@@ -39,13 +40,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:text="cancel" />
+            android:text="@string/cancel" />
 
         <Button
             android:id="@+id/btnDelete"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="DELETE" />
+            android:text="@string/delete" />
 
     </LinearLayout>
 

@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -17,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.databinding.AllItemsLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import org.w3c.dom.Text
 
 
 class AllItemsFragment : Fragment() {
@@ -32,7 +34,11 @@ class AllItemsFragment : Fragment() {
         _binding = AllItemsLayoutBinding.inflate(inflater, container, false)
         binding.fabAddItem.setOnClickListener {
             viewModel.setEditMode(false)
+            viewModel.clearAllData()
             findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
+        }
+        binding.btnDeleteAllMovies.setOnClickListener{
+            deleteAllMoviesDialog()
         }
         return binding.root
     }
@@ -89,7 +95,7 @@ class AllItemsFragment : Fragment() {
             }
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                dialogCreator(viewHolder)
+                deleteMovieDialog(viewHolder)
             }
         }).attachToRecyclerView(binding.recycler)
     }
@@ -99,10 +105,9 @@ class AllItemsFragment : Fragment() {
         _binding = null
     }
 
-    fun dialogCreator(viewHolder: RecyclerView.ViewHolder) {
+    fun deleteMovieDialog(viewHolder: RecyclerView.ViewHolder) {
         val builder = AlertDialog.Builder(requireContext())
         val dialogView = layoutInflater.inflate(R.layout.delete_item_dialog, null)
-
         builder.setView(dialogView)
         val dialog = builder.create()
         dialog.setCancelable(false)
@@ -125,4 +130,24 @@ class AllItemsFragment : Fragment() {
         dialog.show()
     }
 
+    fun deleteAllMoviesDialog(){
+        val builder = AlertDialog.Builder(requireContext())
+        val dialogView = layoutInflater.inflate(R.layout.delete_item_dialog, null)
+        builder.setView(dialogView)
+        val dialog = builder.create()
+        dialog.setCancelable(false)
+
+
+        dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
+            viewModel.deleteAllMovies()
+            Toast.makeText(requireActivity(),getString(R.string.all_movies_deleted_confirmation),Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+        dialogView.findViewById<TextView>(R.id.tv_delete_message).text = dialogView.context.getText(R.string.delete_all_message)
+        dialog.show()
+    }
 }

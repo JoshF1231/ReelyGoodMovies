@@ -51,7 +51,7 @@ class AddOrEditItemFragment : Fragment() {
         if (isEditMode) {
             setupEditMode(viewModel.chosenMovie.value!!)
         } else {
-            clearAllData()
+            //viewModel.clearAllData() - Moved to the view model so this doesn't trigger on screen rotation
             setupAddMode()
         }
 
@@ -264,12 +264,14 @@ class AddOrEditItemFragment : Fragment() {
         return isValid
     }
 
-    private fun clearAllData() {
-        viewModel.setSelectedYear(0)
-        viewModel.setSelectedRuntimeHours(0)
-        viewModel.setSelectedRuntimeMinutes(0)
-        viewModel.setSelectedImageURI(null)
-    }
+
+//    - Moved to the view model so this doesn't trigger on screen rotation
+//    private fun clearAllData() {
+//        viewModel.setSelectedYear(0)
+//        viewModel.setSelectedRuntimeHours(0)
+//        viewModel.setSelectedRuntimeMinutes(0)
+//        viewModel.setSelectedImageURI(null)
+//    }
 
 
 

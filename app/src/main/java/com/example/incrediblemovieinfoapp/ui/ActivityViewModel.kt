@@ -83,5 +83,10 @@ class ActivityViewModel(
         repository.updateMovie(movie)
     }
 
-
+    fun clearAllData(){
+        setSelectedYear(0)
+        setSelectedRuntimeHours(0)
+        setSelectedRuntimeMinutes(0)
+        setSelectedImageURI(null)
+    }
 }

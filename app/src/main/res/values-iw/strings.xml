@@ -53,4 +53,9 @@
     <string name="valid_rating">בבקשה יש להזין דירוג.</string>
     <string name="button_mode">הוסף סרט!</string>
     <string name="edit_success">הסרט %1$s נערך בהצלחה!</string>
+    <string name="delete_all_message">אנא אשר מחיקת כל הסרטים</string>
+    <string name="delete">מחיקה</string>
+    <string name="warning_before_item_delete">אזהרה לפני מחיקה</string>
+    <string name="delete_message">אנא אשר מחיקת הסרט</string>
+    <string name="all_movies_deleted_confirmation">כל הסרטים נמחקו!</string>
 </resources>
