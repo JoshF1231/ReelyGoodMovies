@@ -84,7 +84,7 @@ class ActivityViewModel(
     }
 
     fun clearAllData(){
-        setSelectedYear(0)
+        setSelectedYear(1900)
         setSelectedRuntimeHours(0)
         setSelectedRuntimeMinutes(0)
         setSelectedImageURI(null)

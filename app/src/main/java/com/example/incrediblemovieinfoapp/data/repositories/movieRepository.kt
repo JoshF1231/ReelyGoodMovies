@@ -28,9 +28,6 @@ class movieRepository(application: Application) {
         movieDao?.deleteMovie(movie)
     }
 
-
-    fun getMovie(id:Int) = movieDao?.getMovie(id)
-
     fun deleteAllMovies(){
         movieDao?.deleteAllMovies()
     }

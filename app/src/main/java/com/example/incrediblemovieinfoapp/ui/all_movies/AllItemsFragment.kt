@@ -4,6 +4,9 @@ package com.example.incrediblemovieinfoapp.ui.all_movies
 import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
@@ -18,7 +21,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.databinding.AllItemsLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
-import org.w3c.dom.Text
+
 
 
 class AllItemsFragment : Fragment() {
@@ -37,9 +40,9 @@ class AllItemsFragment : Fragment() {
             viewModel.clearAllData()
             findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
         }
-        binding.btnDeleteAllMovies.setOnClickListener{
-            deleteAllMoviesDialog()
-        }
+
+        setHasOptionsMenu(true)
+
         return binding.root
     }
 
@@ -149,5 +152,17 @@ class AllItemsFragment : Fragment() {
         }
         dialogView.findViewById<TextView>(R.id.tv_delete_message).text = dialogView.context.getText(R.string.delete_all_message)
         dialog.show()
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.main_menu,menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if(item.itemId == R.id.action_delete){
+            deleteAllMoviesDialog()
+        }
+        return true
     }
 }
