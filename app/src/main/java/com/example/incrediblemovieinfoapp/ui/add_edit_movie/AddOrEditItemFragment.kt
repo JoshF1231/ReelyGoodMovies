@@ -197,9 +197,7 @@ class AddOrEditItemFragment : Fragment() {
 
     private fun showGenres(movie: Movie) {
         val genres = movie.genre.split(", ")
-
-        val tempGenres = movie.genre.split(", ")
-        viewModel.setGenres(tempGenres)
+        viewModel.setGenres(genres)
 
         val genreToCheckboxMap = mapOf(
             "Comedy" to binding.checkboxComedy,
@@ -219,26 +217,6 @@ class AddOrEditItemFragment : Fragment() {
         for ((genre,isChecked) in viewModel.genres){
             genreToCheckboxMap[genre]?.isChecked = isChecked
         }
-
-//        for (genre in viewModel.genres){
-//        }
-//
-//        for (genre in genres) {
-//            when (genre) {
-//                getString(R.string.horror_label) -> binding.checkboxHorror.isChecked = true
-//                getString(R.string.family_label) -> binding.checkboxFamily.isChecked = true
-//                getString(R.string.comedy_label) -> binding.checkboxComedy.isChecked = true
-//                getString(R.string.drama_label) -> binding.checkboxDrama.isChecked = true
-//                getString(R.string.action_label) -> binding.checkboxAction.isChecked = true
-//                getString(R.string.thriller_label) -> binding.checkboxThriller.isChecked = true
-//                getString(R.string.science_fiction_label) -> binding.checkboxScienceFiction.isChecked = true
-//                getString(R.string.romance_label) -> binding.checkboxRomance.isChecked = true
-//                getString(R.string.adventure_label) -> binding.checkboxAdventure.isChecked = true
-//                getString(R.string.war_label) -> binding.checkboxWar.isChecked = true
-//                getString(R.string.animation_label) -> binding.checkboxAnimation.isChecked = true
-//                getString(R.string.doco_label) -> binding.checkboxDoco.isChecked = true
-//            }
-//        }
     }
 
     private fun setNumberPickers(movie: Movie) {
@@ -287,7 +265,6 @@ class AddOrEditItemFragment : Fragment() {
         if (!isValid) {
             Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_SHORT).show()
         }
-
         return isValid
     }
 

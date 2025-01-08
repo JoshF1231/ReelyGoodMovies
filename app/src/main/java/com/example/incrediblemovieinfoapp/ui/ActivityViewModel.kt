@@ -82,34 +82,14 @@ class ActivityViewModel(
     }
 
     fun getGeneresAsLocalizedString(context : Context, movie : Movie?) : String { // maybe needed
-//        val keyToResourceMap = mapOf(
-//            "Comedy" to context.getString(com.example.incrediblemovieinfoapp.R.string.comedy_label),
-//            "Horror" to context.getString(com.example.incrediblemovieinfoapp.R.string.horror_label),
-//            "Science Fiction" to context.getString(com.example.incrediblemovieinfoapp.R.string.science_fiction_label),
-//            "War" to context.getString(com.example.incrediblemovieinfoapp.R.string.war_label),
-//            "Family" to context.getString(com.example.incrediblemovieinfoapp.R.string.family_label),
-//            "Action" to context.getString(com.example.incrediblemovieinfoapp.R.string.action_label),
-//            "Romance" to context.getString(com.example.incrediblemovieinfoapp.R.string.romance_label),
-//            "Animation" to context.getString(com.example.incrediblemovieinfoapp.R.string.animation_label),
-//            "Drama" to context.getString(com.example.incrediblemovieinfoapp.R.string.drama_label),
-//            "Thriller" to context.getString(com.example.incrediblemovieinfoapp.R.string.thriller_label),
-//            "Adventure" to context.getString(com.example.incrediblemovieinfoapp.R.string.adventure_label),
-//            "Doco" to context.getString(com.example.incrediblemovieinfoapp.R.string.doco_label)
-//        )
-//
-//        val translatedGenres = _genres.filter { it.value }
-//            .keys
-//            .mapNotNull { keyToResourceMap[it]?.let { resId -> context.getString(resId) } }
-//            .joinToString(",")
-
         var tempGenres = getGenresAsString()
 
-        if (movie!= null){ // Changing the current movie of model in order to take advantage of the functions in the viewmodel
+        if (movie!= null){
             setGenres(movie.genre)
         }
 
         val localizedGenres = genres.filter { it.value }  // Only selected genres (true)
-            .keys // Get the genre names
+            .keys
             .mapNotNull { genre ->
                 when (genre) {
                     "Comedy" -> context.getString(com.example.incrediblemovieinfoapp.R.string.comedy_label)
@@ -127,8 +107,7 @@ class ActivityViewModel(
                     else -> null
                 }
             }
-            .joinToString(", ") // Join all localized genres into a single string
-
+            .joinToString(", ")
         setGenres(tempGenres)
         return localizedGenres
     }
