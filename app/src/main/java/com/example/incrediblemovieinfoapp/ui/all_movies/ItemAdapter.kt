@@ -5,13 +5,16 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
+import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 
-class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(val items: List<Movie>, val viewModel: ActivityViewModel ,val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+
 
     interface ItemListener {
         fun onItemClicked(index : Int)
@@ -42,6 +45,7 @@ class ItemAdapter(val items: List<Movie>, val callBack: ItemListener) : Recycler
             Glide.with(binding.root).load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture).circleCrop().into(binding.ivItemMovieImage)
             binding.rbItemMovieRating.rating = movie.rate
             binding.tvItemMovieGenre.text = movie.genre
+            binding.tvItemMovieGenre.text = viewModel.getGeneresAsLocalizedString(binding.root.context,movie)
             }
         }
 

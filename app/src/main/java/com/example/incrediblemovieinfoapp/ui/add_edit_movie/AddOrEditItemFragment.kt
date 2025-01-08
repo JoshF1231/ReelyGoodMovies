@@ -43,7 +43,6 @@ class AddOrEditItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = AddItemLayoutBinding.inflate(inflater, container, false)
-
         setupObservers()
         setupNumberPickers()
 
@@ -156,7 +155,7 @@ class AddOrEditItemFragment : Fragment() {
             (viewModel.selectedRuntimeHours.value ?: 0) * 60 + (viewModel.selectedRuntimeMinutes.value ?: 0),
             viewModel.selectedYear.value ?: 0,
             binding.rbMovieRating.rating,
-            getSelectedGenres(),
+            viewModel.getGenresAsString(),
             viewModel.selectedImageURI.value
         )
     }
@@ -174,19 +173,22 @@ class AddOrEditItemFragment : Fragment() {
 
     private fun getSelectedGenres(): String {
         val checkboxesToLabels = listOf(
-            binding.checkboxComedy to getString(R.string.comedy_label),
-            binding.checkboxDoco to getString(R.string.doco_label),
-            binding.checkboxWar to getString(R.string.war_label),
-            binding.checkboxDrama to getString(R.string.drama_label),
-            binding.checkboxAction to getString(R.string.action_label),
-            binding.checkboxFamily to getString(R.string.family_label),
-            binding.checkboxRomance to getString(R.string.romance_label),
-            binding.checkboxAdventure to getString(R.string.adventure_label),
-            binding.checkboxAnimation to getString(R.string.animation_label),
-            binding.checkboxScienceFiction to getString(R.string.science_fiction_label),
-            binding.checkboxHorror to getString(R.string.horror_label),
-            binding.checkboxThriller to getString(R.string.thriller_label)
+            binding.checkboxComedy to "Comedy",
+            binding.checkboxDoco to "Doco",
+            binding.checkboxWar to "War",
+            binding.checkboxDrama to "Drama",
+            binding.checkboxAction to "Action",
+            binding.checkboxFamily to "Family",
+            binding.checkboxRomance to "Romance",
+            binding.checkboxAdventure to "Adventure",
+            binding.checkboxAnimation to "Animation",
+            binding.checkboxScienceFiction to "Science Fiction",
+            binding.checkboxHorror to "Horror",
+            binding.checkboxThriller to "Thriller"
         )
+        viewModel.setGenres(checkboxesToLabels.filter { it.first.isChecked }
+            .joinToString(", ") { it.second })
+
 
         return checkboxesToLabels
             .filter { it.first.isChecked }
@@ -195,22 +197,48 @@ class AddOrEditItemFragment : Fragment() {
 
     private fun showGenres(movie: Movie) {
         val genres = movie.genre.split(", ")
-        for (genre in genres) {
-            when (genre) {
-                getString(R.string.horror_label) -> binding.checkboxHorror.isChecked = true
-                getString(R.string.family_label) -> binding.checkboxFamily.isChecked = true
-                getString(R.string.comedy_label) -> binding.checkboxComedy.isChecked = true
-                getString(R.string.drama_label) -> binding.checkboxDrama.isChecked = true
-                getString(R.string.action_label) -> binding.checkboxAction.isChecked = true
-                getString(R.string.thriller_label) -> binding.checkboxThriller.isChecked = true
-                getString(R.string.science_fiction_label) -> binding.checkboxScienceFiction.isChecked = true
-                getString(R.string.romance_label) -> binding.checkboxRomance.isChecked = true
-                getString(R.string.adventure_label) -> binding.checkboxAdventure.isChecked = true
-                getString(R.string.war_label) -> binding.checkboxWar.isChecked = true
-                getString(R.string.animation_label) -> binding.checkboxAnimation.isChecked = true
-                getString(R.string.doco_label) -> binding.checkboxDoco.isChecked = true
-            }
+
+        val tempGenres = movie.genre.split(", ")
+        viewModel.setGenres(tempGenres)
+
+        val genreToCheckboxMap = mapOf(
+            "Comedy" to binding.checkboxComedy,
+            "Doco" to binding.checkboxDoco,
+            "War" to binding.checkboxWar,
+            "Drama" to binding.checkboxDrama,
+            "Action" to binding.checkboxAction,
+            "Family" to binding.checkboxFamily,
+            "Romance" to binding.checkboxRomance,
+            "Adventure" to binding.checkboxAdventure,
+            "Animation" to binding.checkboxAnimation,
+            "Science Fiction" to binding.checkboxScienceFiction,
+            "Horror" to binding.checkboxHorror,
+            "Thriller" to binding.checkboxThriller
+        )
+
+        for ((genre,isChecked) in viewModel.genres){
+            genreToCheckboxMap[genre]?.isChecked = isChecked
         }
+
+//        for (genre in viewModel.genres){
+//        }
+//
+//        for (genre in genres) {
+//            when (genre) {
+//                getString(R.string.horror_label) -> binding.checkboxHorror.isChecked = true
+//                getString(R.string.family_label) -> binding.checkboxFamily.isChecked = true
+//                getString(R.string.comedy_label) -> binding.checkboxComedy.isChecked = true
+//                getString(R.string.drama_label) -> binding.checkboxDrama.isChecked = true
+//                getString(R.string.action_label) -> binding.checkboxAction.isChecked = true
+//                getString(R.string.thriller_label) -> binding.checkboxThriller.isChecked = true
+//                getString(R.string.science_fiction_label) -> binding.checkboxScienceFiction.isChecked = true
+//                getString(R.string.romance_label) -> binding.checkboxRomance.isChecked = true
+//                getString(R.string.adventure_label) -> binding.checkboxAdventure.isChecked = true
+//                getString(R.string.war_label) -> binding.checkboxWar.isChecked = true
+//                getString(R.string.animation_label) -> binding.checkboxAnimation.isChecked = true
+//                getString(R.string.doco_label) -> binding.checkboxDoco.isChecked = true
+//            }
+//        }
     }
 
     private fun setNumberPickers(movie: Movie) {
