@@ -171,7 +171,7 @@ class AddOrEditItemFragment : Fragment() {
         viewModel.setSelectedImageURI(movie.photo)
     }
 
-    private fun getSelectedGenres(): String {
+    private fun getSelectedGenres() {
         val checkboxesToLabels = listOf(
             binding.checkboxComedy to "Comedy",
             binding.checkboxDoco to "Doco",
@@ -188,11 +188,6 @@ class AddOrEditItemFragment : Fragment() {
         )
         viewModel.setGenres(checkboxesToLabels.filter { it.first.isChecked }
             .joinToString(", ") { it.second })
-
-
-        return checkboxesToLabels
-            .filter { it.first.isChecked }
-            .joinToString(", ") { it.second }
     }
 
     private fun showGenres(movie: Movie) {
@@ -225,7 +220,7 @@ class AddOrEditItemFragment : Fragment() {
     }
 
     private fun isFormValid(): Boolean {
-        val genre = getSelectedGenres()
+        getSelectedGenres()
         var isValid = true
         var errorMessage = ""
 
@@ -235,7 +230,7 @@ class AddOrEditItemFragment : Fragment() {
                 errorMessage = getString(R.string.valid_title)
             }
 
-            genre.isEmpty() -> {
+            viewModel.genres.isEmpty() -> {
                 isValid = false
                 errorMessage = getString(R.string.valid_genre)
             }
