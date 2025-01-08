@@ -5,7 +5,6 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
-import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
@@ -45,7 +44,7 @@ class ItemAdapter(val items: List<Movie>, val viewModel: ActivityViewModel ,val 
             Glide.with(binding.root).load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture).circleCrop().into(binding.ivItemMovieImage)
             binding.rbItemMovieRating.rating = movie.rate
             binding.tvItemMovieGenre.text = movie.genre
-            binding.tvItemMovieGenre.text = viewModel.getGeneresAsLocalizedString(binding.root.context,movie)
+            binding.tvItemMovieGenre.text = viewModel.getGenresAsLocalizedString(binding.root.context,movie)
             }
         }
 

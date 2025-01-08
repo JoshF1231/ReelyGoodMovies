@@ -32,7 +32,7 @@ class DetailedItemFragment : Fragment(){
 
         viewModel.chosenMovie.observe(viewLifecycleOwner){
             binding.tvMovieTitle.text = it.title
-            binding.tvMovieGenres.text = viewModel.getGeneresAsLocalizedString(requireContext(),it)
+            binding.tvMovieGenres.text = viewModel.getGenresAsLocalizedString(requireContext(),it)
             binding.tvMoviePlot.text = it.plot
             binding.rbMovieRating.rating = it.rate
             binding.tvMovieYear.text = it.year.toString()

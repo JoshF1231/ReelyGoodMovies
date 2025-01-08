@@ -2,7 +2,6 @@ package com.example.incrediblemovieinfoapp.ui
 
 import android.app.Application
 import android.content.Context
-import androidx.constraintlayout.widget.R
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -81,7 +80,7 @@ class ActivityViewModel(
         return genres.filter{ it.value }.keys.joinToString (",")
     }
 
-    fun getGeneresAsLocalizedString(context : Context, movie : Movie?) : String { // maybe needed
+    fun getGenresAsLocalizedString(context : Context, movie : Movie?) : String { // maybe needed
         var tempGenres = getGenresAsString()
 
         if (movie!= null){
