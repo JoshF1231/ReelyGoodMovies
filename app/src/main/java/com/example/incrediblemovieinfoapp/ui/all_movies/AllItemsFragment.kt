@@ -16,7 +16,6 @@ import android.widget.Toast
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -24,8 +23,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.databinding.AllItemsLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
-import kotlinx.coroutines.launch
-
 
 class AllItemsFragment : Fragment() {
     private var _binding: AllItemsLayoutBinding? = null

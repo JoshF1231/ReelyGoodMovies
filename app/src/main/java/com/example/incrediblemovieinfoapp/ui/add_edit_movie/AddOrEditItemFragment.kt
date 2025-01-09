@@ -19,7 +19,6 @@ import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class AddOrEditItemFragment : Fragment() {
@@ -218,6 +217,7 @@ class AddOrEditItemFragment : Fragment() {
         viewModel.setSelectedRuntimeHours(movie.length / 60)
         viewModel.setSelectedRuntimeMinutes(movie.length % 60)
     }
+
     private fun isFormValid(): Boolean {
         val genre = getSelectedGenresForCurrentMovie()
         var isValid = true
