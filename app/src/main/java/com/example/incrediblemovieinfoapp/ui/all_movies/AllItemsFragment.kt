@@ -10,8 +10,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
@@ -115,6 +117,7 @@ class AllItemsFragment : Fragment() {
         builder.setView(dialogView)
         val dialog = builder.create()
         dialog.setCancelable(false)
+        val movie = (binding.recycler.adapter as ItemAdapter).itemAt(viewHolder.adapterPosition)
 
         dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
             binding.recycler.adapter?.notifyItemChanged(viewHolder.adapterPosition)
@@ -122,15 +125,17 @@ class AllItemsFragment : Fragment() {
         }
 
         dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-            val movie = (binding.recycler.adapter as ItemAdapter).itemAt(viewHolder.adapterPosition)
             val deleteMessage = getString(R.string.item_deletion, movie.title)
             Toast.makeText(requireContext(), deleteMessage, Toast.LENGTH_SHORT).show()
-            lifecycleScope.launch {
-                viewModel.deleteMovie(movie)
-            }
+            viewModel.deleteMovie(movie)
             (binding.recycler.adapter as ItemAdapter).notifyItemRemoved(viewHolder.adapterPosition)
 
             dialog.dismiss()
+        }
+
+        if (!movie.photo.isNullOrEmpty()) {
+            dialogView.findViewById<ImageView>(R.id.iv_warning_image_movie)
+                .setImageURI(movie.photo?.toUri())
         }
 
         dialog.show()
@@ -149,9 +154,7 @@ class AllItemsFragment : Fragment() {
         }
 
         dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-            lifecycleScope.launch {
-                viewModel.deleteAllMovies()
-            }
+            viewModel.deleteAllMovies()
             Toast.makeText(requireActivity(),getString(R.string.all_movies_deleted_confirmation),Toast.LENGTH_SHORT).show()
             dialog.dismiss()
         }
