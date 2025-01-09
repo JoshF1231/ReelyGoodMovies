@@ -37,20 +37,6 @@ class ActivityViewModel(
     private val _isEditMode = MutableLiveData(false)
     val isEditMode: LiveData<Boolean> get() = _isEditMode
 
-    private val _selectedGenres = MutableLiveData<List<Pair<Int, String>>>()
-    val selectedGenres: LiveData<List<Pair<Int, String>>> get() = _selectedGenres
-
-    fun updateSelectedGenres(checkboxesToLabels: List<Pair<CheckBox, String>>) {
-        val selected = checkboxesToLabels.filter { it.first.isChecked }
-            .map { Pair(it.first.id, it.second) }
-        _selectedGenres.value = selected
-    }
-
-    fun updateCheckboxesForGenres(checkboxesToLabels: List<Pair<CheckBox, Int>>, genres: List<Pair<Int, String>>) {
-        checkboxesToLabels.forEach { (checkbox, id) ->
-            checkbox.isChecked = genres.any { it.first == id }
-        }
-    }
 
     fun setEditMode(isEdit: Boolean) {
         _isEditMode.value = isEdit

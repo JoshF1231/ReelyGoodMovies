@@ -32,7 +32,13 @@ class DetailedItemFragment : Fragment(){
 
         viewModel.chosenMovie.observe(viewLifecycleOwner) { movie ->
             binding.tvMovieTitle.text = movie.title
-            val genreNames = movie.genre.joinToString(", ") { it.second }
+            val genreIds = movie.genre?.split(",")?.mapNotNull {
+                it.trim().takeIf { it.isNotEmpty() }?.toIntOrNull()
+            } ?: emptyList()
+
+            val genreNames = genreIds.joinToString(", ") { genreId ->
+                requireContext().getString(genreId)
+            }
             binding.tvMovieGenres.text = genreNames
             binding.tvMoviePlot.text = movie.plot
             binding.rbMovieRating.rating = movie.rate
@@ -44,6 +50,7 @@ class DetailedItemFragment : Fragment(){
                 .circleCrop()
                 .into(binding.ivMoviePoster)
         }
+
 
 
         binding.ibMovieEdit.setOnClickListener {

@@ -3,11 +3,9 @@ package com.example.incrediblemovieinfoapp.data.models
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
 
 
 @Entity(tableName = "movies")
-@TypeConverters(GenreListConverter::class)
 data class Movie(
     @ColumnInfo(name = "title")
     val title: String,
@@ -20,7 +18,7 @@ data class Movie(
     @ColumnInfo(name = "rate")
     val rate: Float,
     @ColumnInfo(name = "genre")
-    @TypeConverters(GenreListConverter::class) val genre: List<Pair<Int, String>>,
+    val genre: String,
     @ColumnInfo(name = "photo")
     val photo: String?)
 

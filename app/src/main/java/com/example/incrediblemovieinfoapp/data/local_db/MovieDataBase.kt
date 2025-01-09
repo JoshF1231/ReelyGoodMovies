@@ -4,12 +4,9 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.example.incrediblemovieinfoapp.data.models.GenreListConverter
 import com.example.incrediblemovieinfoapp.data.models.Movie
 
-@Database(entities = arrayOf(Movie::class), version = 3, exportSchema = false)
-@TypeConverters(GenreListConverter::class)
+@Database(entities = [Movie::class], version = 3, exportSchema = false)
 abstract class MovieDataBase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao
@@ -19,8 +16,21 @@ abstract class MovieDataBase : RoomDatabase() {
         @Volatile
         private var instance: MovieDataBase? = null
 
-        fun getDataBase(context: Context) = instance ?: synchronized(this) {
-            Room.databaseBuilder(context.applicationContext, MovieDataBase::class.java, "movies_db").build()
-        }
+        fun getDataBase(context: Context): MovieDataBase {
+            return instance ?: synchronized(this) {
+                instance ?: synchronized(this) {
+                    Room.databaseBuilder(
+                        context.applicationContext,
+                        MovieDataBase::class.java,
+                        "movies_db"
+                    )
+                        .fallbackToDestructiveMigration()
+                        .build()
+                        .also { instance = it }
+                }
+
+            }
+            }
     }
 }
+

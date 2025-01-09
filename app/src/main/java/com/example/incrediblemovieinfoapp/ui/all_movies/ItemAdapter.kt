@@ -37,21 +37,29 @@ class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) : 
             return true
         }
 
-        fun bind(movie: Movie){
+        fun bind(movie: Movie) {
             binding.tvItemMovieTitle.text = movie.title
+
             Glide.with(binding.root)
                 .load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
                 .circleCrop()
                 .into(binding.ivItemMovieImage)
 
-
             binding.rbItemMovieRating.rating = movie.rate
-            val genreNames = movie.genre.joinToString(", ") { it.second }
+
+            val genreIds = movie.genre?.split(",")?.mapNotNull {
+                it.trim().takeIf { it.isNotEmpty() }?.toIntOrNull()
+            } ?: emptyList()
+
+            val genreNames = genreIds.joinToString(", ") { genreId ->
+                binding.root.context.getString(genreId)
+            }
             binding.tvItemMovieGenre.text = genreNames
         }
-    }
+        }
 
-    fun itemAt(position: Int) = items[position]
+
+        fun itemAt(position: Int) = items[position]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false))

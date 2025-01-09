@@ -172,44 +172,50 @@ class AddOrEditItemFragment : Fragment() {
         viewModel.setSelectedImageURI(movie.photo)
     }
 
-    private fun getSelectedGenresForCurrentMovie(): List<Pair<Int, String>> {
+    private fun getSelectedGenresForCurrentMovie(): String {
         val checkboxesToLabels = listOf(
-            binding.checkboxComedy to getString(R.string.comedy),
-            binding.checkboxDoco to getString(R.string.doco_label),
-            binding.checkboxWar to getString(R.string.war_label),
-            binding.checkboxDrama to getString(R.string.drama_label),
-            binding.checkboxAction to getString(R.string.action_label),
-            binding.checkboxFamily to getString(R.string.family),
-            binding.checkboxRomance to getString(R.string.romance_label),
-            binding.checkboxAdventure to getString(R.string.adventure_label),
-            binding.checkboxAnimation to getString(R.string.animation_label),
-            binding.checkboxScienceFiction to getString(R.string.science_fiction_label),
-            binding.checkboxHorror to getString(R.string.horror_label),
-            binding.checkboxThriller to getString(R.string.thriller_label)
+            binding.checkboxComedy to R.string.comedy_label,
+            binding.checkboxDoco to R.string.doco_label,
+            binding.checkboxWar to R.string.war_label,
+            binding.checkboxDrama to R.string.drama_label,
+            binding.checkboxAction to R.string.action_label,
+            binding.checkboxFamily to R.string.family_label,
+            binding.checkboxRomance to R.string.romance_label,
+            binding.checkboxAdventure to R.string.adventure_label,
+            binding.checkboxAnimation to R.string.animation_label,
+            binding.checkboxScienceFiction to R.string.science_fiction_label,
+            binding.checkboxHorror to R.string.horror_label,
+            binding.checkboxThriller to R.string.thriller_label
         )
 
-        viewModel.updateSelectedGenres(checkboxesToLabels)
-        return viewModel.selectedGenres.value ?: emptyList()
-        }
+        val selectedGenres = checkboxesToLabels.filter { it.first.isChecked }
+            .joinToString(", ") { it.second.toString() }
 
+        return selectedGenres
+    }
 
     private fun showGenres(movie: Movie) {
-        val checkboxesToIds = listOf(
-            binding.checkboxComedy to R.id.checkbox_comedy,
-            binding.checkboxDoco to R.id.checkbox_doco,
-            binding.checkboxWar to R.id.checkbox_war,
-            binding.checkboxDrama to R.id.checkbox_drama,
-            binding.checkboxAction to R.id.checkbox_action,
-            binding.checkboxFamily to R.id.checkbox_family,
-            binding.checkboxRomance to R.id.checkbox_romance,
-            binding.checkboxAdventure to R.id.checkbox_adventure,
-            binding.checkboxAnimation to R.id.checkbox_animation,
-            binding.checkboxScienceFiction to R.id.checkbox_scienceFiction,
-            binding.checkboxHorror to R.id.checkbox_horror,
-            binding.checkboxThriller to R.id.checkbox_thriller
+        val genreIds = movie.genre.split(",")
+            .mapNotNull { it.trim().toIntOrNull() }
+
+        val checkboxesToIds = mapOf(
+            binding.checkboxComedy to R.string.comedy_label,
+            binding.checkboxDoco to R.string.doco_label,
+            binding.checkboxWar to R.string.war_label,
+            binding.checkboxDrama to R.string.drama_label,
+            binding.checkboxAction to R.string.action_label,
+            binding.checkboxFamily to R.string.family_label,
+            binding.checkboxRomance to R.string.romance_label,
+            binding.checkboxAdventure to R.string.adventure_label,
+            binding.checkboxAnimation to R.string.animation_label,
+            binding.checkboxScienceFiction to R.string.science_fiction_label,
+            binding.checkboxHorror to R.string.horror_label,
+            binding.checkboxThriller to R.string.thriller_label
         )
 
-        viewModel.updateCheckboxesForGenres(checkboxesToIds, movie.genre)
+        checkboxesToIds.forEach { (checkbox, genreId) ->
+            checkbox.isChecked = genreIds.contains(genreId)
+        }
     }
 
 
@@ -217,7 +223,6 @@ class AddOrEditItemFragment : Fragment() {
         viewModel.setSelectedRuntimeHours(movie.length / 60)
         viewModel.setSelectedRuntimeMinutes(movie.length % 60)
     }
-
     private fun isFormValid(): Boolean {
         val genre = getSelectedGenresForCurrentMovie()
         var isValid = true
