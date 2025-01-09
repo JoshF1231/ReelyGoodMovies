@@ -18,6 +18,7 @@ import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import com.example.incrediblemovieinfoapp.utils.GenreMapper
 import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
 
@@ -155,7 +156,7 @@ class AddOrEditItemFragment : Fragment() {
             (viewModel.selectedRuntimeHours.value ?: 0) * 60 + (viewModel.selectedRuntimeMinutes.value ?: 0),
             viewModel.selectedYear.value ?: 0,
             binding.rbMovieRating.rating,
-            viewModel.getGenresAsString(),
+            GenreMapper.getGenresAsString(),
             viewModel.selectedImageURI.value
         )
     }
@@ -186,13 +187,13 @@ class AddOrEditItemFragment : Fragment() {
             binding.checkboxHorror to "Horror",
             binding.checkboxThriller to "Thriller"
         )
-        viewModel.setGenres(checkboxesToLabels.filter { it.first.isChecked }
+        GenreMapper.setGenres(checkboxesToLabels.filter { it.first.isChecked }
             .joinToString(", ") { it.second })
     }
 
     private fun showGenres(movie: Movie) {
-        val genres = movie.genre.split(", ")
-        viewModel.setGenres(genres)
+        val genres = movie.genre.split(",")
+        GenreMapper.setGenres(genres)
 
         val genreToCheckboxMap = mapOf(
             "Comedy" to binding.checkboxComedy,
@@ -209,7 +210,7 @@ class AddOrEditItemFragment : Fragment() {
             "Thriller" to binding.checkboxThriller
         )
 
-        for ((genre,isChecked) in viewModel.genres){
+        for ((genre,isChecked) in GenreMapper.genres){
             genreToCheckboxMap[genre]?.isChecked = isChecked
         }
     }
@@ -230,7 +231,7 @@ class AddOrEditItemFragment : Fragment() {
                 errorMessage = getString(R.string.valid_title)
             }
 
-            viewModel.genres.isEmpty() -> {
+            GenreMapper.genres.isEmpty() -> {
                 isValid = false
                 errorMessage = getString(R.string.valid_genre)
             }

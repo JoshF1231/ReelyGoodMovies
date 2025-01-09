@@ -10,9 +10,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
-import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import com.example.incrediblemovieinfoapp.utils.GenreMapper
 
-class ItemAdapter(val items: List<Movie>, val viewModel: ActivityViewModel ,val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
 
     interface ItemListener {
@@ -43,8 +43,7 @@ class ItemAdapter(val items: List<Movie>, val viewModel: ActivityViewModel ,val 
             binding.tvItemMovieTitle.text = movie.title
             Glide.with(binding.root).load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture).circleCrop().into(binding.ivItemMovieImage)
             binding.rbItemMovieRating.rating = movie.rate
-            binding.tvItemMovieGenre.text = movie.genre
-            binding.tvItemMovieGenre.text = viewModel.getGenresAsLocalizedString(binding.root.context,movie)
+            binding.tvItemMovieGenre.text = GenreMapper.getGenresAsLocalizedString(binding.root.context,movie)
             }
         }
 

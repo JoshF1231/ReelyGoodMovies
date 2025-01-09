@@ -57,7 +57,7 @@ class AllItemsFragment : Fragment() {
             }
             else {
                 binding.recycler.visibility = View.VISIBLE
-                binding.recycler.adapter = ItemAdapter(movies,viewModel ,object : ItemAdapter.ItemListener {
+                binding.recycler.adapter = ItemAdapter(movies ,object : ItemAdapter.ItemListener {
 
                     override fun onItemClicked(index: Int) {
                         viewModel.setMovie(movies[index])
@@ -139,7 +139,7 @@ class AllItemsFragment : Fragment() {
         dialog.show()
     }
 
-    fun deleteAllMoviesDialog(){
+    private fun deleteAllMoviesDialog(){
         val builder = AlertDialog.Builder(requireContext())
         val dialogView = layoutInflater.inflate(R.layout.delete_item_dialog, null)
         builder.setView(dialogView)

@@ -11,6 +11,7 @@ import com.bumptech.glide.Glide
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.databinding.DetailedItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import com.example.incrediblemovieinfoapp.utils.GenreMapper
 
 
 class DetailedItemFragment : Fragment(){
@@ -32,7 +33,7 @@ class DetailedItemFragment : Fragment(){
 
         viewModel.chosenMovie.observe(viewLifecycleOwner){
             binding.tvMovieTitle.text = it.title
-            binding.tvMovieGenres.text = viewModel.getGenresAsLocalizedString(requireContext(),it)
+            binding.tvMovieGenres.text = GenreMapper.getGenresAsLocalizedString(requireContext(),it)
             binding.tvMoviePlot.text = it.plot
             binding.rbMovieRating.rating = it.rate
             binding.tvMovieYear.text = it.year.toString()
