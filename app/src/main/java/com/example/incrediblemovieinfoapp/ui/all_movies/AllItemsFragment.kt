@@ -52,8 +52,7 @@ class AllItemsFragment : Fragment() {
         viewModel.movieList?.observe(viewLifecycleOwner) { movies ->
             if (movies.isEmpty()) {
                 binding.recycler.visibility = View.GONE
-            }
-            else {
+            } else {
                 binding.recycler.visibility = View.VISIBLE
                 binding.recycler.adapter = ItemAdapter(movies, object : ItemAdapter.ItemListener {
 
@@ -138,34 +137,36 @@ class AllItemsFragment : Fragment() {
         dialog.show()
     }
 
-    private fun deleteAllMoviesDialog(){
+    private fun deleteAllMoviesDialog() {
         val builder = AlertDialog.Builder(requireContext())
         val dialogView = layoutInflater.inflate(R.layout.delete_item_dialog, null)
         builder.setView(dialogView)
         val dialog = builder.create()
         dialog.setCancelable(false)
-
-
         dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
             dialog.dismiss()
         }
 
         dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
             viewModel.deleteAllMovies()
-            Toast.makeText(requireActivity(),getString(R.string.all_movies_deleted_confirmation),Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireActivity(),
+                getString(R.string.all_movies_deleted_confirmation),
+                Toast.LENGTH_SHORT
+            ).show()
             dialog.dismiss()
         }
-        dialogView.findViewById<TextView>(R.id.tv_delete_message).text = dialogView.context.getText(R.string.delete_all_message)
+        dialogView.findViewById<TextView>(R.id.tv_delete_message).text =
+            dialogView.context.getText(R.string.delete_all_message)
         dialog.show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_menu,menu)
+        inflater.inflate(R.menu.main_menu, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-
-        if(item.itemId == R.id.action_delete){
+        if (item.itemId == R.id.action_delete) {
             deleteAllMoviesDialog()
         }
         return true

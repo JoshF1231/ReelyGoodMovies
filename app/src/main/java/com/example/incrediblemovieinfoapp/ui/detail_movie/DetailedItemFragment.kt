@@ -13,17 +13,17 @@ import com.example.incrediblemovieinfoapp.databinding.DetailedItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 
 
-class DetailedItemFragment : Fragment(){
-    private var _binding : DetailedItemLayoutBinding? = null
-    private val binding get () = _binding!!
-    private val viewModel : ActivityViewModel by activityViewModels()
+class DetailedItemFragment : Fragment() {
+    private var _binding: DetailedItemLayoutBinding? = null
+    private val binding get() = _binding!!
+    private val viewModel: ActivityViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = DetailedItemLayoutBinding.inflate(inflater,container,false)
+        _binding = DetailedItemLayoutBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -32,9 +32,7 @@ class DetailedItemFragment : Fragment(){
 
         viewModel.chosenMovie.observe(viewLifecycleOwner) { movie ->
             binding.tvMovieTitle.text = movie.title
-            val genreIds = movie.genre?.split(",")?.mapNotNull {
-                it.trim().takeIf { it.isNotEmpty() }?.toIntOrNull()
-            } ?: emptyList()
+            val genreIds = movie.genre
 
             val genreNames = genreIds.joinToString(", ") { genreId ->
                 requireContext().getString(genreId)
@@ -50,8 +48,6 @@ class DetailedItemFragment : Fragment(){
                 .circleCrop()
                 .into(binding.ivMoviePoster)
         }
-
-
 
         binding.ibMovieEdit.setOnClickListener {
             viewModel.setEditMode(true)

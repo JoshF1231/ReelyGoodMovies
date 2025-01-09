@@ -107,15 +107,15 @@ class AddOrEditItemFragment : Fragment() {
                         id = movie?.id ?: 0
                     }
                 }
-                    if (isEditMode) {
-                        viewModel.updateMovie(movieToSave)
-                        val editMessage = getString(R.string.edit_success, movieToSave.title)
-                        Toast.makeText(requireContext(), editMessage, Toast.LENGTH_SHORT).show()
-                    } else {
-                        viewModel.addMovie(movieToSave)
-                        val addMessage = getString(R.string.movie_added, movieToSave.title)
-                        Toast.makeText(requireContext(), addMessage, Toast.LENGTH_SHORT).show()
-                    }
+                if (isEditMode) {
+                    viewModel.updateMovie(movieToSave)
+                    val editMessage = getString(R.string.edit_success, movieToSave.title)
+                    Toast.makeText(requireContext(), editMessage, Toast.LENGTH_SHORT).show()
+                } else {
+                    viewModel.addMovie(movieToSave)
+                    val addMessage = getString(R.string.movie_added, movieToSave.title)
+                    Toast.makeText(requireContext(), addMessage, Toast.LENGTH_SHORT).show()
+                }
 
                 findNavController().navigate(R.id.action_addOrEditItemFragment_to_allItemsFragment2)
             }
@@ -154,7 +154,8 @@ class AddOrEditItemFragment : Fragment() {
         return Movie(
             binding.tvItemTitle.text.toString(),
             binding.etMoviePlot.text.toString(),
-            (viewModel.selectedRuntimeHours.value ?: 0) * 60 + (viewModel.selectedRuntimeMinutes.value ?: 0),
+            (viewModel.selectedRuntimeHours.value
+                ?: 0) * 60 + (viewModel.selectedRuntimeMinutes.value ?: 0),
             viewModel.selectedYear.value ?: 0,
             binding.rbMovieRating.rating,
             getSelectedGenresForCurrentMovie(),
@@ -172,7 +173,7 @@ class AddOrEditItemFragment : Fragment() {
         viewModel.setSelectedImageURI(movie.photo)
     }
 
-    private fun getSelectedGenresForCurrentMovie(): String {
+    private fun getSelectedGenresForCurrentMovie(): List<Int> {
         val checkboxesToLabels = listOf(
             binding.checkboxComedy to R.string.comedy_label,
             binding.checkboxDoco to R.string.doco_label,
@@ -189,14 +190,13 @@ class AddOrEditItemFragment : Fragment() {
         )
 
         val selectedGenres = checkboxesToLabels.filter { it.first.isChecked }
-            .joinToString(", ") { it.second.toString() }
+            .map { it.second }
 
         return selectedGenres
     }
 
     private fun showGenres(movie: Movie) {
-        val genreIds = movie.genre.split(",")
-            .mapNotNull { it.trim().toIntOrNull() }
+        val genreIds = movie.genre
 
         val checkboxesToIds = mapOf(
             binding.checkboxComedy to R.string.comedy_label,
@@ -223,6 +223,7 @@ class AddOrEditItemFragment : Fragment() {
         viewModel.setSelectedRuntimeHours(movie.length / 60)
         viewModel.setSelectedRuntimeMinutes(movie.length % 60)
     }
+
     private fun isFormValid(): Boolean {
         val genre = getSelectedGenresForCurrentMovie()
         var isValid = true
@@ -267,8 +268,6 @@ class AddOrEditItemFragment : Fragment() {
 
         return isValid
     }
-
-
 
     override fun onDestroyView() {
         super.onDestroyView()

@@ -9,7 +9,7 @@ class MovieRepository(application: Application) {
 
     private var movieDao: MovieDao?
 
-    init{
+    init {
         val db = MovieDataBase.getDataBase(application.applicationContext)
         movieDao = db.movieDao()
     }
@@ -20,7 +20,7 @@ class MovieRepository(application: Application) {
         movieDao?.addMovie(movie)
     }
 
-    suspend fun updateMovie(movie: Movie){
+    suspend fun updateMovie(movie: Movie) {
         movieDao?.updateMovie(movie)
     }
 
@@ -28,7 +28,7 @@ class MovieRepository(application: Application) {
         movieDao?.deleteMovie(movie)
     }
 
-    suspend fun deleteAllMovies(){
+    suspend fun deleteAllMovies() {
         movieDao?.deleteAllMovies()
     }
 

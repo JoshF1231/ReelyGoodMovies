@@ -11,23 +11,25 @@ import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
 
-class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) :
+    RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     interface ItemListener {
-        fun onItemClicked(index : Int)
-        fun onItemLongClicked(index : Int)
+        fun onItemClicked(index: Int)
+        fun onItemLongClicked(index: Int)
         fun onButtonClick(index: Int)
     }
 
-    inner class ItemViewHolder(private val binding : ItemLayoutBinding)
-        : RecyclerView.ViewHolder(binding.root) ,OnClickListener,OnLongClickListener{
+    inner class ItemViewHolder(private val binding: ItemLayoutBinding) :
+        RecyclerView.ViewHolder(binding.root), OnClickListener, OnLongClickListener {
         init {
-            binding.root.setOnClickListener (this)
+            binding.root.setOnClickListener(this)
             binding.root.setOnLongClickListener(this)
-            binding.ibItemEdit.setOnClickListener{
+            binding.ibItemEdit.setOnClickListener {
                 callBack.onButtonClick(adapterPosition)
             }
         }
+
         override fun onClick(p0: View?) {
             callBack.onItemClicked(adapterPosition)
         }
@@ -47,22 +49,26 @@ class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) : 
 
             binding.rbItemMovieRating.rating = movie.rate
 
-            val genreIds = movie.genre?.split(",")?.mapNotNull {
-                it.trim().takeIf { it.isNotEmpty() }?.toIntOrNull()
-            } ?: emptyList()
+            val genreIds = movie.genre
 
             val genreNames = genreIds.joinToString(", ") { genreId ->
                 binding.root.context.getString(genreId)
             }
             binding.tvItemMovieGenre.text = genreNames
         }
-        }
+    }
 
 
-        fun itemAt(position: Int) = items[position]
+    fun itemAt(position: Int) = items[position]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
-        return ItemViewHolder(ItemLayoutBinding.inflate(LayoutInflater.from(parent.context),parent,false))
+        return ItemViewHolder(
+            ItemLayoutBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {

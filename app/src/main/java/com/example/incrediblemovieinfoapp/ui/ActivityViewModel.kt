@@ -1,7 +1,6 @@
 package com.example.incrediblemovieinfoapp.ui
 
 import android.app.Application
-import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -63,19 +62,19 @@ class ActivityViewModel(
     }
 
     fun addMovie(movie: Movie) {
-        viewModelScope.launch {repository.addMovie(movie)}
+        viewModelScope.launch { repository.addMovie(movie) }
     }
 
     fun deleteMovie(movie: Movie) {
-        viewModelScope.launch {repository.deleteMovie(movie)}
+        viewModelScope.launch { repository.deleteMovie(movie) }
     }
 
     fun deleteAllMovies() {
-        viewModelScope.launch {repository.deleteAllMovies()}
+        viewModelScope.launch { repository.deleteAllMovies() }
     }
 
     fun updateMovie(movie: Movie) {
-        viewModelScope.launch {repository.updateMovie(movie)}
+        viewModelScope.launch { repository.updateMovie(movie) }
     }
 
 
