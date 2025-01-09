@@ -30,20 +30,21 @@ class DetailedItemFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.chosenMovie.observe(viewLifecycleOwner){
-            binding.tvMovieTitle.text = it.title
-            binding.tvMovieGenres.text = viewModel.getGenresAsLocalizedString(requireContext(),it)
-            binding.tvMoviePlot.text = it.plot
-            binding.rbMovieRating.rating = it.rate
-            binding.tvMovieYear.text = it.year.toString()
-            binding.tvMovieLength.text =it.length.toString()
+        viewModel.chosenMovie.observe(viewLifecycleOwner) { movie ->
+            binding.tvMovieTitle.text = movie.title
+            val genreNames = movie.genre.joinToString(", ") { it.second }
+            binding.tvMovieGenres.text = genreNames
+            binding.tvMoviePlot.text = movie.plot
+            binding.rbMovieRating.rating = movie.rate
+            binding.tvMovieYear.text = movie.year.toString()
+            binding.tvMovieLength.text = movie.length.toString()
+
             Glide.with(requireContext())
-                .load(it.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
+                .load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
                 .circleCrop()
                 .into(binding.ivMoviePoster)
-
-
         }
+
 
         binding.ibMovieEdit.setOnClickListener {
             viewModel.setEditMode(true)

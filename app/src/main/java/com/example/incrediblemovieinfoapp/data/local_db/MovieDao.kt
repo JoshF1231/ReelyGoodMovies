@@ -12,20 +12,17 @@ import com.example.incrediblemovieinfoapp.data.models.Movie
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun addMovie(movie: Movie)
+    suspend fun addMovie(movie: Movie)
 
     @Delete
-    fun deleteMovie(vararg movies: Movie)
+    suspend fun deleteMovie(vararg movies: Movie)
 
     @Update
-    fun updateMovie(movie: Movie)
+    suspend fun updateMovie(movie: Movie)
 
     @Query("SELECT * FROM movies")
     fun getMovies(): LiveData<List<Movie>>
 
-    @Query("SELECT * FROM movies WHERE id LIKE :id")
-    fun getMovie(id: Int) : Movie
-
     @Query("DELETE FROM movies")
-    fun deleteAllMovies()
+    suspend fun deleteAllMovies()
 }

@@ -10,10 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.incrediblemovieinfoapp.R
 import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
-import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 
-class ItemAdapter(val items: List<Movie>, val viewModel: ActivityViewModel ,val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
-
+class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) : RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     interface ItemListener {
         fun onItemClicked(index : Int)
@@ -23,13 +21,13 @@ class ItemAdapter(val items: List<Movie>, val viewModel: ActivityViewModel ,val 
 
     inner class ItemViewHolder(private val binding : ItemLayoutBinding)
         : RecyclerView.ViewHolder(binding.root) ,OnClickListener,OnLongClickListener{
-            init {
-                binding.root.setOnClickListener (this)
-                binding.root.setOnLongClickListener(this)
-                binding.ibItemEdit.setOnClickListener{
-                    callBack.onButtonClick(adapterPosition)
-                }
+        init {
+            binding.root.setOnClickListener (this)
+            binding.root.setOnLongClickListener(this)
+            binding.ibItemEdit.setOnClickListener{
+                callBack.onButtonClick(adapterPosition)
             }
+        }
         override fun onClick(p0: View?) {
             callBack.onItemClicked(adapterPosition)
         }
@@ -41,12 +39,17 @@ class ItemAdapter(val items: List<Movie>, val viewModel: ActivityViewModel ,val 
 
         fun bind(movie: Movie){
             binding.tvItemMovieTitle.text = movie.title
-            Glide.with(binding.root).load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture).circleCrop().into(binding.ivItemMovieImage)
+            Glide.with(binding.root)
+                .load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
+                .circleCrop()
+                .into(binding.ivItemMovieImage)
+
+
             binding.rbItemMovieRating.rating = movie.rate
-            binding.tvItemMovieGenre.text = movie.genre
-            binding.tvItemMovieGenre.text = viewModel.getGenresAsLocalizedString(binding.root.context,movie)
-            }
+            val genreNames = movie.genre.joinToString(", ") { it.second }
+            binding.tvItemMovieGenre.text = genreNames
         }
+    }
 
     fun itemAt(position: Int) = items[position]
 

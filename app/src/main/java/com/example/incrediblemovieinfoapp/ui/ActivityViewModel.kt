@@ -1,114 +1,55 @@
 package com.example.incrediblemovieinfoapp.ui
 
 import android.app.Application
-import android.content.Context
+import android.widget.CheckBox
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.SavedStateHandle
-import androidx.lifecycle.map
+import androidx.lifecycle.viewModelScope
 import com.example.incrediblemovieinfoapp.data.models.Movie
-import com.example.incrediblemovieinfoapp.data.repositories.movieRepository
-
+import com.example.incrediblemovieinfoapp.data.repositories.MovieRepository
+import kotlinx.coroutines.launch
 
 
 class ActivityViewModel(
     application: Application,
-    private val savedStateHandle: SavedStateHandle
 ) : AndroidViewModel(application) {
 
 
-    private val repository = movieRepository(application)
+    private val repository = MovieRepository(application)
     val movieList: LiveData<List<Movie>>? = repository.getMovies()
-    
+
     private val _chosenMovie = MutableLiveData<Movie>()
     val chosenMovie: LiveData<Movie> get() = _chosenMovie
 
     private val _selectedYear = MutableLiveData<Int>()
-    val selectedYear : LiveData<Int> get() = _selectedYear
+    val selectedYear: LiveData<Int> get() = _selectedYear
 
     private val _selectedRuntimeHours = MutableLiveData<Int>()
-    val selectedRuntimeHours : LiveData<Int> get() = _selectedRuntimeHours
+    val selectedRuntimeHours: LiveData<Int> get() = _selectedRuntimeHours
 
     private val _selectedRuntimeMinutes = MutableLiveData<Int>()
-    val selectedRuntimeMinutes : LiveData<Int> = _selectedRuntimeMinutes.map { minutes ->
-        minutes ?: 0
-    }
+    val selectedRuntimeMinutes: LiveData<Int> get() = _selectedRuntimeMinutes
 
     private val _selectedImageURI = MutableLiveData<String>()
-    val selectedImageURI : LiveData<String> get() = _selectedImageURI
+    val selectedImageURI: LiveData<String> get() = _selectedImageURI
 
-
-    private val _isEditMode = MutableLiveData<Boolean>(false)
+    private val _isEditMode = MutableLiveData(false)
     val isEditMode: LiveData<Boolean> get() = _isEditMode
 
-    private var _genres = mutableMapOf(
-        "Comedy" to false,
-        "Horror" to false,
-        "Science Fiction" to false,
-        "War" to false,
-        "Family" to false,
-        "Action" to false,
-        "Romance" to false,
-        "Animation" to false,
-        "Drama" to false,
-        "Thriller" to false,
-        "Adventure" to false,
-        "Doco" to false,
-    )
-    val genres get() = _genres
+    private val _selectedGenres = MutableLiveData<List<Pair<Int, String>>>()
+    val selectedGenres: LiveData<List<Pair<Int, String>>> get() = _selectedGenres
 
-    fun setGenres(genreString: String){
-        clearGenres()
-        for (genre in genreString.split(",")){
-            _genres[genre.trim()] = true
-        }
+    fun updateSelectedGenres(checkboxesToLabels: List<Pair<CheckBox, String>>) {
+        val selected = checkboxesToLabels.filter { it.first.isChecked }
+            .map { Pair(it.first.id, it.second) }
+        _selectedGenres.value = selected
     }
 
-    fun setGenres(genreList : List<String>){
-        for (genre in genreList){
-            _genres[genre.trim()] = true
+    fun updateCheckboxesForGenres(checkboxesToLabels: List<Pair<CheckBox, Int>>, genres: List<Pair<Int, String>>) {
+        checkboxesToLabels.forEach { (checkbox, id) ->
+            checkbox.isChecked = genres.any { it.first == id }
         }
-    }
-    fun clearGenres(){
-        for (genre in _genres){
-            genre.setValue(false)
-        }
-    }
-
-    fun getGenresAsString() : String    {
-        return genres.filter{ it.value }.keys.joinToString (",")
-    }
-
-    fun getGenresAsLocalizedString(context : Context, movie : Movie?) : String { // maybe needed
-        var tempGenres = getGenresAsString()
-
-        if (movie!= null){
-            setGenres(movie.genre)
-        }
-
-        val localizedGenres = genres.filter { it.value }  // Only selected genres (true)
-            .keys
-            .mapNotNull { genre ->
-                when (genre) {
-                    "Comedy" -> context.getString(com.example.incrediblemovieinfoapp.R.string.comedy_label)
-                    "Horror" -> context.getString(com.example.incrediblemovieinfoapp.R.string.horror_label)
-                    "Science Fiction" -> context.getString(com.example.incrediblemovieinfoapp.R.string.science_fiction_label)
-                    "War" -> context.getString(com.example.incrediblemovieinfoapp.R.string.war_label)
-                    "Family" -> context.getString(com.example.incrediblemovieinfoapp.R.string.family_label)
-                    "Action" -> context.getString(com.example.incrediblemovieinfoapp.R.string.action_label)
-                    "Romance" -> context.getString(com.example.incrediblemovieinfoapp.R.string.romance_label)
-                    "Animation" -> context.getString(com.example.incrediblemovieinfoapp.R.string.animation_label)
-                    "Drama" -> context.getString(com.example.incrediblemovieinfoapp.R.string.drama_label)
-                    "Thriller" -> context.getString(com.example.incrediblemovieinfoapp.R.string.thriller_label)
-                    "Adventure" -> context.getString(com.example.incrediblemovieinfoapp.R.string.adventure_label)
-                    "Doco" -> context.getString(com.example.incrediblemovieinfoapp.R.string.doco_label)
-                    else -> null
-                }
-            }
-            .joinToString(", ")
-        setGenres(tempGenres)
-        return localizedGenres
     }
 
     fun setEditMode(isEdit: Boolean) {
@@ -119,46 +60,43 @@ class ActivityViewModel(
         _selectedImageURI.value = uri ?: ""
     }
 
-    fun setSelectedRuntimeHours(hours : Int){
+    fun setSelectedRuntimeHours(hours: Int) {
         _selectedRuntimeHours.value = hours
     }
 
-    fun setSelectedRuntimeMinutes(minutes : Int){
+    fun setSelectedRuntimeMinutes(minutes: Int) {
         _selectedRuntimeMinutes.value = minutes
     }
 
-    fun setSelectedYear (year:Int){
+    fun setSelectedYear(year: Int) {
         _selectedYear.value = year
     }
 
-
-   fun setMovie(movie: Movie){
-       _chosenMovie.value = movie
-       setGenres(movie.genre)
-   }
-
-
-    fun addMovie(movie: Movie){
-        repository.addMovie(movie)
+    fun setMovie(movie: Movie) {
+        _chosenMovie.value = movie
     }
 
-    fun deleteMovie(movie: Movie){
-        repository.deleteMovie(movie)
+    fun addMovie(movie: Movie) {
+        viewModelScope.launch {repository.addMovie(movie)}
     }
 
-    fun deleteAllMovies(){
-        repository.deleteAllMovies()
+    fun deleteMovie(movie: Movie) {
+        viewModelScope.launch {repository.deleteMovie(movie)}
     }
 
-    fun updateMovie(movie: Movie){
-        repository.updateMovie(movie)
+    fun deleteAllMovies() {
+        viewModelScope.launch {repository.deleteAllMovies()}
     }
 
-    fun clearAllData(){
-        setSelectedYear(1900)
+    fun updateMovie(movie: Movie) {
+        viewModelScope.launch {repository.updateMovie(movie)}
+    }
+
+
+    fun clearAllData() {
+        setSelectedYear(0)
         setSelectedRuntimeHours(0)
         setSelectedRuntimeMinutes(0)
         setSelectedImageURI(null)
-        clearGenres()
     }
 }

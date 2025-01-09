@@ -56,14 +56,14 @@
                 android:id="@+id/checkbox_comedy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/comedy_label"
+                android:text="@string/comedy"
                 android:textSize="14sp" />
 
             <CheckBox
                 android:id="@+id/checkbox_family"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/family_label"
+                android:text="@string/family"
                 android:textSize="14sp" />
 
             <CheckBox

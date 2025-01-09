@@ -3,8 +3,8 @@
     <string name="movie_info">מידע על הסרט שלך</string>
     <string name="movie_name_label">שם הסרט</string>
     <string name="genre_label">זאנר:</string>
-    <string name="comedy_label">קומדיה</string>
-    <string name="family_label">משפחה</string>
+    <string name="comedy">קומדיה</string>
+    <string name="family">משפחה</string>
     <string name="drama_label">דרמה</string>
     <string name="horror_label">אימה</string>
     <string name="action_label">אקשן</string>
@@ -58,4 +58,6 @@
     <string name="warning_before_item_delete">אזהרה לפני מחיקה</string>
     <string name="delete_message">אנא אשר מחיקת הסרט</string>
     <string name="all_movies_deleted_confirmation">כל הסרטים נמחקו!</string>
+
+
 </resources>

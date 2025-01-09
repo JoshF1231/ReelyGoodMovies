@@ -3,8 +3,8 @@
     <string name="movie_info">Your Movie Info</string>
     <string name="movie_name_label">Movie name</string>
     <string name="genre_label">Genre:</string>
-    <string name="comedy_label">Comedy</string>
-    <string name="family_label">Family</string>
+    <string name="comedy">Comedy</string>
+    <string name="family">Family</string>
     <string name="drama_label">Drama</string>
     <string name="horror_label">Horror</string>
     <string name="action_label">Action</string>
@@ -58,5 +58,10 @@
     <string name="delete">Delete</string>
     <string name="warning_before_item_delete">Warning before item delete</string>
     <string name="all_movies_deleted_confirmation">All movies deleted!</string>
+
+
+
+
+
 
 </resources>

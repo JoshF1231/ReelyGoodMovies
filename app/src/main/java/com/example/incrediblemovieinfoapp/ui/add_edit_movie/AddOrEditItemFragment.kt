@@ -19,6 +19,7 @@ import com.example.incrediblemovieinfoapp.data.models.Movie
 import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
 import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 class AddOrEditItemFragment : Fragment() {
@@ -43,15 +44,14 @@ class AddOrEditItemFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = AddItemLayoutBinding.inflate(inflater, container, false)
+
         setupObservers()
         setupNumberPickers()
 
         val isEditMode = viewModel.isEditMode.value ?: false
-        if (isEditMode) {
-            setupEditMode(viewModel.chosenMovie.value!!)
-        } else {
-            setupAddMode()
-        }
+        val movie = viewModel.chosenMovie.value
+        setupAddOrEditMode(isEditMode, movie)
+
 
         binding.btnSelectYear.setOnClickListener {
             showYearPickerDialog()
@@ -91,35 +91,38 @@ class AddOrEditItemFragment : Fragment() {
                 binding.ivSelectedImage.setImageURI(uri.toUri())
             }
         }
-
     }
 
-    private fun setupAddMode() {
-        binding.btnAddMovie.text = getString(R.string.button_mode)
+    private fun setupAddOrEditMode(isEditMode: Boolean, movie: Movie? = null) {
+        if (isEditMode) {
+            binding.btnAddMovie.text = getString(R.string.edit_movie_bt)
+            movie?.let { setParameters(it) }
+        } else {
+            binding.btnAddMovie.text = getString(R.string.button_mode)
+        }
+
         binding.btnAddMovie.setOnClickListener {
             if (isFormValid()) {
-                val newMovie = createMovieFromInput()
-                viewModel.addMovie(newMovie)
-                val addMessage = getString(R.string.movie_added, newMovie.title)
-                Toast.makeText(requireContext(), addMessage, Toast.LENGTH_SHORT).show()
+                val movieToSave = createMovieFromInput().apply {
+                    if (isEditMode) {
+                        id = movie?.id ?: 0
+                    }
+                }
+                    if (isEditMode) {
+                        viewModel.updateMovie(movieToSave)
+                        val editMessage = getString(R.string.edit_success, movieToSave.title)
+                        Toast.makeText(requireContext(), editMessage, Toast.LENGTH_SHORT).show()
+                    } else {
+                        viewModel.addMovie(movieToSave)
+                        val addMessage = getString(R.string.movie_added, movieToSave.title)
+                        Toast.makeText(requireContext(), addMessage, Toast.LENGTH_SHORT).show()
+                    }
+
                 findNavController().navigate(R.id.action_addOrEditItemFragment_to_allItemsFragment2)
             }
         }
     }
 
-    private fun setupEditMode(movie: Movie) {
-        binding.btnAddMovie.text = getString(R.string.edit_movie_bt)
-        setParameters(movie)
-        binding.btnAddMovie.setOnClickListener {
-            if (isFormValid()) {
-                val updatedMovie = createMovieFromInput().apply { id = movie.id }
-                viewModel.updateMovie(updatedMovie)
-                val editMessage = getString(R.string.edit_success, updatedMovie.title)
-                Toast.makeText(requireContext(), editMessage, Toast.LENGTH_SHORT).show()
-                findNavController().navigate(R.id.action_addOrEditItemFragment_to_allItemsFragment2)
-            }
-        }
-    }
 
     private fun setupNumberPickers() {
         binding.npHoursPicker.minValue = 0
@@ -141,7 +144,7 @@ class AddOrEditItemFragment : Fragment() {
             .setTitle(R.string.choose_year)
             .setView(numberPicker)
             .setPositiveButton(R.string.ok) { _, _ ->
-                viewModel.setSelectedYear(numberPicker.value.toString().toInt())
+                viewModel.setSelectedYear(numberPicker.value)
                 binding.tvSelectedYear.text = numberPicker.value.toString()
             }
             .setNegativeButton(R.string.cancel, null)
@@ -155,11 +158,10 @@ class AddOrEditItemFragment : Fragment() {
             (viewModel.selectedRuntimeHours.value ?: 0) * 60 + (viewModel.selectedRuntimeMinutes.value ?: 0),
             viewModel.selectedYear.value ?: 0,
             binding.rbMovieRating.rating,
-            viewModel.getGenresAsString(),
+            getSelectedGenresForCurrentMovie(),
             viewModel.selectedImageURI.value
         )
     }
-
 
     private fun setParameters(movie: Movie) {
         binding.tvItemTitle.setText(movie.title)
@@ -171,56 +173,53 @@ class AddOrEditItemFragment : Fragment() {
         viewModel.setSelectedImageURI(movie.photo)
     }
 
-    private fun getSelectedGenres() {
+    private fun getSelectedGenresForCurrentMovie(): List<Pair<Int, String>> {
         val checkboxesToLabels = listOf(
-            binding.checkboxComedy to "Comedy",
-            binding.checkboxDoco to "Doco",
-            binding.checkboxWar to "War",
-            binding.checkboxDrama to "Drama",
-            binding.checkboxAction to "Action",
-            binding.checkboxFamily to "Family",
-            binding.checkboxRomance to "Romance",
-            binding.checkboxAdventure to "Adventure",
-            binding.checkboxAnimation to "Animation",
-            binding.checkboxScienceFiction to "Science Fiction",
-            binding.checkboxHorror to "Horror",
-            binding.checkboxThriller to "Thriller"
+            binding.checkboxComedy to getString(R.string.comedy),
+            binding.checkboxDoco to getString(R.string.doco_label),
+            binding.checkboxWar to getString(R.string.war_label),
+            binding.checkboxDrama to getString(R.string.drama_label),
+            binding.checkboxAction to getString(R.string.action_label),
+            binding.checkboxFamily to getString(R.string.family),
+            binding.checkboxRomance to getString(R.string.romance_label),
+            binding.checkboxAdventure to getString(R.string.adventure_label),
+            binding.checkboxAnimation to getString(R.string.animation_label),
+            binding.checkboxScienceFiction to getString(R.string.science_fiction_label),
+            binding.checkboxHorror to getString(R.string.horror_label),
+            binding.checkboxThriller to getString(R.string.thriller_label)
         )
-        viewModel.setGenres(checkboxesToLabels.filter { it.first.isChecked }
-            .joinToString(", ") { it.second })
-    }
+
+        viewModel.updateSelectedGenres(checkboxesToLabels)
+        return viewModel.selectedGenres.value ?: emptyList()
+        }
+
 
     private fun showGenres(movie: Movie) {
-        val genres = movie.genre.split(", ")
-        viewModel.setGenres(genres)
-
-        val genreToCheckboxMap = mapOf(
-            "Comedy" to binding.checkboxComedy,
-            "Doco" to binding.checkboxDoco,
-            "War" to binding.checkboxWar,
-            "Drama" to binding.checkboxDrama,
-            "Action" to binding.checkboxAction,
-            "Family" to binding.checkboxFamily,
-            "Romance" to binding.checkboxRomance,
-            "Adventure" to binding.checkboxAdventure,
-            "Animation" to binding.checkboxAnimation,
-            "Science Fiction" to binding.checkboxScienceFiction,
-            "Horror" to binding.checkboxHorror,
-            "Thriller" to binding.checkboxThriller
+        val checkboxesToIds = listOf(
+            binding.checkboxComedy to R.id.checkbox_comedy,
+            binding.checkboxDoco to R.id.checkbox_doco,
+            binding.checkboxWar to R.id.checkbox_war,
+            binding.checkboxDrama to R.id.checkbox_drama,
+            binding.checkboxAction to R.id.checkbox_action,
+            binding.checkboxFamily to R.id.checkbox_family,
+            binding.checkboxRomance to R.id.checkbox_romance,
+            binding.checkboxAdventure to R.id.checkbox_adventure,
+            binding.checkboxAnimation to R.id.checkbox_animation,
+            binding.checkboxScienceFiction to R.id.checkbox_scienceFiction,
+            binding.checkboxHorror to R.id.checkbox_horror,
+            binding.checkboxThriller to R.id.checkbox_thriller
         )
 
-        for ((genre,isChecked) in viewModel.genres){
-            genreToCheckboxMap[genre]?.isChecked = isChecked
-        }
+        viewModel.updateCheckboxesForGenres(checkboxesToIds, movie.genre)
     }
+
 
     private fun setNumberPickers(movie: Movie) {
         viewModel.setSelectedRuntimeHours(movie.length / 60)
         viewModel.setSelectedRuntimeMinutes(movie.length % 60)
     }
-
     private fun isFormValid(): Boolean {
-        getSelectedGenres()
+        val genre = getSelectedGenresForCurrentMovie()
         var isValid = true
         var errorMessage = ""
 
@@ -230,7 +229,7 @@ class AddOrEditItemFragment : Fragment() {
                 errorMessage = getString(R.string.valid_title)
             }
 
-            viewModel.genres.isEmpty() -> {
+            genre.isEmpty() -> {
                 isValid = false
                 errorMessage = getString(R.string.valid_genre)
             }
@@ -260,8 +259,11 @@ class AddOrEditItemFragment : Fragment() {
         if (!isValid) {
             Snackbar.make(binding.root, errorMessage, Snackbar.LENGTH_SHORT).show()
         }
+
         return isValid
     }
+
+
 
     override fun onDestroyView() {
         super.onDestroyView()
