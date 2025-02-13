@@ -85,7 +85,6 @@
             app:layout_constraintStart_toEndOf="@id/ib_item_edit_"
             app:layout_constraintTop_toTopOf="parent" />
 
-
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
