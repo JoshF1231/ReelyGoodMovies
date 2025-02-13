@@ -60,6 +60,7 @@
     <string name="all_movies_deleted_confirmation">כל הסרטים נמחקו!</string>
     <string name="open">לפתוח</string>
     <string name="close">לסגור</string>
+    <string name="like_movie">סרט אהוב</string>
 
 
 </resources>

@@ -67,10 +67,12 @@ class AddOrEditItemFragment : Fragment() {
         binding.npMinutesPicker.setOnValueChangedListener { _, _, value ->
             viewModel.setSelectedRuntimeMinutes(value)
         }
-
-        binding.ibItemFavorite.setOnClickListener{
-            viewModel.setFavorite(!viewModel.favorite.value!!)
+        binding.ibItemFavorite.setOnClickListener {
+            // הפוך את הערך הנוכחי של favorite
+            val newFavoriteStatus = !(viewModel.favorite.value ?: false)
+            viewModel.setFavorite(newFavoriteStatus)
         }
+
 
         return binding.root
     }
@@ -96,9 +98,9 @@ class AddOrEditItemFragment : Fragment() {
             }
         }
 
-    viewModel.favorite.observe(viewLifecycleOwner){
-        binding.ibItemFavorite.setImageResource(if(it) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
-    }
+        viewModel.favorite.observe(viewLifecycleOwner) {
+            binding.ibItemFavorite.setImageResource(if (it) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
+        }
     }
 
     private fun setupAddOrEditMode(isEditMode: Boolean, movie: Movie? = null) {
@@ -169,14 +171,17 @@ class AddOrEditItemFragment : Fragment() {
             binding.rbMovieRating.rating,
             getSelectedGenresForCurrentMovie(),
             viewModel.selectedImageURI.value,
-            viewModel.favorite.value!!,
+            viewModel.favorite.value ?: false,
         )
     }
 
     private fun setParameters(movie: Movie) {
         binding.tvItemTitle.setText(movie.title)
         binding.etMoviePlot.setText(movie.plot)
-        binding.ibItemFavorite.setImageResource(if(movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
+        viewModel.setFavorite(movie.favorite)
+        binding.ibItemFavorite.setImageResource(
+            if (movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
+        )
         setNumberPickers(movie)
         viewModel.setSelectedYear(movie.year)
         binding.rbMovieRating.rating = movie.rate

@@ -24,7 +24,7 @@ data class Movie(
     @ColumnInfo(name = "photo")
     val photo: String?,
     @ColumnInfo(name = "favorite")
-    var favorite: Boolean = false,
+    var favorite: Boolean,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

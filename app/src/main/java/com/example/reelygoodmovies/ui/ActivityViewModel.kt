@@ -18,6 +18,8 @@ class ActivityViewModel(
     private val repository = MovieRepository(application)
     val movieList: LiveData<List<Movie>>? = repository.getMovies()
 
+    val favoriteMovies: LiveData<List<Movie>>? = repository.getFavoriteMovies()
+
     private val _chosenMovie = MutableLiveData<Movie>()
     val chosenMovie: LiveData<Movie> get() = _chosenMovie
 
@@ -38,6 +40,8 @@ class ActivityViewModel(
 
     private val _favorite = MutableLiveData<Boolean>()
     val favorite: LiveData<Boolean> get() = _favorite
+
+
 
 
     fun setEditMode(isEdit: Boolean) {
@@ -90,5 +94,6 @@ class ActivityViewModel(
         setSelectedRuntimeHours(0)
         setSelectedRuntimeMinutes(0)
         setSelectedImageURI(null)
+        setFavorite(false)
     }
 }
