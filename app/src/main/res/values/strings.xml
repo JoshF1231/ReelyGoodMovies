@@ -58,6 +58,8 @@
     <string name="delete">Delete</string>
     <string name="warning_before_item_delete">Warning before item delete</string>
     <string name="all_movies_deleted_confirmation">All movies deleted!</string>
+    <string name="open">open</string>
+    <string name="close">close\n</string>
 
 
 

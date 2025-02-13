@@ -58,6 +58,8 @@
     <string name="warning_before_item_delete">אזהרה לפני מחיקה</string>
     <string name="delete_message">אנא אשר מחיקת הסרט</string>
     <string name="all_movies_deleted_confirmation">כל הסרטים נמחקו!</string>
+    <string name="open">לפתוח</string>
+    <string name="close">לסגור</string>
 
 
 </resources>

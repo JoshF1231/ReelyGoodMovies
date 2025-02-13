@@ -25,9 +25,9 @@ class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) :
         init {
             binding.root.setOnClickListener(this)
             binding.root.setOnLongClickListener(this)
-            binding.ibItemEdit.setOnClickListener {
-                callBack.onButtonClick(adapterPosition)
-            }
+                // binding.ibItemEdit.setOnClickListener {
+              //  callBack.onButtonClick(adapterPosition)
+            //}
         }
 
         override fun onClick(p0: View?) {

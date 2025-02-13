@@ -41,7 +41,6 @@ class AllItemsFragment : Fragment() {
             findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
         }
 
-        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -161,14 +160,12 @@ class AllItemsFragment : Fragment() {
         dialog.show()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.main_menu, menu)
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.action_delete) {
-            deleteAllMoviesDialog()
-        }
-        return true
-    }
+//
+//    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+//        if (item.itemId == R.id.action_delete) {
+//            deleteAllMoviesDialog()
+//        }
+//        return true
+//    }
 }

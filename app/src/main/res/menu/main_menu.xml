@@ -2,9 +2,21 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <item android:id="@+id/action_delete"
-        android:title="This is the Title now!!!!!"
-        android:icon="@drawable/baseline_delete_24"
-        app:showAsAction="always"/>
+
+
+    <group
+        android:checkableBehavior="single"/>
+    <item
+        android:id="@+id/nav_all_movies"
+        android:title="All movies"
+        android:icon="@drawable/movie_icon"/>
+
+    <item
+        android:id="@+id/nav_favorites"
+        android:title="Your Favorites"
+        android:icon="@drawable/baseline_favorite_24"/>
+
+
+    <group/>
 
 </menu>
