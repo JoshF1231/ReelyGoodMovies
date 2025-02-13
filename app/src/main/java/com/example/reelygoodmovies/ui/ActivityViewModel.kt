@@ -36,6 +36,9 @@ class ActivityViewModel(
     private val _isEditMode = MutableLiveData(false)
     val isEditMode: LiveData<Boolean> get() = _isEditMode
 
+    private val _favorite = MutableLiveData<Boolean>()
+    val favorite: LiveData<Boolean> get() = _favorite
+
 
     fun setEditMode(isEdit: Boolean) {
         _isEditMode.value = isEdit
@@ -59,6 +62,7 @@ class ActivityViewModel(
 
     fun setMovie(movie: Movie) {
         _chosenMovie.value = movie
+        //_favorite.value = movie.favorite
     }
 
     fun addMovie(movie: Movie) {
@@ -77,6 +81,9 @@ class ActivityViewModel(
         viewModelScope.launch { repository.updateMovie(movie) }
     }
 
+    fun setFavorite(bool: Boolean) {
+        _favorite.value = bool
+    }
 
     fun clearAllData() {
         setSelectedYear(0)

@@ -3,6 +3,7 @@ package com.example.reelygoodmovies.ui.all_movies
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.MenuInflater
@@ -68,10 +69,18 @@ class AllItemsFragment : Fragment() {
                         ).show()
                     }
 
-                    override fun onButtonClick(index: Int) {
+                    override fun onEditButtonClick(index: Int) {
                         viewModel.setMovie(movies[index])
                         viewModel.setEditMode(true)
                         findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
+                    }
+
+                    override fun onFavButtonClick(index: Int) {
+                        viewModel.setMovie(movies[index])
+                        viewModel.chosenMovie.value!!.favorite = !viewModel.chosenMovie.value!!.favorite // To update the movie in the movies list
+                        viewModel.updateMovie(viewModel.chosenMovie.value!!) // To update the movie in the DB
+                        binding.recycler.adapter?.notifyItemChanged(index)
+                        Log.d("FavChange",viewModel.chosenMovie.value!!.favorite.toString())
                     }
                 })
             }
