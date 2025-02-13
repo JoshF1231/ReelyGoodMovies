@@ -18,6 +18,8 @@ class MovieRepository(application: Application) {
 
     fun getMovie(id: Int) = movieDao?.getMovie(id)
 
+    fun getFavoriteMovies() = movieDao?.getFavoriteMovies()
+
     suspend fun addMovie(movie: Movie) {
         movieDao?.addMovie(movie)
     }
@@ -33,5 +35,8 @@ class MovieRepository(application: Application) {
     suspend fun deleteAllMovies() {
         movieDao?.deleteAllMovies()
     }
+
+
+
 
 }

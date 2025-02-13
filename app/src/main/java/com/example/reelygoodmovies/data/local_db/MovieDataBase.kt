@@ -9,7 +9,7 @@ import com.example.reelygoodmovies.data.models.IntListConverter
 import com.example.reelygoodmovies.data.models.Movie
 
 @TypeConverters(IntListConverter::class)
-@Database(entities = [Movie::class], version = 3, exportSchema = false)
+@Database(entities = [Movie::class], version = 4, exportSchema = false)
 abstract class MovieDataBase : RoomDatabase() {
 
     abstract fun movieDao(): MovieDao

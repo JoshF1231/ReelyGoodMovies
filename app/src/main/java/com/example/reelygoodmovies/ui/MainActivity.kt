@@ -1,11 +1,13 @@
 package com.example.reelygoodmovies.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.ui.all_movies.AllItemsFragment
 import com.google.android.material.navigation.NavigationView
@@ -14,44 +16,39 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var drawerLayout: DrawerLayout
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val toolbar: androidx.appcompat.widget.Toolbar? = findViewById(R.id.toolbar)
-        if (toolbar != null) {
-            setSupportActionBar(toolbar)
-        } else {
-            Log.e("MainActivity", "Toolbar is null!")
-        }
+        val toolbar: Toolbar = findViewById(R.id.toolbar)
+        setSupportActionBar(toolbar)
 
         drawerLayout = findViewById(R.id.drawer_layout)
         val navigationView: NavigationView = findViewById(R.id.nav_view)
 
+        // Setup the NavController using NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        navController = navHostFragment.navController
+
+        // Set up ActionBarDrawerToggle
         toggle = ActionBarDrawerToggle(this, drawerLayout, toolbar, R.string.open, R.string.close)
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
-        navigationView.setNavigationItemSelectedListener {
-            it.isChecked = true
+        // Set up NavigationItemSelectedListener for the NavigationDrawer
+        navigationView.setNavigationItemSelectedListener { menuItem ->
+            menuItem.isChecked = true
 
-            when (it.itemId) {
-                R.id.nav_all_movies -> replaceFragment(AllItemsFragment())
-                R.id.nav_favorites -> replaceFragment(AllItemsFragment())
+            when (menuItem.itemId) {
+                R.id.nav_all_movies -> navController.navigate(R.id.action_global_allItemsFragment2)
+                R.id.nav_favorites -> navController.navigate(R.id.action_global_favoriteMovieFragment)
             }
 
             drawerLayout.closeDrawers()
             true
         }
-    }
-
-    private fun replaceFragment(fragment: Fragment) {
-        val fragmentManager = supportFragmentManager
-        val fragmentTransaction = fragmentManager.beginTransaction()
-        fragmentTransaction.replace(R.id.nav_host_fragment, fragment) // תיקון פה
-        fragmentTransaction.commit()
-        drawerLayout.closeDrawers()
     }
 
     override fun onOptionsItemSelected(item: android.view.MenuItem): Boolean {
