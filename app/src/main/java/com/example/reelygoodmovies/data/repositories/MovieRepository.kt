@@ -16,6 +16,8 @@ class MovieRepository(application: Application) {
 
     fun getMovies() = movieDao?.getMovies()
 
+    fun getMovie(id: Int) = movieDao?.getMovie(id)
+
     suspend fun addMovie(movie: Movie) {
         movieDao?.addMovie(movie)
     }

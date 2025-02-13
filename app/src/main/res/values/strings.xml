@@ -58,10 +58,7 @@
     <string name="delete">Delete</string>
     <string name="warning_before_item_delete">Warning before item delete</string>
     <string name="all_movies_deleted_confirmation">All movies deleted!</string>
-
-
-
-
+    <string name="like_movie">like movie</string>
 
 
 </resources>
