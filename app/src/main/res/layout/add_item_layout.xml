@@ -264,6 +264,14 @@
                 android:scaleX="0.6"
                 android:scaleY="0.6"
                 android:stepSize="1" />
+
+            <ImageButton
+                android:id="@+id/ib_item_favorite_"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:contentDescription="@string/like_movie"
+                android:src="@drawable/baseline_favorite_border_24"/>
         </LinearLayout>
 
         <LinearLayout

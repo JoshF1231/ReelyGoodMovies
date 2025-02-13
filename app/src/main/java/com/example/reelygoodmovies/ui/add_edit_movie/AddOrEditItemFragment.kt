@@ -2,6 +2,7 @@ package com.example.reelygoodmovies.ui.add_edit_movie
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -67,6 +68,10 @@ class AddOrEditItemFragment : Fragment() {
             viewModel.setSelectedRuntimeMinutes(value)
         }
 
+        binding.ibItemFavorite.setOnClickListener{
+            viewModel.setFavorite(!viewModel.favorite.value!!)
+        }
+
         return binding.root
     }
 
@@ -90,6 +95,10 @@ class AddOrEditItemFragment : Fragment() {
                 binding.ivSelectedImage.setImageURI(uri.toUri())
             }
         }
+
+    viewModel.favorite.observe(viewLifecycleOwner){
+        binding.ibItemFavorite.setImageResource(if(it) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
+    }
     }
 
     private fun setupAddOrEditMode(isEditMode: Boolean, movie: Movie? = null) {
@@ -159,13 +168,15 @@ class AddOrEditItemFragment : Fragment() {
             viewModel.selectedYear.value ?: 0,
             binding.rbMovieRating.rating,
             getSelectedGenresForCurrentMovie(),
-            viewModel.selectedImageURI.value
+            viewModel.selectedImageURI.value,
+            viewModel.favorite.value!!,
         )
     }
 
     private fun setParameters(movie: Movie) {
         binding.tvItemTitle.setText(movie.title)
         binding.etMoviePlot.setText(movie.plot)
+        binding.ibItemFavorite.setImageResource(if(movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
         setNumberPickers(movie)
         viewModel.setSelectedYear(movie.year)
         binding.rbMovieRating.rating = movie.rate

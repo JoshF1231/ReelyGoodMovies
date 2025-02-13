@@ -17,7 +17,8 @@ class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) :
     interface ItemListener {
         fun onItemClicked(index: Int)
         fun onItemLongClicked(index: Int)
-        fun onButtonClick(index: Int)
+        fun onEditButtonClick(index: Int)
+        fun onFavButtonClick(index: Int)
     }
 
     inner class ItemViewHolder(private val binding: ItemLayoutBinding) :
@@ -25,9 +26,12 @@ class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) :
         init {
             binding.root.setOnClickListener(this)
             binding.root.setOnLongClickListener(this)
-                // binding.ibItemEdit.setOnClickListener {
-              //  callBack.onButtonClick(adapterPosition)
-            //}
+            binding.ibItemEdit.setOnClickListener {
+                callBack.onEditButtonClick(adapterPosition)
+            }
+            binding.ibItemFavorite.setOnClickListener{
+                callBack.onFavButtonClick(adapterPosition)
+            }
         }
 
         override fun onClick(p0: View?) {
@@ -55,6 +59,8 @@ class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) :
                 binding.root.context.getString(genreId)
             }
             binding.tvItemMovieGenre.text = genreNames
+
+            binding.ibItemFavorite.setImageResource(if(movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
         }
     }
 

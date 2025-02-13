@@ -1,6 +1,7 @@
 package com.example.reelygoodmovies.data.local_db
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -22,6 +23,9 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies")
     fun getMovies(): LiveData<List<Movie>>
+
+    @Query("SELECT * FROM movies WHERE id = :id")
+    fun getMovie(id: Int) : Movie
 
     @Query("DELETE FROM movies")
     suspend fun deleteAllMovies()

@@ -22,7 +22,9 @@ data class Movie(
     @ColumnInfo(name = "genre")
     val genre: List<Int>,
     @ColumnInfo(name = "photo")
-    val photo: String?
+    val photo: String?,
+    @ColumnInfo(name = "favorite")
+    var favorite: Boolean = false,
 ) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
