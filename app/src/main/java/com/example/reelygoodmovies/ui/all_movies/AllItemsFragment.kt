@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.ui.all_movies
+package com.example.reelygoodmovies.ui.all_movies
 
 
 import android.app.AlertDialog
@@ -20,9 +20,9 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.incrediblemovieinfoapp.R
-import com.example.incrediblemovieinfoapp.databinding.AllItemsLayoutBinding
-import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import com.example.reelygoodmovies.R
+import com.example.reelygoodmovies.databinding.AllItemsLayoutBinding
+import com.example.reelygoodmovies.ui.ActivityViewModel
 
 class AllItemsFragment : Fragment() {
     private var _binding: AllItemsLayoutBinding? = null

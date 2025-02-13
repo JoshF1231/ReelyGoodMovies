@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.ui.all_movies
+package com.example.reelygoodmovies.ui.all_movies
 
 import android.view.LayoutInflater
 import android.view.View
@@ -7,9 +7,9 @@ import android.view.View.OnLongClickListener
 import android.view.ViewGroup
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
-import com.example.incrediblemovieinfoapp.R
-import com.example.incrediblemovieinfoapp.data.models.Movie
-import com.example.incrediblemovieinfoapp.databinding.ItemLayoutBinding
+import com.example.reelygoodmovies.R
+import com.example.reelygoodmovies.data.models.Movie
+import com.example.reelygoodmovies.databinding.ItemLayoutBinding
 
 class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {

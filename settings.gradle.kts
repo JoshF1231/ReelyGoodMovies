@@ -19,6 +19,6 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Incredible Movie Info App"
+rootProject.name = "Reel-y Good Movies"
 include(":app")
  

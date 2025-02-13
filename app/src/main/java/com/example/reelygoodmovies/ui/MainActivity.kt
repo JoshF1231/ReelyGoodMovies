@@ -1,9 +1,9 @@
-package com.example.incrediblemovieinfoapp.ui
+package com.example.reelygoodmovies.ui
 
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.incrediblemovieinfoapp.R
+import com.example.reelygoodmovies.R
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

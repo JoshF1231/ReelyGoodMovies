@@ -6,13 +6,13 @@
 
 android {
 
-    namespace = "com.example.incrediblemovieinfoapp"
+    namespace = "com.example.reelygoodmovies"
     compileSdk = 35
     buildFeatures{
         viewBinding = true
     }
     defaultConfig {
-        applicationId = "com.example.incrediblemovieinfoapp"
+        applicationId = "com.example.reelygoodmovies"
         minSdk = 24
         targetSdk = 34
         versionCode = 1

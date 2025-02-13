@@ -6,7 +6,7 @@
     app:startDestination="@id/allItemsFragment2">
     <fragment
         android:id="@+id/allItemsFragment2"
-        android:name="com.example.incrediblemovieinfoapp.ui.all_movies.AllItemsFragment"
+        android:name="com.example.reelygoodmovies.ui.all_movies.AllItemsFragment"
         android:label="all_items_layout"
         tools:layout="@layout/all_items_layout" >
         <action
@@ -26,7 +26,7 @@
     </fragment>
     <fragment
         android:id="@+id/addOrEditItemFragment"
-        android:name="com.example.incrediblemovieinfoapp.ui.add_edit_movie.AddOrEditItemFragment"
+        android:name="com.example.reelygoodmovies.ui.add_edit_movie.AddOrEditItemFragment"
         android:label="add_item_layout"
         tools:layout="@layout/add_item_layout" >
         <action
@@ -41,7 +41,7 @@
     </fragment>
     <fragment
         android:id="@+id/detailedItemFragment"
-        android:name="com.example.incrediblemovieinfoapp.ui.detail_movie.DetailedItemFragment"
+        android:name="com.example.reelygoodmovies.ui.detail_movie.DetailedItemFragment"
         android:label="detailed_item_layout"
         tools:layout="@layout/detailed_item_layout" >
         <action

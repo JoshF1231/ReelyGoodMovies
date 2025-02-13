@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.ui.add_edit_movie
+package com.example.reelygoodmovies.ui.add_edit_movie
 
 import android.app.AlertDialog
 import android.content.Intent
@@ -14,10 +14,10 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
-import com.example.incrediblemovieinfoapp.R
-import com.example.incrediblemovieinfoapp.data.models.Movie
-import com.example.incrediblemovieinfoapp.databinding.AddItemLayoutBinding
-import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import com.example.reelygoodmovies.R
+import com.example.reelygoodmovies.data.models.Movie
+import com.example.reelygoodmovies.databinding.AddItemLayoutBinding
+import com.example.reelygoodmovies.ui.ActivityViewModel
 import com.google.android.material.snackbar.Snackbar
 import java.util.Calendar
 

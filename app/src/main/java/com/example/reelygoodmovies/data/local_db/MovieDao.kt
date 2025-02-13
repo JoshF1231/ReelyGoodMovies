@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.data.local_db
+package com.example.reelygoodmovies.data.local_db
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -7,7 +7,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.example.incrediblemovieinfoapp.data.models.Movie
+import com.example.reelygoodmovies.data.models.Movie
 
 @Dao
 interface MovieDao {

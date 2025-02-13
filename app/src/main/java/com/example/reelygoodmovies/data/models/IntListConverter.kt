@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.data.models
+package com.example.reelygoodmovies.data.models
 
 import androidx.room.TypeConverter
 

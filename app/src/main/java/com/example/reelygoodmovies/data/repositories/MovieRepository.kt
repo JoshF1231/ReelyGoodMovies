@@ -1,9 +1,9 @@
-package com.example.incrediblemovieinfoapp.data.repositories
+package com.example.reelygoodmovies.data.repositories
 
 import android.app.Application
-import com.example.incrediblemovieinfoapp.data.local_db.MovieDao
-import com.example.incrediblemovieinfoapp.data.local_db.MovieDataBase
-import com.example.incrediblemovieinfoapp.data.models.Movie
+import com.example.reelygoodmovies.data.local_db.MovieDao
+import com.example.reelygoodmovies.data.local_db.MovieDataBase
+import com.example.reelygoodmovies.data.models.Movie
 
 class MovieRepository(application: Application) {
 

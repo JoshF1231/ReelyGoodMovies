@@ -1,12 +1,12 @@
-package com.example.incrediblemovieinfoapp.ui
+package com.example.reelygoodmovies.ui
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.incrediblemovieinfoapp.data.models.Movie
-import com.example.incrediblemovieinfoapp.data.repositories.MovieRepository
+import com.example.reelygoodmovies.data.models.Movie
+import com.example.reelygoodmovies.data.repositories.MovieRepository
 import kotlinx.coroutines.launch
 
 

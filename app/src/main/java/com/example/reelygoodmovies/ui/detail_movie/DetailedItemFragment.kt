@@ -1,4 +1,4 @@
-package com.example.incrediblemovieinfoapp.ui.detail_movie
+package com.example.reelygoodmovies.ui.detail_movie
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
-import com.example.incrediblemovieinfoapp.R
-import com.example.incrediblemovieinfoapp.databinding.DetailedItemLayoutBinding
-import com.example.incrediblemovieinfoapp.ui.ActivityViewModel
+import com.example.reelygoodmovies.R
+import com.example.reelygoodmovies.databinding.DetailedItemLayoutBinding
+import com.example.reelygoodmovies.ui.ActivityViewModel
 
 
 class DetailedItemFragment : Fragment() {

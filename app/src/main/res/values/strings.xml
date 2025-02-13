@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Incredible Movie Info App</string>
+    <string name="app_name">Reel-y Good Movies</string>
     <string name="movie_info">Your Movie Info</string>
     <string name="movie_name_label">Movie name</string>
     <string name="genre_label">Genre:</string>

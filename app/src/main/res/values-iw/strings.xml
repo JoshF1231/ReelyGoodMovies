@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">אפליקציית מידע מדהימה על סרטים</string>
+    <string name="app_name">סרטים טובים מאוד</string>
     <string name="movie_info">מידע על הסרט שלך</string>
     <string name="movie_name_label">שם הסרט</string>
     <string name="genre_label">זאנר:</string>
