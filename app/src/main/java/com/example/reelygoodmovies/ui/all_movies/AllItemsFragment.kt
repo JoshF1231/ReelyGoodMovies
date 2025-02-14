@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.net.toUri
@@ -108,7 +109,27 @@ class AllItemsFragment : Fragment() {
                 deleteMovieDialog(viewHolder)
             }
         }).attachToRecyclerView(binding.recycler)
+
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                binding.searchView.clearFocus()
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                val query = newText.orEmpty().toLowerCase()
+                val filteredMovies = viewModel.movieList?.value?.filter {
+                    it.title.toLowerCase().contains(query)
+                } ?: emptyList()
+
+                (binding.recycler.adapter as ItemAdapter).updateMovies(filteredMovies)
+
+                return true
+            }
+
+        })
     }
+
 
     override fun onDestroyView() {
         super.onDestroyView()
@@ -168,6 +189,8 @@ class AllItemsFragment : Fragment() {
             dialogView.context.getText(R.string.delete_all_message)
         dialog.show()
     }
+
+
 
 
 //

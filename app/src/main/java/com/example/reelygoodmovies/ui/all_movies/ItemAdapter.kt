@@ -11,7 +11,7 @@ import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.databinding.ItemLayoutBinding
 
-class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) :
+class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
     interface ItemListener {
@@ -64,6 +64,10 @@ class ItemAdapter(private val items: List<Movie>, val callBack: ItemListener) :
         }
     }
 
+    fun updateMovies(newMovies: List<Movie>) {
+        this.items = newMovies
+        notifyDataSetChanged()
+    }
 
     fun itemAt(position: Int) = items[position]
 
