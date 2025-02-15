@@ -50,42 +50,48 @@ class AllItemsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.movieList?.observe(viewLifecycleOwner) { movies ->
-            if (movies.isEmpty()) {
+        viewModel.filteredMovies.observe(viewLifecycleOwner) { movies ->
+            (binding.recycler.adapter as ItemAdapter).updateMovies(movies)
+        }
+
+        viewModel.movieList?.observe(viewLifecycleOwner) { fullMoviesList ->
+            if (fullMoviesList.isEmpty()) {
                 binding.recycler.visibility = View.GONE
             } else {
                 binding.recycler.visibility = View.VISIBLE
-                binding.recycler.adapter = ItemAdapter(movies, object : ItemAdapter.ItemListener {
 
+                val filteredMovies = viewModel.filteredMovies.value ?: fullMoviesList
+
+                val itemAdapter = ItemAdapter(filteredMovies, object : ItemAdapter.ItemListener {
                     override fun onItemClicked(index: Int) {
-                        viewModel.setMovie(movies[index])
+                        val movie = filteredMovies[index]
+                        viewModel.setMovie(movie)
                         findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment)
                     }
 
                     override fun onItemLongClicked(index: Int) {
-                        Toast.makeText(
-                            requireContext(),
-                            movies[index].title,
-                            Toast.LENGTH_SHORT
-                        ).show()
+                        Toast.makeText(requireContext(), filteredMovies[index].title, Toast.LENGTH_SHORT).show()
                     }
 
                     override fun onEditButtonClick(index: Int) {
-                        viewModel.setMovie(movies[index])
+                        val movie = filteredMovies[index]
+                        viewModel.setMovie(movie)
                         viewModel.setEditMode(true)
                         findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
                     }
 
                     override fun onFavButtonClick(index: Int) {
-                        viewModel.setMovie(movies[index])
-                        viewModel.chosenMovie.value!!.favorite = !viewModel.chosenMovie.value!!.favorite // To update the movie in the movies list
-                        viewModel.updateMovie(viewModel.chosenMovie.value!!) // To update the movie in the DB
+                        val movie = filteredMovies[index]
+                        movie.favorite = !movie.favorite // עדכון הסרט
+                        viewModel.updateMovie(movie)   // עדכון ב-DB
                         binding.recycler.adapter?.notifyItemChanged(index)
-                        Log.d("FavChange",viewModel.chosenMovie.value!!.favorite.toString())
+                        Log.d("FavChange", movie.favorite.toString())
                     }
                 })
+
+                binding.recycler.adapter = itemAdapter
+                binding.recycler.layoutManager = LinearLayoutManager(requireContext())
             }
-            binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         }
 
         ItemTouchHelper(object : ItemTouchHelper.Callback() {
@@ -110,7 +116,7 @@ class AllItemsFragment : Fragment() {
             }
         }).attachToRecyclerView(binding.recycler)
 
-        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean {
                 binding.searchView.clearFocus()
                 return false
@@ -121,11 +127,12 @@ class AllItemsFragment : Fragment() {
                 val filteredMovies = viewModel.movieList?.value?.filter {
                     it.title.toLowerCase().contains(query)
                 } ?: emptyList()
-
+                viewModel.setFilteredMovies(filteredMovies)
                 (binding.recycler.adapter as ItemAdapter).updateMovies(filteredMovies)
 
                 return true
             }
+
 
         })
     }
