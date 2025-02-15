@@ -13,7 +13,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.FavoriteLayoutBinding
 import com.example.reelygoodmovies.ui.all_movies.ItemAdapter
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class FavoriteMovieFragment : Fragment() {
     private var _binding: FavoriteLayoutBinding? = null
     private val binding get() = _binding!!

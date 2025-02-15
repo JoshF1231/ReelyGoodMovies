@@ -2,8 +2,9 @@
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
      id("org.jetbrains.kotlin.kapt")
+     id("kotlin-kapt")
+     id("com.google.dagger.hilt.android")
 }
-
 android {
 
     namespace = "com.example.reelygoodmovies"
@@ -17,7 +18,6 @@ android {
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -43,7 +43,6 @@ android {
 dependencies {
     implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
-    implementation (libs.dagger.hilt.android) // Use the latest version
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.core.ktx)
     implementation (libs.glide)
@@ -61,4 +60,8 @@ dependencies {
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     kapt (libs.hilt.android.compiler)
+    implementation (libs.hilt.android.v255)
 }
+ kapt {
+     correctErrorTypes = true
+ }
