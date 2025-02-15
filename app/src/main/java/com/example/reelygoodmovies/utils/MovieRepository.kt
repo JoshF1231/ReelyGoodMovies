@@ -16,7 +16,7 @@ import javax.inject.Singleton
 //        {localDataSource.addMoviesCheckDuplicate()}
 //    )
 //    fun getMovie (id : Int) = performFetchingAndSaving(
-//        {localDataSource.getMovieById(id)},
+//        {localDataSource.getMovie(id)},
 //        {remoteDataSource.getMovieById(id)},
 //        {localDataSource.addMovieCheckDuplicate(it)}
 //    )

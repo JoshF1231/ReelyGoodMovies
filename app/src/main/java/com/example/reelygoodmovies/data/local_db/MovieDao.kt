@@ -9,11 +9,15 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.reelygoodmovies.data.models.Movie
+import javax.inject.Inject
 
 @Dao
 interface MovieDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun addMovie(movie: Movie)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addMovies(movies : List <Movie>)
 
     @Delete
     suspend fun deleteMovie(vararg movies: Movie)
@@ -25,7 +29,7 @@ interface MovieDao {
     fun getMovies(): LiveData<List<Movie>>
 
     @Query("SELECT * FROM movies WHERE id = :id")
-    fun getMovie(id: Int): Movie
+    fun getMovie(id: Int): LiveData<Movie>
 
     @Query("DELETE FROM movies")
     suspend fun deleteAllMovies()
