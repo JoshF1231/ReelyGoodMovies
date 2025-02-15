@@ -41,9 +41,12 @@ android {
 }
 
 dependencies {
+    implementation (libs.androidx.lifecycle.livedata.ktx)
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
+    implementation (libs.dagger.hilt.android) // Use the latest version
     implementation(libs.androidx.room.runtime)
     implementation(libs.androidx.core.ktx)
-    implementation ("com.github.bumptech.glide:glide:4.16.0")
+    implementation (libs.glide)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.activity)
@@ -57,4 +60,5 @@ dependencies {
     implementation(libs.androidx.room.runtime)
     kapt(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
+    kapt (libs.hilt.android.compiler)
 }
