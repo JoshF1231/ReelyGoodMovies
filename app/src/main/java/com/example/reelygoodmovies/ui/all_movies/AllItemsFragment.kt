@@ -51,7 +51,7 @@ class AllItemsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.filteredMovies.observe(viewLifecycleOwner) { movies ->
-            (binding.recycler.adapter as ItemAdapter).updateMovies(movies)
+            (binding.recycler.adapter as? ItemAdapter)?.updateMovies(movies)
         }
 
         viewModel.movieList?.observe(viewLifecycleOwner) { fullMoviesList ->
@@ -128,8 +128,7 @@ class AllItemsFragment : Fragment() {
                     it.title.toLowerCase().contains(query)
                 } ?: emptyList()
                 viewModel.setFilteredMovies(filteredMovies)
-                (binding.recycler.adapter as ItemAdapter).updateMovies(filteredMovies)
-
+                (binding.recycler.adapter as? ItemAdapter)?.updateMovies(filteredMovies)
                 return true
             }
 
