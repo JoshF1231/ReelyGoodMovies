@@ -42,7 +42,13 @@ class ActivityViewModel(
     val favorite: LiveData<Boolean> get() = _favorite
 
 
+    private val _filteredMovies = MutableLiveData<List<Movie>>()
+    val filteredMovies: LiveData<List<Movie>> get() = _filteredMovies
 
+    fun setFilteredMovies(movies: List<Movie>) {
+        _filteredMovies.value = movies
+
+    }
 
     fun setEditMode(isEdit: Boolean) {
         _isEditMode.value = isEdit
