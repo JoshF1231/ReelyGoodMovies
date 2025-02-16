@@ -20,8 +20,10 @@ import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.databinding.AddItemLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
 import com.google.android.material.snackbar.Snackbar
+import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
 
+@AndroidEntryPoint
 class AddOrEditItemFragment : Fragment() {
     private var _binding: AddItemLayoutBinding? = null
     private val binding get() = _binding!!

@@ -25,7 +25,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.AllItemsLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AllItemsFragment : Fragment() {
     private var _binding: AllItemsLayoutBinding? = null
     private val binding get() = _binding!!
@@ -51,7 +53,7 @@ class AllItemsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         viewModel.filteredMovies.observe(viewLifecycleOwner) { movies ->
-            (binding.recycler.adapter as ItemAdapter).updateMovies(movies)
+            (binding.recycler.adapter as? ItemAdapter)?.updateMovies(movies)
         }
 
         viewModel.movieList?.observe(viewLifecycleOwner) { fullMoviesList ->
@@ -128,8 +130,7 @@ class AllItemsFragment : Fragment() {
                     it.title.toLowerCase().contains(query)
                 } ?: emptyList()
                 viewModel.setFilteredMovies(filteredMovies)
-                (binding.recycler.adapter as ItemAdapter).updateMovies(filteredMovies)
-
+                (binding.recycler.adapter as? ItemAdapter)?.updateMovies(filteredMovies)
                 return true
             }
 

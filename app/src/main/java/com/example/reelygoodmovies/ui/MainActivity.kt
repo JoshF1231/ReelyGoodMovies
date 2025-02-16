@@ -11,7 +11,10 @@ import androidx.navigation.fragment.NavHostFragment
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.ui.all_movies.AllItemsFragment
 import com.google.android.material.navigation.NavigationView
+import dagger.hilt.android.AndroidEntryPoint
 
+
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var toggle: ActionBarDrawerToggle
