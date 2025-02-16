@@ -1,7 +1,6 @@
-package com.example.reelygoodmovies.ui
+package com.example.reelygoodmovies.ui.favorite_movies
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.FavoriteLayoutBinding
+import com.example.reelygoodmovies.ui.ActivityViewModel
 import com.example.reelygoodmovies.ui.all_movies.ItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
