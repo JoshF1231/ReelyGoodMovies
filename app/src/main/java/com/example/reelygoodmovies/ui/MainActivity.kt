@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.nav_all_movies -> navController.navigate(R.id.action_global_allItemsFragment2)
                 R.id.nav_favorites -> navController.navigate(R.id.action_global_favoriteMovieFragment)
+                R.id.nav_genres-> navController.navigate(R.id.action_global_genreMoodFragment)
             }
 
             drawerLayout.closeDrawers()

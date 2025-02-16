@@ -5,6 +5,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.data.repositories.MovieRepository
 import kotlinx.coroutines.launch
@@ -45,61 +46,86 @@ class ActivityViewModel(
     private val _filteredMovies = MutableLiveData<List<Movie>>()
     val filteredMovies: LiveData<List<Movie>> get() = _filteredMovies
 
+    private val _comedyMovies = MutableLiveData<List<Movie>>()
+    val comedyMovies: LiveData<List<Movie>> = _comedyMovies
+
+    private val _thrillerMovies = MutableLiveData<List<Movie>>()
+    val thrillerMovies: LiveData<List<Movie>> = _thrillerMovies
+
+    private val _fantasyMovies = MutableLiveData<List<Movie>>()
+    val fantasyMovies: LiveData<List<Movie>> = _fantasyMovies
+
+    private val _romanceMovies = MutableLiveData<List<Movie>>()
+    val romanceMovies: LiveData<List<Movie>> = _romanceMovies
+
+    private val _familyMovies = MutableLiveData<List<Movie>>()
+    val familyMovies: LiveData<List<Movie>> = _familyMovies
+
+
+    fun filterMoviesByGenre(movies: List<Movie>) {
+        _comedyMovies.value = movies.filter { it.genre.contains(R.string.comedy_label) }
+        _thrillerMovies.value = movies.filter { it.genre.contains(R.string.thriller_label)}
+        _fantasyMovies.value = movies.filter { it.genre.contains(R.string.science_fiction_label)}
+        _romanceMovies.value = movies.filter { it.genre.contains(R.string.romance_label)}
+        _familyMovies.value = movies.filter { it.genre.contains(R.string.family_label)}
+    }
+
+
     fun setFilteredMovies(movies: List<Movie>) {
-        _filteredMovies.value = movies
+            _filteredMovies.value = movies
 
-    }
+        }
 
-    fun setEditMode(isEdit: Boolean) {
-        _isEditMode.value = isEdit
-    }
+        fun setEditMode(isEdit: Boolean) {
+            _isEditMode.value = isEdit
+        }
 
-    fun setSelectedImageURI(uri: String?) {
-        _selectedImageURI.value = uri ?: ""
-    }
+        fun setSelectedImageURI(uri: String?) {
+            _selectedImageURI.value = uri ?: ""
+        }
 
-    fun setSelectedRuntimeHours(hours: Int) {
-        _selectedRuntimeHours.value = hours
-    }
+        fun setSelectedRuntimeHours(hours: Int) {
+            _selectedRuntimeHours.value = hours
+        }
 
-    fun setSelectedRuntimeMinutes(minutes: Int) {
-        _selectedRuntimeMinutes.value = minutes
-    }
+        fun setSelectedRuntimeMinutes(minutes: Int) {
+            _selectedRuntimeMinutes.value = minutes
+        }
 
-    fun setSelectedYear(year: Int) {
-        _selectedYear.value = year
-    }
+        fun setSelectedYear(year: Int) {
+            _selectedYear.value = year
+        }
 
-    fun setMovie(movie: Movie) {
-        _chosenMovie.value = movie
-        //_favorite.value = movie.favorite
-    }
+        fun setMovie(movie: Movie) {
+            _chosenMovie.value = movie
+            //_favorite.value = movie.favorite
+        }
 
-    fun addMovie(movie: Movie) {
-        viewModelScope.launch { repository.addMovie(movie) }
-    }
+        fun addMovie(movie: Movie) {
+            viewModelScope.launch { repository.addMovie(movie) }
+        }
 
-    fun deleteMovie(movie: Movie) {
-        viewModelScope.launch { repository.deleteMovie(movie) }
-    }
+        fun deleteMovie(movie: Movie) {
+            viewModelScope.launch { repository.deleteMovie(movie) }
+        }
 
-    fun deleteAllMovies() {
-        viewModelScope.launch { repository.deleteAllMovies() }
-    }
+        fun deleteAllMovies() {
+            viewModelScope.launch { repository.deleteAllMovies() }
+        }
 
-    fun updateMovie(movie: Movie) {
-        viewModelScope.launch { repository.updateMovie(movie) }
-    }
+        fun updateMovie(movie: Movie) {
+            viewModelScope.launch { repository.updateMovie(movie) }
+        }
 
-    fun setFavorite(bool: Boolean) {
-        _favorite.value = bool
-    }
+        fun setFavorite(bool: Boolean) {
+            _favorite.value = bool
+        }
 
-    fun clearAllData() {
-        setSelectedYear(0)
-        setSelectedRuntimeHours(0)
-        setSelectedRuntimeMinutes(0)
-        setSelectedImageURI(null)
-        setFavorite(false)
+        fun clearAllData() {
+            setSelectedYear(0)
+            setSelectedRuntimeHours(0)
+            setSelectedRuntimeMinutes(0)
+            setSelectedImageURI(null)
+            setFavorite(false)
+        }
     }
-}

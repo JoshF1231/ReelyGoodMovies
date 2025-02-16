@@ -13,6 +13,11 @@
     <action
         android:id="@+id/action_global_allItemsFragment2"
         app:destination="@id/allItemsFragment2" />
+
+    <action
+        android:id="@+id/action_global_genreMoodFragment"
+        app:destination="@id/genreMoodFragment" />
+
     <fragment
         android:id="@+id/allItemsFragment2"
         android:name="com.example.reelygoodmovies.ui.all_movies.AllItemsFragment"
@@ -83,10 +88,17 @@
             app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_right"
             app:popExitAnim="@anim/to_left"/>
+        <action
+            android:id="@+id/action_detailedItemFragment_to_genreMoodFragment"
+            app:destination="@id/favoriteMovieFragment"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
+            app:popEnterAnim="@anim/from_right"
+            app:popExitAnim="@anim/to_left"/>
     </fragment>
     <fragment
         android:id="@+id/favoriteMovieFragment"
-        android:name="com.example.reelygoodmovies.ui.FavoriteMovieFragment"
+        android:name="com.example.reelygoodmovies.ui.favorite_movies.FavoriteMovieFragment"
         android:label="FavoriteMovieFragment"
         tools:layout="@layout/favorite_layout">
         <action
@@ -104,4 +116,16 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"/>
     </fragment>
+    <fragment
+        android:id="@+id/genreMoodFragment"
+        android:name="com.example.reelygoodmovies.ui.filter_genre_movies.GenreMoodFragment"
+        android:label="GenreMoodFragment"
+        tools:layout="@layout/genre_mood_filter_layout"/>
+    <action
+        android:id="@+id/action_genreMoodFragment_to_detailedItemFragment"
+        app:destination="@id/detailedItemFragment"
+        app:enterAnim="@anim/from_right"
+        app:exitAnim="@anim/to_left"
+        app:popEnterAnim="@anim/from_left"
+        app:popExitAnim="@anim/to_right" />
 </navigation>
