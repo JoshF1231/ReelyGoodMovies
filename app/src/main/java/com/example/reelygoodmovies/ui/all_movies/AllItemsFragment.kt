@@ -58,10 +58,12 @@ class AllItemsFragment : Fragment() {
 
         binding.searchView.setQuery("", false)
         viewModel.setFilteredMovies(viewModel.movieList?.value ?: emptyList())
+        viewModel.setRecognition("")
+
 
 
         viewModel.recognition.observe(viewLifecycleOwner) { recognitionText ->
-            binding.searchView.setQuery(recognitionText, false) // עדכון השאילתא מבלי לשלוח אוטומטית
+            binding.searchView.setQuery(recognitionText, false)
         }
 
         binding.ibMicSearch.setOnClickListener {
