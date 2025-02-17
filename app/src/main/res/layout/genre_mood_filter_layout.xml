@@ -13,7 +13,7 @@
             android:id="@+id/tv_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Find Your Movie By Your Mood!"
+            android:text="@string/movie_genre_mood_label"
             android:textColor="@color/black"
             android:textSize="20sp"
             android:paddingBottom="20dp"
@@ -38,8 +38,9 @@
             android:id="@+id/tv_funny"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Laugh Out Loud"
+            android:text="@string/comedy_label_genre_mood"
             android:paddingEnd="10dp"
+            android:paddingStart="0dp"
             android:textColor="@color/black"
             android:textSize="18sp" />
 
@@ -48,7 +49,7 @@
                 android:layout_height="40dp"
                 android:src="@drawable/comedy_icon"
                 android:background="@null"
-                android:contentDescription="funny icon"/>
+                android:contentDescription="@string/funny_icon"/>
 
         </LinearLayout>
 
@@ -79,10 +80,11 @@
             android:id="@+id/tv_thriller"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Feel the Thrill"
+            android:text="@string/thrill_label_genre_mood"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:paddingEnd="10dp"
+            android:paddingStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_funny"/>
@@ -91,7 +93,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/thrill_icon"
-                android:background="@null"/>
+                android:background="@null"
+                android:contentDescription="@string/thrill_icon"/>
 
         </LinearLayout>
 
@@ -121,10 +124,11 @@
             android:id="@+id/tv_relax"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Chill &amp; Relax"
+            android:text="@string/relax_label_genre_mood"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:paddingEnd="10dp"
+            android:paddingStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_thriller"/>
@@ -133,7 +137,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/relax_icon"
-                android:background="@null"/>
+                android:background="@null"
+                android:contentDescription="@string/relax_icon"/>
 
         </LinearLayout>
 
@@ -163,10 +168,11 @@
             android:id="@+id/tv_fantasy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Escape Reality"
+            android:text="@string/fantasy_label_genre_mood"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:paddingEnd="10dp"
+            android:paddingStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_relax"/>
@@ -175,7 +181,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/fantasy_icon"
-                android:background="@null"/>
+                android:background="@null"
+                android:contentDescription="@string/fantasy_icon"/>
 
         </LinearLayout>
 
@@ -206,10 +213,11 @@
             android:id="@+id/tv_romantic"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Heartfelt"
+            android:text="@string/romantic_label_genre_mood"
             android:textColor="@color/black"
             android:textSize="18sp"
             android:paddingEnd="10dp"
+            android:paddingStart="0dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_fantasy"/>
@@ -218,7 +226,8 @@
                 android:layout_width="40dp"
                 android:layout_height="40dp"
                 android:src="@drawable/romance_icon"
-                android:background="@null"/>
+                android:background="@null"
+                android:contentDescription="@string/romantic_icon"/>
 
         </LinearLayout>
 

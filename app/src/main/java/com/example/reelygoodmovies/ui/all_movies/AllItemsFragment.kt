@@ -1,13 +1,18 @@
 package com.example.reelygoodmovies.ui.all_movies
 
 import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
+import android.speech.RecognizerIntent
+import android.speech.SpeechRecognizer
 import android.view.*
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.appcompat.app.AppCompatActivity.RESULT_OK
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -19,6 +24,7 @@ import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.AllItemsLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import java.util.Locale
 
 @AndroidEntryPoint
 class AllItemsFragment : Fragment() {
@@ -26,6 +32,17 @@ class AllItemsFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
     private lateinit var adapter: ItemAdapter
+
+    val recognizeSpeechLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        if (it.resultCode == RESULT_OK) {
+            it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.let { it1 ->
+                viewModel.setRecognition(
+                    it1
+                        .joinToString(" ")
+                )
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,9 +56,20 @@ class AllItemsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.recognition.observe(viewLifecycleOwner) { recognitionText ->
+            binding.searchView.setQuery(recognitionText, false) // עדכון השאילתא מבלי לשלוח אוטומטית
+        }
+
+        binding.ibMicSearch.setOnClickListener {
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mic_talk))
+            }
+            recognizeSpeechLauncher.launch(intent)
+            }
 
 
-        // Initialize Adapter
+            // Initialize Adapter
         adapter = ItemAdapter(emptyList(), object : ItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {
                 val movie = adapter.getItem(index)

@@ -9,7 +9,7 @@
     <item
         android:id="@+id/nav_all_movies"
         android:title="All movies"
-        android:icon="@drawable/movie_icon"/>
+        android:icon="@drawable/baseline_home_24"/>
 
     <item
         android:id="@+id/nav_favorites"
@@ -19,7 +19,7 @@
     <item
         android:id="@+id/nav_genres"
         android:title="Your Mood"
-        android:icon="@drawable/baseline_favorite_24"/>
+        android:icon="@drawable/baseline_emoji_emotions_24"/>
 
 
     <group/>
