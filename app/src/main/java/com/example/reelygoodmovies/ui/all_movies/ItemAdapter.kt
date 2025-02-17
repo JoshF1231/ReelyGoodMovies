@@ -69,7 +69,7 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
         notifyDataSetChanged()
     }
 
-    fun itemAt(position: Int) = items[position]
+    fun getItem(position: Int) = items[position]
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
@@ -88,4 +88,6 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
     override fun getItemCount(): Int {
         return items.size
     }
+
+
 }
