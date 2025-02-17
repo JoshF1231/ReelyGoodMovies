@@ -56,6 +56,10 @@ class AllItemsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.searchView.setQuery("", false)
+        viewModel.setFilteredMovies(viewModel.movieList?.value ?: emptyList())
+
+
         viewModel.recognition.observe(viewLifecycleOwner) { recognitionText ->
             binding.searchView.setQuery(recognitionText, false) // עדכון השאילתא מבלי לשלוח אוטומטית
         }
