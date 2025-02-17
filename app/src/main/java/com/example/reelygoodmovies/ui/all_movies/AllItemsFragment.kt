@@ -23,6 +23,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.AllItemsLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
+import com.example.reelygoodmovies.utils.Error
+import com.example.reelygoodmovies.utils.Loading
+import com.example.reelygoodmovies.utils.Success
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 
@@ -60,7 +63,18 @@ class AllItemsFragment : Fragment() {
         viewModel.setFilteredMovies(viewModel.movieList?.value ?: emptyList())
         viewModel.setRecognition("")
 
-
+        viewModel.movies.observe(viewLifecycleOwner){
+            when (it.status){
+                is Loading -> binding.progressBar.visibility = View.VISIBLE
+                is Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), it.status.message, Toast.LENGTH_SHORT).show()
+                }
+                is Success -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+            }
+        }
 
         viewModel.recognition.observe(viewLifecycleOwner) { recognitionText ->
             binding.searchView.setQuery(recognitionText, false)
