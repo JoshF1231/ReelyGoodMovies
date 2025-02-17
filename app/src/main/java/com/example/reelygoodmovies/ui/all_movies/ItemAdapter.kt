@@ -51,13 +51,17 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
                 .circleCrop()
                 .into(binding.ivItemMovieImage)
 
-            binding.rbItemMovieRating.rating = movie.rate
+            binding.rbItemMovieRating.rating = movie.rate.toFloat()
 
             val genreIds = movie.genre
 
-            val genreNames = genreIds.joinToString(", ") { genreId ->
-                binding.root.context.getString(genreId)
-            }
+            val genreNames = genreIds.joinToString(", ") //{ genreId ->
+                //binding.root.context.getString(genreId) // TODO()
+            //}
+
+            // NEED TO FIX THIS. When ID is received from GET call this causes
+            // an error, because it can't find the string for the id.
+            // maybe solvable with a different GET request
             binding.tvItemMovieGenre.text = genreNames
 
             binding.ibItemFavorite.setImageResource(if(movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
