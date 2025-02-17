@@ -10,7 +10,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <ImageView
@@ -24,12 +24,13 @@
 
         <LinearLayout
             android:id="@+id/linearLayout"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:orientation="vertical"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/iv_item_movie_image"
+            app:layout_constraintEnd_toStartOf="@id/ll_icons"
             app:layout_goneMarginStart="50dp">
 
             <TextView
@@ -46,6 +47,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="start|center"
+                android:ellipsize="end"
+                android:maxLines="2"
                 android:text="@string/movie_genre_label" />
 
 
@@ -63,27 +66,32 @@
                 android:stepSize="1" />
         </LinearLayout>
 
-        <ImageButton
-            android:id="@+id/ib_item_edit_"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:contentDescription="@string/edit_movie_bt"
-            android:src="@drawable/baseline_edit_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/linearLayout"
-            app:layout_constraintTop_toTopOf="parent" />
+        <LinearLayout
+            android:id="@+id/ll_icons"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+     >
 
-        <ImageButton
-            android:id="@+id/ib_item_favorite_"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="@null"
-            android:contentDescription="@string/like_movie"
-            android:src="@drawable/baseline_favorite_border_24"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/ib_item_edit_"
-            app:layout_constraintTop_toTopOf="parent" />
+            <ImageButton
+                android:id="@+id/ib_item_edit_"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:contentDescription="@string/edit_movie_bt"
+                android:src="@drawable/baseline_edit_24" />
+
+            <ImageButton
+                android:id="@+id/ib_item_favorite_"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@null"
+                android:contentDescription="@string/like_movie"
+                android:src="@drawable/baseline_favorite_border_24" />
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
