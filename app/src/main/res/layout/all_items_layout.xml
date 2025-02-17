@@ -20,7 +20,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Newest Movies!"
+            android:text="@string/newest_movies_label"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -35,7 +35,7 @@
             android:id="@+id/tv_search_movie"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Search movie:"
+            android:text="@string/search_movie_label"
             android:textColor="@android:color/black"
             android:layout_marginTop="8dp"
             android:textSize="18sp"
@@ -53,6 +53,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_search_movie" />
+
+        <ImageButton
+            android:id="@+id/ib_micSearch"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:src="@drawable/baseline_mic_24"
+            android:background="@null"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/searchView"
+            android:contentDescription="@string/mic_search_button"/>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
@@ -92,7 +102,7 @@
             android:id="@+id/tv_add_movie_label"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Add new movie!"
+            android:text="@string/add_new_movie_label"
             android:textSize="18sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"

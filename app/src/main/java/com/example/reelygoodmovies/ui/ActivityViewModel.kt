@@ -63,7 +63,13 @@ class ActivityViewModel @Inject constructor(
     private val _familyMovies = MutableLiveData<List<Movie>>()
     val familyMovies: LiveData<List<Movie>> = _familyMovies
 
+    private val _recognition = MutableLiveData<String>()
+    val recognition : LiveData<String> get() = _recognition
 
+
+    fun setRecognition(string: String){
+        _recognition.value = string
+    }
 
 
     fun filterMoviesByGenre(movies: List<Movie>) {

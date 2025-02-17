@@ -61,6 +61,23 @@
     <string name="open">לפתוח</string>
     <string name="close">לסגור</string>
     <string name="like_movie">סרט אהוב</string>
+    <string name="mic_talk">בבקשה תדבר לאט ובבהירות"</string>
+    <string name="mic_search_button">חיפוש מיקרופון</string>
+    <string name="newest_movies_label">הסרטים החדשים ביותר!</string>
+    <string name="add_new_movie_label">הוסף סרט חדש!</string>
+    <string name="search_movie_label">חיפוש סרט:</string>
+    <string name="favorite_movies_label">הסרטים המעודפים שלך!</string>
+    <string name="funny_icon">אייקון קומדיה</string>
+    <string name="thrill_icon">אייקון לחץ</string>
+    <string name="relax_icon">אייקון רגוע</string>
+    <string name="fantasy_icon">אייקון פנטזיה</string>
+    <string name="romantic_icon">אייקון רומנטי</string>
+    <string name="movie_genre_mood_label">מצא את הסרט שלך לפי מצב הרוח שלך!</string>
+    <string name="comedy_label_genre_mood">צחוק בלתי פוסק</string>
+    <string name="thrill_label_genre_mood">מתח שמחזיק אותך על הקצה</string>
+    <string name="relax_label_genre_mood"><![CDATA[רוגע & ומנוחה]]></string>
+    <string name="fantasy_label_genre_mood">לברוח מהמציאות</string>
+    <string name="romantic_label_genre_mood">מרגש מעומק הלב</string>
 
 
 </resources>
