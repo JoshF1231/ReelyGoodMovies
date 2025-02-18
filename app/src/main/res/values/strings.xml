@@ -85,10 +85,7 @@
     <string name="mystery">mystery</string>
     <string name="TVMovie_label">TV-movies</string>
     <string name="western_label">western</string>
-
-
-
-
+    <string name="unknown_genre">Unknown</string>
 
 
 </resources>

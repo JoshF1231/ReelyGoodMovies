@@ -24,14 +24,12 @@ data class Movie(
     @TypeConverters(IntListConverter::class)
     @ColumnInfo(name = "genre")
     @SerializedName("genre_ids")
-    var genre: List<Int>,
+    var genre: List<Int> = emptyList(),
     @ColumnInfo(name = "photo")
     val photo: String?,
     @ColumnInfo(name = "favorite")
     var favorite: Boolean = false,
-) {
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
-}
-
+)
 

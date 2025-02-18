@@ -39,6 +39,7 @@ import java.util.Locale
 import android.Manifest
 import android.provider.ContactsContract
 import androidx.core.content.ContentProviderCompat
+import androidx.core.os.bundleOf
 
 @AndroidEntryPoint
 class AllItemsFragment : Fragment() {
@@ -141,7 +142,9 @@ class AllItemsFragment : Fragment() {
                 override fun onItemClicked(index: Int) {
                     val movie = adapter.getItem(index)
                     viewModel.setMovie(movie)
-                    findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment)
+
+                    findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment
+                    , bundleOf("id" to movie.id))
                 }
 
                 override fun onItemLongClicked(index: Int) {
