@@ -2,17 +2,23 @@ package com.example.reelygoodmovies.ui.all_movies
 
 import android.app.AlertDialog
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.speech.SpeechRecognizer
 import android.view.*
 import android.widget.Button
+import android.widget.EditText
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity.RESULT_OK
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -21,10 +27,14 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reelygoodmovies.R
+import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.databinding.AllItemsLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
+import android.Manifest
+import android.provider.ContactsContract
+import androidx.core.content.ContentProviderCompat
 
 @AndroidEntryPoint
 class AllItemsFragment : Fragment() {
@@ -32,17 +42,48 @@ class AllItemsFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
     private lateinit var adapter: ItemAdapter
+    private var currentMovie: Movie? = null
 
-    val recognizeSpeechLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == RESULT_OK) {
-            it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.let { it1 ->
-                viewModel.setRecognition(
-                    it1
-                        .joinToString(" ")
-                )
+
+    val recognizeSpeechLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+            if (it.resultCode == RESULT_OK) {
+                it.data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)?.let { it1 ->
+                    viewModel.setRecognition(
+                        it1
+                            .joinToString(" ")
+                    )
+                }
             }
         }
+
+    private val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+        if (isGranted) {
+            // If permission is granted, show contacts dialog
+            currentMovie?.let { showContactsDialog(it) }
+        } else {
+            Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+        }
     }
+
+
+    private fun requestContactPermission(movie: Movie) {
+        // Store the selected movie in currentMovie
+        currentMovie = movie
+
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) == PackageManager.PERMISSION_GRANTED) {
+            // If permission is granted, call the function directly
+            currentMovie?.let { showContactsDialog(it) }
+        } else {
+            // If permission is not granted, request permission
+            requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
+        }
+    }
+
+
+
+
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -68,26 +109,39 @@ class AllItemsFragment : Fragment() {
 
         binding.ibMicSearch.setOnClickListener {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+                putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                )
                 putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mic_talk))
             }
             recognizeSpeechLauncher.launch(intent)
-            }
+        }
 
 
-            // Initialize Adapter
-        adapter = ItemAdapter(emptyList(), object : ItemAdapter.ItemListener {
-            override fun onItemClicked(index: Int) {
-                val movie = adapter.getItem(index)
-                viewModel.setMovie(movie)
-                findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment)
-            }
+        // Initialize Adapter
+        adapter = ItemAdapter(
+            emptyList(),
+            object : ItemAdapter.ItemListener {
+                override fun onItemClicked(index: Int) {
+                    val movie = adapter.getItem(index)
+                    viewModel.setMovie(movie)
+                    findNavController().navigate(R.id.action_allItemsFragment2_to_detailedItemFragment)
+                }
 
-            override fun onItemLongClicked(index: Int) {
-                Toast.makeText(requireContext(), adapter.getItem(index).title, Toast.LENGTH_SHORT).show()
-            }
+                override fun onItemLongClicked(index: Int) {
+                    val movie = adapter.getItem(index)
+                    if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+                        requestContactPermission(movie) // אם אין הרשאה, בקש הרשאה
+                    } else {
+                        showContactsDialog(movie) // מעביר את הסרט לפונקציה
+                    }
+                }
 
-            override fun onEditButtonClick(index: Int) {
+
+
+
+                override fun onEditButtonClick(index: Int) {
                 val movie = adapter.getItem(index)
                 viewModel.setMovie(movie)
                 viewModel.setEditMode(true)
@@ -161,6 +215,74 @@ class AllItemsFragment : Fragment() {
 
 
     }
+    // שליחת הסרט לאיש קשר שנבחר מתוך האפליקציה שלך
+    private fun shareMovieWithContact(contact: String, movie: Movie) {
+        val shareText = """
+    Hey, check out this movie: ${movie.title}
+    
+    Plot: ${movie.plot}
+    
+    Rating: ${movie.rate}/5
+""".trimIndent()
+
+
+        // יצירת Intent לשיתוף טקסט
+        val smsIntent = Intent(Intent.ACTION_SENDTO).apply {
+            data = Uri.parse("smsto:$contact")  // מספר הטלפון של איש הקשר
+            putExtra("sms_body", shareText)  // טקסט של הסרט שברצונך לשתף
+        }
+
+        try {
+            startActivity(smsIntent)  // פותח את אפליקציית SMS עם ההודעה שהכנו
+        } catch (e: Exception) {
+            e.printStackTrace()
+            // טיפול במידה ו-Intent נכשל (אם אין אפליקציית SMS או בעיה אחרת)
+        }
+    }
+
+    // הצגת דיאלוג לבחירת איש קשר מתוך אנשי הקשר של המשתמש
+    fun showContactsDialog(movie: Movie) {
+        val contacts = getContacts() // קבלת רשימת אנשי קשר
+        val contactNames = contacts.map { it.first as CharSequence }.toTypedArray() // המרת השמות ל-CharSequence
+
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Choose a contact to share the movie")
+        builder.setItems(contactNames) { _, which ->
+            val contact = contacts[which]
+            shareMovieWithContact(contact.second, movie) // שליחת הסרט לאיש קשר עם מספר הטלפון
+        }
+        builder.show()
+    }
+
+    // פונקציה לחילוץ אנשי קשר מהמכשיר
+    fun getContacts(): List<Pair<String, String>> {
+        val contactList = mutableListOf<Pair<String, String>>()
+        val contentResolver = requireContext().contentResolver
+        val cursor = contentResolver.query(
+            ContactsContract.CommonDataKinds.Phone.CONTENT_URI, // Uri של אנשי קשר
+            arrayOf(
+                ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+            ), // מה אנחנו רוצים להחזיר
+            null, null, null
+        )
+
+        cursor?.use {
+            val nameIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME)
+            val numberIndex = it.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER)
+            while (it.moveToNext()) {
+                val name = it.getString(nameIndex)
+                val number = it.getString(numberIndex)
+                contactList.add(name to number) // הוספת זוג של שם ומספר
+            }
+        }
+
+        return contactList
+    }
+
+
+
+
 
     private fun deleteMovieDialog(viewHolder: RecyclerView.ViewHolder) {
         val movieToDelete = adapter.getItem(viewHolder.adapterPosition)
@@ -241,3 +363,7 @@ private fun deleteAllMoviesDialog() {
     }
 }
 */
+
+
+
+

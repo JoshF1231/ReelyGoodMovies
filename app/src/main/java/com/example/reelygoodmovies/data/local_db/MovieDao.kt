@@ -37,4 +37,5 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE favorite = 1")
     fun getFavoriteMovies(): LiveData<List<Movie>>
 
+
 }
