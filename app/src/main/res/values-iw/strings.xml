@@ -85,6 +85,7 @@
     <string name="mystery">מיסתורין</string>
     <string name="TVMovie_label">סרטי טלוויזיה</string>
     <string name="western_label">מערבי</string>
+    <string name="unknown_genre">ללא</string>
 
 
 </resources>

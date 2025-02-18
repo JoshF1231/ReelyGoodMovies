@@ -2,8 +2,10 @@ package com.example.reelygoodmovies.di
 
 import android.content.Context
 import com.example.reelygoodmovies.data.local_db.MovieDataBase
+import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.data.remote_db.MovieService
 import com.example.reelygoodmovies.utils.Constants
+import com.example.reelygoodmovies.utils.MovieDeserializer
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -41,7 +43,11 @@ class AppModule {
     }
 
     @Provides
-    fun provideGson() : Gson = GsonBuilder().create()
+    fun provideGson(): Gson {
+        return GsonBuilder()
+            .registerTypeAdapter(Movie::class.java, MovieDeserializer())
+            .create()
+    }
 
     @Provides
     fun provideMovieService(retrofit : Retrofit) : MovieService =

@@ -17,7 +17,7 @@ class MovieRepositoryNew @Inject constructor(
         { moviesFromApi ->
             val favoriteMovies = localDataSource.getFavoriteMoviesSync()
             localDataSource.addMovies(moviesFromApi.results)
-            favoriteMovies.forEach{movie -> localDataSource.updateMovie(movie )}
+            favoriteMovies.forEach{movie -> localDataSource.updateMovie(movie)}
         }
     )
 
@@ -25,6 +25,7 @@ class MovieRepositoryNew @Inject constructor(
     fun getMovie (id : Int) = performFetchingAndSaving(
         {localDataSource.getMovie(id)},
         {remoteDataSource.getMovie(id)},
-        {localDataSource.addMovie(it)}
+        {localDataSource.addMovie(it)
+        }
     )
 }
