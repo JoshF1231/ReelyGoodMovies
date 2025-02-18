@@ -38,5 +38,4 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE favorite = 1")
     suspend fun getFavoriteMoviesSync(): List<Movie>
 
-
 }
