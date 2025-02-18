@@ -78,8 +78,14 @@
     <string name="relax_label_genre_mood"><![CDATA[Chill & Relax]]></string>
     <string name="fantasy_label_genre_mood">Escape Reality</string>
     <string name="romantic_label_genre_mood">Heartfelt</string>
+    <string name="crime_label">crime</string>
+    <string name="fantasy_label">fantasy</string>
+    <string name="history_label">history</string>
+    <string name="music_label">music</string>
+    <string name="mystery">mystery</string>
+    <string name="TVMovie_label">TV-movies</string>
+    <string name="western_label">western</string>
 
-    please talk clearly and slowly"
 
 
 

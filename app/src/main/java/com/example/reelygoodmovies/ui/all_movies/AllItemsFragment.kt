@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reelygoodmovies.R
+import com.example.reelygoodmovies.data.models.GenreConverter
 import com.example.reelygoodmovies.databinding.AllItemsLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
 import com.example.reelygoodmovies.utils.Error
@@ -125,6 +126,12 @@ class AllItemsFragment : Fragment() {
         viewModel.movieList?.observe(viewLifecycleOwner) { fullMoviesList ->
             if (binding.searchView.query.isNullOrEmpty()) {
                 // Only update the RecyclerView with the full list if the search query is empty
+                for (movie in fullMoviesList) {
+                    val genreLabels = movie.genre.map { genreId ->
+                        GenreConverter.movieGenres[genreId] ?: genreId
+                    }
+                    movie.genre = genreLabels
+                }
                 adapter.updateMovies(fullMoviesList)
 
                 // Show the RecyclerView if there are movies in the list

@@ -11,11 +11,17 @@ class MovieRepositoryNew @Inject constructor(
     private val localDataSource : MovieDao
 ) {
 
-    fun getMovies () = performFetchingAndSaving(
-        {localDataSource.getMovies()},
-        {remoteDataSource.getMovies()},
-        {localDataSource.addMovies(it.results)}
+    fun getMovies() = performFetchingAndSaving(
+        { localDataSource.getMovies() },
+        { remoteDataSource.getMovies() },
+        { moviesFromApi ->
+            val favoriteMovies = localDataSource.getFavoriteMoviesSync()
+            localDataSource.addMovies(moviesFromApi.results)
+            favoriteMovies.forEach{movie -> localDataSource.updateMovie(movie )}
+        }
     )
+
+
     fun getMovie (id : Int) = performFetchingAndSaving(
         {localDataSource.getMovie(id)},
         {remoteDataSource.getMovie(id)},

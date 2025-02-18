@@ -24,7 +24,7 @@ data class Movie(
     @TypeConverters(IntListConverter::class)
     @ColumnInfo(name = "genre")
     @SerializedName("genre_ids")
-    val genre: List<Int>,
+    var genre: List<Int>,
     @ColumnInfo(name = "photo")
     val photo: String?,
     @ColumnInfo(name = "favorite")
