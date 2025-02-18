@@ -4,7 +4,9 @@ import android.app.Application
 import com.example.reelygoodmovies.data.local_db.MovieDao
 import com.example.reelygoodmovies.data.local_db.MovieDataBase
 import com.example.reelygoodmovies.data.models.Movie
+import javax.inject.Singleton
 
+@Singleton
 class MovieRepository(application: Application) {
 
     private var movieDao: MovieDao?

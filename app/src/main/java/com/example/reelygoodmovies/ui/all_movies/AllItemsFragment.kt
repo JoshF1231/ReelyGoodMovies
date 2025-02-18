@@ -28,8 +28,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
+import com.example.reelygoodmovies.data.models.GenreConverter
 import com.example.reelygoodmovies.databinding.AllItemsLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
+import com.example.reelygoodmovies.utils.Error
+import com.example.reelygoodmovies.utils.Loading
+import com.example.reelygoodmovies.utils.Success
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import android.Manifest
@@ -101,7 +105,18 @@ class AllItemsFragment : Fragment() {
         viewModel.setFilteredMovies(viewModel.movieList?.value ?: emptyList())
         viewModel.setRecognition("")
 
-
+        viewModel.movies.observe(viewLifecycleOwner){
+            when (it.status){
+                is Loading -> binding.progressBar.visibility = View.VISIBLE
+                is Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    Toast.makeText(requireContext(), it.status.message, Toast.LENGTH_SHORT).show()
+                }
+                is Success -> {
+                    binding.progressBar.visibility = View.GONE
+                }
+            }
+        }
 
         viewModel.recognition.observe(viewLifecycleOwner) { recognitionText ->
             binding.searchView.setQuery(recognitionText, false)
@@ -165,6 +180,12 @@ class AllItemsFragment : Fragment() {
         viewModel.movieList?.observe(viewLifecycleOwner) { fullMoviesList ->
             if (binding.searchView.query.isNullOrEmpty()) {
                 // Only update the RecyclerView with the full list if the search query is empty
+                for (movie in fullMoviesList) {
+                    val genreLabels = movie.genre.map { genreId ->
+                        GenreConverter.movieGenres[genreId] ?: genreId
+                    }
+                    movie.genre = genreLabels
+                }
                 adapter.updateMovies(fullMoviesList)
 
                 // Show the RecyclerView if there are movies in the list

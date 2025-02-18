@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
+import com.example.reelygoodmovies.data.models.Movie
 
 fun <T,A> performFetchingAndSaving(localDbFetch : () -> LiveData<T>,
                                    remoteDbFetch: suspend () -> Resource <A>,
@@ -15,8 +16,10 @@ fun <T,A> performFetchingAndSaving(localDbFetch : () -> LiveData<T>,
 
         val fetchResource = remoteDbFetch()
 
-        if (fetchResource.status is Success)
-            localDbSave(fetchResource.status.data!!)
+        if (fetchResource.status is Success) {
+            localDbSave(fetchResource.status.data!!) //Currently causes
+            // an error because the database fields are different from the json
+        }
 
         else if (fetchResource.status is Error){
             emit(Resource.error(fetchResource.status.message))

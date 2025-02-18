@@ -1,7 +1,6 @@
 package com.example.reelygoodmovies.data.local_db
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -9,7 +8,6 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import com.example.reelygoodmovies.data.models.Movie
-import javax.inject.Inject
 
 @Dao
 interface MovieDao {
@@ -37,5 +35,7 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE favorite = 1")
     fun getFavoriteMovies(): LiveData<List<Movie>>
 
+    @Query("SELECT * FROM movies WHERE favorite = 1")
+    suspend fun getFavoriteMoviesSync(): List<Movie>
 
 }

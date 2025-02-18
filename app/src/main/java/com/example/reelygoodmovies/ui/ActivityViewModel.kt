@@ -8,15 +8,17 @@ import androidx.lifecycle.viewModelScope
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.data.repositories.MovieRepository
+import com.example.reelygoodmovies.utils.MovieRepositoryNew
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ActivityViewModel @Inject constructor(
-    application: Application,
+    application: Application, moviesRepository : MovieRepositoryNew
 ) : AndroidViewModel(application) {
 
+    val movies = moviesRepository.getMovies()
 
     private val repository = MovieRepository(application)
     val movieList: LiveData<List<Movie>>? = repository.getMovies()

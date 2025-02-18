@@ -51,7 +51,7 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
                 .circleCrop()
                 .into(binding.ivItemMovieImage)
 
-            binding.rbItemMovieRating.rating = movie.rate
+            binding.rbItemMovieRating.rating = movie.rate.toFloat()
 
             val genreIds = movie.genre
 

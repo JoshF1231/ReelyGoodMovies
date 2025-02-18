@@ -78,6 +78,13 @@
     <string name="relax_label_genre_mood"><![CDATA[רוגע & ומנוחה]]></string>
     <string name="fantasy_label_genre_mood">לברוח מהמציאות</string>
     <string name="romantic_label_genre_mood">מרגש מעומק הלב</string>
+    <string name="crime_label">פשע</string>
+    <string name="fantasy_label">פנטזיה</string>
+    <string name="history_label">היסטוריה</string>
+    <string name="music_label">מחזמר</string>
+    <string name="mystery">מיסתורין</string>
+    <string name="TVMovie_label">סרטי טלוויזיה</string>
+    <string name="western_label">מערבי</string>
 
 
 </resources>
