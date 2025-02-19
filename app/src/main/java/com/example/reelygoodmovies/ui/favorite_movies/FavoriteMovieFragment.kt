@@ -54,7 +54,8 @@ class FavoriteMovieFragment : Fragment() {
             }
 
                     override fun onEditButtonClick(index: Int) {
-                        viewModel.setMovie(favoriteMovies[index])
+                        val movie = adapter.getItem(index)
+                        viewModel.setMovie(movie)
                         editViewModel.setEditMode(true)
                         findNavController().navigate(R.id.action_favoriteMovieFragment_to_addOrEditItemFragment)
                     }

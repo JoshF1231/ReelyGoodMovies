@@ -189,7 +189,7 @@ class AddOrEditItemFragment : Fragment() {
         setNumberPickers(movie)
 
         editViewModel.setSelectedYear(movie.year)
-        binding.rbMovieRating=.rating = movie.rate.toFloat()
+        binding.rbMovieRating.rating = movie.rate.toFloat()
 
         showGenres(movie)
         editViewModel.setSelectedImageURI(movie.photo)

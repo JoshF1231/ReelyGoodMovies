@@ -40,6 +40,7 @@
     import android.provider.ContactsContract
     import androidx.core.content.ContentProviderCompat
     import androidx.core.os.bundleOf
+    import androidx.fragment.app.viewModels
     import com.bumptech.glide.Glide
     import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
 
