@@ -4,10 +4,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.switchMap
+import androidx.lifecycle.viewModelScope
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.data.repositories.MovieRepository
 import com.example.reelygoodmovies.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -21,5 +23,8 @@ class DetailedMovieViewModel @Inject constructor(
     val movie: LiveData<Resource<Movie>> = _movie
     fun setId(id: Int) {
         _id.value = id
+    }
+    fun updateMovie(movie: Movie) {
+        viewModelScope.launch { movieRepository.updateMovie(movie) }
     }
 }
