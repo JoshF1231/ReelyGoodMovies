@@ -55,6 +55,9 @@ class AddOrEditItemFragment : Fragment() {
         val movie = viewModel.chosenMovie.value
         setupAddOrEditMode(isEditMode, movie)
 
+        arguments?.getInt("id")?.let{
+            editViewModel.setId(it)
+        }
 
         binding.btnSelectYear.setOnClickListener {
             showYearPickerDialog()

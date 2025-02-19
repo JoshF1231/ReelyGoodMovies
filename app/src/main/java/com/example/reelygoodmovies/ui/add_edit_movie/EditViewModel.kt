@@ -3,8 +3,28 @@ package com.example.reelygoodmovies.ui.add_edit_movie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.switchMap
+import com.example.reelygoodmovies.data.models.Movie
+import com.example.reelygoodmovies.utils.Error
+import com.example.reelygoodmovies.utils.Loading
+import com.example.reelygoodmovies.utils.MovieRepositoryNew
+import com.example.reelygoodmovies.utils.Resource
+import com.example.reelygoodmovies.utils.Success
+import dagger.hilt.android.lifecycle.HiltViewModel
+import javax.inject.Inject
 
-class EditViewModel: ViewModel() {
+@HiltViewModel
+class EditViewModel @Inject constructor(movieRepositoryNew : MovieRepositoryNew) : ViewModel() {
+
+    private val _id = MutableLiveData<Int>()
+    private val _movie = _id.switchMap {
+        movieRepositoryNew.getMovie(it)
+    }
+    val movie: LiveData<Resource<Movie>> = _movie
+
+    fun setId(id: Int) {
+        _id.value = id
+    }
 
     private val _favorite = MutableLiveData<Boolean>()
     val favorite: LiveData<Boolean> get() = _favorite
@@ -56,4 +76,20 @@ class EditViewModel: ViewModel() {
         _favorite.value = b
     }
 
+
+    fun updateMovieFields (){
+        when (movie.value?.status){
+            is Error -> return
+            is Loading -> return
+            is Success -> {
+                clearAllData()
+                setSelectedYear(movie.value!!.status.data!!.year)
+                setSelectedRuntimeHours(movie.value!!.status.data!!.length%60)
+                setSelectedRuntimeMinutes(movie.value!!.status.data!!.length/60)
+                setSelectedImageURI(movie.value!!.status.data!!.photo)
+                setFavorite(movie.value!!.status.data!!.favorite)
+            }
+            else -> return
+        }
+    }
 }

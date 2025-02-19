@@ -5,6 +5,7 @@
     import android.view.View
     import android.view.ViewGroup
     import android.widget.Toast
+    import androidx.core.os.bundleOf
     import androidx.core.view.isVisible
     import androidx.fragment.app.Fragment
     import androidx.fragment.app.activityViewModels
@@ -27,7 +28,6 @@
     class DetailedItemFragment : Fragment() {
         private var _binding: DetailedItemLayoutBinding? = null
         private val binding get() = _binding!!
-        private val viewModel: ActivityViewModel by activityViewModels()
         private val editViewModel: EditViewModel by viewModels()
         private val detailedMovieViewModel : DetailedMovieViewModel by viewModels()
 
@@ -61,12 +61,10 @@
             arguments?.getInt("id")?.let{
                 detailedMovieViewModel.setId(it)
             }
-
-            binding.ibMovieEdit.isVisible = viewModel.chosenMovie.value!!.localGen
             binding.ibMovieEdit.setOnClickListener {
                 editViewModel.setEditMode(true)
-                findNavController().navigate(R.id.action_detailedItemFragment_to_addOrEditItemFragment)
-
+                findNavController().navigate(R.id.action_detailedItemFragment_to_addOrEditItemFragment,
+                    bundleOf("id" to (detailedMovieViewModel.movie.value?.status?.data?.id ?: -1)))
             }
         }
 
@@ -82,6 +80,7 @@
             binding.rbMovieRating.rating = movie.rate
             binding.tvMovieYear.text = movie.year.toString()
             binding.tvMovieLength.text = movie.length.toString()
+            binding.ibMovieEdit.isVisible = movie.localGen
             Glide.with(requireContext())
                 .load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
                 .circleCrop()

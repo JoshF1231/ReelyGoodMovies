@@ -20,7 +20,7 @@ class ActivityViewModel @Inject constructor(
 
     val movies = moviesRepository.getMovies()
 
-    val favoriteMovies: LiveData<List<Movie>>? = moviesRepository.getFavoriteMovies()
+    val favoriteMovies: LiveData<List<Movie>> = moviesRepository.getFavoriteMovies()
 
     private val _chosenMovie = MutableLiveData<Movie>()
     val chosenMovie: LiveData<Movie> get() = _chosenMovie
