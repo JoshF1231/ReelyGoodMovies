@@ -175,7 +175,8 @@
                 val movie = adapter.getItem(index)
                 viewModel.setMovie(movie)
                 editViewModel.setEditMode(true)
-                findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
+                findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment
+                , bundleOf("id" to movie.id))
             }
 
                 override fun onFavButtonClick(index: Int) {
@@ -191,6 +192,7 @@
 
             binding.recycler.adapter = adapter
             binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+
 
             // Observe filtered movies
             viewModel.filteredMovies.observe(viewLifecycleOwner) { filteredMovies ->
@@ -222,7 +224,8 @@
         binding.fabAddItem.setOnClickListener {
             editViewModel.setEditMode(false)
             editViewModel.clearAllData()
-            findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
+            findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment,
+                bundleOf("id" to -1))
         }
 
 

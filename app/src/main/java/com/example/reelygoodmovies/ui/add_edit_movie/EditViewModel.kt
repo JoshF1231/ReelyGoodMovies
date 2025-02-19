@@ -3,6 +3,7 @@ package com.example.reelygoodmovies.ui.add_edit_movie
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.utils.Error
@@ -17,8 +18,12 @@ import javax.inject.Inject
 class EditViewModel @Inject constructor(movieRepositoryNew : MovieRepositoryNew) : ViewModel() {
 
     private val _id = MutableLiveData<Int>()
-    private val _movie = _id.switchMap {
-        movieRepositoryNew.getMovie(it)
+    private val _movie = _id.switchMap { id ->
+        if (id > 0) {
+            movieRepositoryNew.getMovie(id)
+        } else {
+            liveData { emit(Resource.error("Invalid ID")) }
+        }
     }
     val movie: LiveData<Resource<Movie>> = _movie
 
