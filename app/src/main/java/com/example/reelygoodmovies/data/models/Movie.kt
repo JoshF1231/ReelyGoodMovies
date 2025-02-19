@@ -29,6 +29,8 @@ data class Movie(
     val photo: String?,
     @ColumnInfo(name = "favorite")
     var favorite: Boolean = false,
+    @ColumnInfo(name = "localGen")
+    var localGen: Boolean = false,
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 )

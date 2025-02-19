@@ -51,7 +51,8 @@ class MovieDeserializer : JsonDeserializer<Movie> {
             photo = "",
             year = releaseYear,
             length = movieLength,
-            id = id
+            id = id,
+            localGen = false,
         )
     }
 }

@@ -7,17 +7,18 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.GenreMoodFilterLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
-import com.example.reelygoodmovies.ui.all_movies.ItemAdapter
 
 class GenreMoodFragment : Fragment() {
 
     private var _binding: GenreMoodFilterLayoutBinding? = null
     private val binding get() = _binding!!
+    private val viewModelGenre: GenreMoodViewModel by viewModels()
     private val viewModel: ActivityViewModel by activityViewModels()
 
     override fun onCreateView(
@@ -34,13 +35,13 @@ class GenreMoodFragment : Fragment() {
 
         viewModel.movieList?.observe(viewLifecycleOwner) { movies ->
             if (movies.isNotEmpty()) {
-                viewModel.filterMoviesByGenre(movies)
+                viewModelGenre.filterMoviesByGenre(movies)
             }
         }
 
         val comedyAdapter = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {
-                val selectedMovie = viewModel.comedyMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.comedyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
                     findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
@@ -48,7 +49,7 @@ class GenreMoodFragment : Fragment() {
             }
 
             override fun onItemLongClicked(index: Int) {
-                val selectedMovie = viewModel.comedyMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.comedyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     Toast.makeText(requireContext(), selectedMovie.title, Toast.LENGTH_SHORT).show()
                 }
@@ -59,13 +60,13 @@ class GenreMoodFragment : Fragment() {
 
         binding.recyclerFunny.adapter = comedyAdapter
 
-        viewModel.comedyMovies.observe(viewLifecycleOwner) { movies ->
+        viewModelGenre.comedyMovies.observe(viewLifecycleOwner) { movies ->
             comedyAdapter.updateMovies(movies)
         }
 
         val thrillerAdapter  = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {
-                val selectedMovie = viewModel.thrillerMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.thrillerMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
                     findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
@@ -73,7 +74,7 @@ class GenreMoodFragment : Fragment() {
             }
 
             override fun onItemLongClicked(index: Int) {
-                val selectedMovie = viewModel.thrillerMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.thrillerMovies.value?.get(index)
                 if (selectedMovie != null) {
                     Toast.makeText(requireContext(), selectedMovie.title, Toast.LENGTH_SHORT).show()
                 }
@@ -84,13 +85,13 @@ class GenreMoodFragment : Fragment() {
 
         binding.recyclerThriller.adapter = thrillerAdapter
 
-        viewModel.thrillerMovies.observe(viewLifecycleOwner) { movies ->
+        viewModelGenre.thrillerMovies.observe(viewLifecycleOwner) { movies ->
             thrillerAdapter .updateMovies(movies)
         }
 
         val fantasyAdapter = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {
-                val selectedMovie = viewModel.fantasyMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.fantasyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
                     findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
@@ -98,7 +99,7 @@ class GenreMoodFragment : Fragment() {
             }
 
             override fun onItemLongClicked(index: Int) {
-                val selectedMovie = viewModel.fantasyMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.fantasyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     Toast.makeText(requireContext(), selectedMovie.title, Toast.LENGTH_SHORT).show()
                 }
@@ -109,13 +110,13 @@ class GenreMoodFragment : Fragment() {
 
         binding.recyclerFantasy.adapter = fantasyAdapter
 
-        viewModel.fantasyMovies.observe(viewLifecycleOwner) { movies ->
+        viewModelGenre.fantasyMovies.observe(viewLifecycleOwner) { movies ->
             fantasyAdapter.updateMovies(movies)
         }
 
         val romanceAdapter = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {
-                val selectedMovie = viewModel.romanceMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.romanceMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
                     findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
@@ -123,7 +124,7 @@ class GenreMoodFragment : Fragment() {
             }
 
             override fun onItemLongClicked(index: Int) {
-                val selectedMovie = viewModel.romanceMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.romanceMovies.value?.get(index)
                 if (selectedMovie != null) {
                     Toast.makeText(requireContext(), selectedMovie.title, Toast.LENGTH_SHORT).show()
                 }
@@ -134,13 +135,13 @@ class GenreMoodFragment : Fragment() {
 
         binding.recyclerRomantic.adapter = romanceAdapter
 
-        viewModel.romanceMovies.observe(viewLifecycleOwner) { movies ->
+        viewModelGenre.romanceMovies.observe(viewLifecycleOwner) { movies ->
             romanceAdapter.updateMovies(movies)
         }
 
         val familyAdapter = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {
-                val selectedMovie = viewModel.familyMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.familyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
                     findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
@@ -148,7 +149,7 @@ class GenreMoodFragment : Fragment() {
             }
 
             override fun onItemLongClicked(index: Int) {
-                val selectedMovie = viewModel.familyMovies.value?.get(index)
+                val selectedMovie = viewModelGenre.familyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     Toast.makeText(requireContext(), selectedMovie.title, Toast.LENGTH_SHORT).show()
                 }
@@ -159,7 +160,7 @@ class GenreMoodFragment : Fragment() {
 
         binding.recyclerRelax.adapter = familyAdapter
 
-        viewModel.familyMovies.observe(viewLifecycleOwner) { movies ->
+        viewModelGenre.familyMovies.observe(viewLifecycleOwner) { movies ->
             familyAdapter.updateMovies(movies)
         }
 

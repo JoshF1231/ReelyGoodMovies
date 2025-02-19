@@ -38,14 +38,19 @@ import dagger.hilt.android.AndroidEntryPoint
 import java.util.Locale
 import android.Manifest
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.core.content.ContentProviderCompat
 import androidx.core.os.bundleOf
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
 
 @AndroidEntryPoint
 class AllItemsFragment : Fragment() {
     private var _binding: AllItemsLayoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
+    private val editViewModel: EditViewModel by viewModels()
     private lateinit var adapter: ItemAdapter
     private var currentMovie: Movie? = null
 
@@ -162,7 +167,7 @@ class AllItemsFragment : Fragment() {
                 override fun onEditButtonClick(index: Int) {
                 val movie = adapter.getItem(index)
                 viewModel.setMovie(movie)
-                viewModel.setEditMode(true)
+                editViewModel.setEditMode(true)
                 findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
             }
 
@@ -232,8 +237,8 @@ class AllItemsFragment : Fragment() {
 
         // Add new movie button
         binding.fabAddItem.setOnClickListener {
-            viewModel.setEditMode(false)
-            viewModel.clearAllData()
+            editViewModel.setEditMode(false)
+            editViewModel.clearAllData()
             findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
         }
 
@@ -316,7 +321,6 @@ class AllItemsFragment : Fragment() {
         builder.setView(dialogView)
         val dialog = builder.create()
         dialog.setCancelable(false)
-
         dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
             adapter.notifyItemChanged(viewHolder.adapterPosition)
             dialog.dismiss()
@@ -348,6 +352,7 @@ class AllItemsFragment : Fragment() {
         movieToDelete.photo?.let {
             dialogView.findViewById<ImageView>(R.id.iv_warning_image_movie).setImageURI(it.toUri())
         }
+
         dialog.show()
     }
 

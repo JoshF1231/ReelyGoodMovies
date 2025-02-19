@@ -7,11 +7,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.FavoriteLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
+import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
 import com.example.reelygoodmovies.ui.all_movies.ItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -21,6 +23,7 @@ class FavoriteMovieFragment : Fragment() {
     private var _binding: FavoriteLayoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
+    private val editViewModel: EditViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -52,7 +55,7 @@ class FavoriteMovieFragment : Fragment() {
 
                     override fun onEditButtonClick(index: Int) {
                         viewModel.setMovie(favoriteMovies[index])
-                        viewModel.setEditMode(true)
+                        editViewModel.setEditMode(true)
                         findNavController().navigate(R.id.action_favoriteMovieFragment_to_addOrEditItemFragment)
                     }
 
