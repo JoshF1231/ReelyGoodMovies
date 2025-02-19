@@ -75,11 +75,11 @@ class ActivityViewModel @Inject constructor(
 
 
     fun filterMoviesByGenre(movies: List<Movie>) {
-        _comedyMovies.value = movies.filter { it.genre!!.contains(R.string.comedy_label) }
-        _thrillerMovies.value = movies.filter { it.genre!!.contains(R.string.thriller_label) }
-        _fantasyMovies.value = movies.filter { it.genre!!.contains(R.string.science_fiction_label) }
-        _romanceMovies.value = movies.filter { it.genre!!.contains(R.string.romance_label) }
-        _familyMovies.value = movies.filter { it.genre!!.contains(R.string.family_label) }
+        _comedyMovies.value = movies.filter { it.genre.contains(R.string.comedy_label) }
+        _thrillerMovies.value = movies.filter { it.genre.contains(R.string.thriller_label) }
+        _fantasyMovies.value = movies.filter { it.genre.contains(R.string.science_fiction_label) }
+        _romanceMovies.value = movies.filter { it.genre.contains(R.string.romance_label) }
+        _familyMovies.value = movies.filter { it.genre.contains(R.string.family_label) }
     }
 
 

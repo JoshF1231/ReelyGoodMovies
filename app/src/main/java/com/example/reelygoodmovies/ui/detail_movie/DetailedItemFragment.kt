@@ -50,11 +50,7 @@
                     is Loading -> binding.progressBar.visibility = View.VISIBLE
                     is Success -> {
                         binding.progressBar.visibility = View.GONE
-                        val genreNames =  movie.status.data!!.genre.joinToString(", ") { genreId ->
-                            val stringResId = GenreConverter.movieGenres[genreId] ?: R.string.unknown_genre // Provide a default
-                            requireContext().getString(stringResId)
-                        }
-                        updateMovie(genreNames,movie.status.data)
+                        updateMovie(movie.status.data!!)
                     }
                 }
             }
@@ -63,15 +59,6 @@
                 detailedMovieViewModel.setId(it)
             }
 
-            viewModel.chosenMovie.observe(viewLifecycleOwner) { movie ->
-                binding.tvMovieTitle.text = movie.title
-                val genreIds = movie.genre
-
-                val genreNames = genreIds.joinToString(", ") { genreId ->
-                    requireContext().getString(genreId)
-                }
-                updateMovie(genreNames,movie)
-            }
 
             binding.ibMovieEdit.setOnClickListener {
                 viewModel.setEditMode(true)
@@ -80,7 +67,12 @@
             }
         }
 
-        fun updateMovie(genreNames : String, movie : Movie){
+        fun updateMovie(movie : Movie){
+            val genreIds = movie.genre
+
+            val genreNames = genreIds.joinToString(", ") { genreId ->
+                binding.root.context.getString(genreId)
+            }
             binding.tvMovieGenres.text = genreNames
             binding.tvMoviePlot.text = movie.plot
             binding.rbMovieRating.rating = movie.rate

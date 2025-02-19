@@ -183,12 +183,12 @@ class AllItemsFragment : Fragment() {
         viewModel.movieList?.observe(viewLifecycleOwner) { fullMoviesList ->
             if (binding.searchView.query.isNullOrEmpty()) {
                 // Only update the RecyclerView with the full list if the search query is empty
-                for (movie in fullMoviesList) {
-                    val genreLabels = movie.genre.map { genreId ->
-                        GenreConverter.movieGenres[genreId] ?: genreId
-                    }
-                    movie.genre = genreLabels
-                }
+//                for (movie in fullMoviesList) {
+//                    val genreLabels = movie.genre.map { genreId ->
+//                        GenreConverter.movieGenres[genreId] ?: genreId
+//                    }
+//                    movie.genre = genreLabels
+//                }
                 adapter.updateMovies(fullMoviesList)
 
                 // Show the RecyclerView if there are movies in the list
