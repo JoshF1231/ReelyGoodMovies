@@ -20,6 +20,9 @@ import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.databinding.AddItemLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
+import com.example.reelygoodmovies.utils.Error
+import com.example.reelygoodmovies.utils.Loading
+import com.example.reelygoodmovies.utils.Success
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -54,7 +57,20 @@ class AddOrEditItemFragment : Fragment() {
         val isEditMode = editViewModel.isEditMode.value ?: false
         val movie = viewModel.chosenMovie.value
         setupAddOrEditMode(isEditMode, movie)
+        
+        editViewModel.movie.observe(viewLifecycleOwner){ movie ->
+            when (movie.status){
+                is Error -> setupAddOrEditMode(isEditMode = false)
+                is Loading -> setupAddOrEditMode(isEditMode = false)
+                is Success -> {
+                    setupAddOrEditMode(true,movie.status.data)
+                }
+            }
+        }
 
+        arguments?.getInt("id")?.let{
+            editViewModel.setId(it) // ID received is -1 if the FAB (+) is pressed from AllItems
+        }
 
         binding.btnSelectYear.setOnClickListener {
             showYearPickerDialog()
@@ -130,7 +146,6 @@ class AddOrEditItemFragment : Fragment() {
                     val addMessage = getString(R.string.movie_added, movieToSave.title)
                     Toast.makeText(requireContext(), addMessage, Toast.LENGTH_SHORT).show()
                 }
-
                 findNavController().navigate(R.id.action_addOrEditItemFragment_to_allItemsFragment2)
             }
         }

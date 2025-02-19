@@ -5,25 +5,20 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.data.repositories.MovieRepository
-import com.example.reelygoodmovies.utils.MovieRepositoryNew
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ActivityViewModel @Inject constructor(
-    application: Application, moviesRepository : MovieRepositoryNew
+    application: Application, private val moviesRepository : MovieRepository
 ) : AndroidViewModel(application) {
 
     val movies = moviesRepository.getMovies()
 
-    private val repository = MovieRepository(application)
-    val movieList: LiveData<List<Movie>>? = repository.getMovies()
-
-    val favoriteMovies: LiveData<List<Movie>>? = repository.getFavoriteMovies()
+    val favoriteMovies: LiveData<List<Movie>> = moviesRepository.getFavoriteMovies()
 
     private val _chosenMovie = MutableLiveData<Movie>()
     val chosenMovie: LiveData<Movie> get() = _chosenMovie
@@ -71,11 +66,11 @@ class ActivityViewModel @Inject constructor(
 
     fun initializeSearch() {
         setRecognition("")
-        setFilteredMovies(movieList?.value ?: emptyList())
+        setFilteredMovies(movies.value?.status?.data ?: emptyList())
     }
 
     fun filterMovies(query: String) {
-        val filteredMovies = movieList?.value?.filter {
+        val filteredMovies = movies.value?.status?.data?.filter {
             it.title.lowercase().contains(query.lowercase())
         } ?: emptyList()
         setFilteredMovies(filteredMovies)
@@ -97,7 +92,6 @@ class ActivityViewModel @Inject constructor(
 
     fun setFilteredMovies(movies: List<Movie>) {
         _filteredMovies.value = movies
-
     }
 
 //    fun setEditMode(isEdit: Boolean) {
@@ -126,14 +120,14 @@ class ActivityViewModel @Inject constructor(
     }
 
     fun addMovie(movie: Movie) {
-        viewModelScope.launch { repository.addMovie(movie) }
+        viewModelScope.launch { moviesRepository.addMovie(movie) }
     }
 
     fun deleteMovie(movie: Movie, query: String?) {
         viewModelScope.launch {
-            repository.deleteMovie(movie)
+            moviesRepository.deleteMovie(movie)
 
-            val updatedMovies = movieList?.value?.filter { it.id != movie.id } ?: emptyList()
+            val updatedMovies = movies.value?.status?.data?.filter { it.id != movie.id } ?: emptyList()
             val filteredMovies = if (!query.isNullOrEmpty()) {
                 updatedMovies.filter { it.title.lowercase().contains(query.lowercase()) }
             } else {
@@ -145,11 +139,11 @@ class ActivityViewModel @Inject constructor(
 
 
     fun deleteAllMovies() {
-        viewModelScope.launch { repository.deleteAllMovies() }
+        viewModelScope.launch { moviesRepository.deleteAllMovies() }
     }
 
     fun updateMovie(movie: Movie) {
-        viewModelScope.launch { repository.updateMovie(movie) }
+        viewModelScope.launch { moviesRepository.updateMovie(movie) }
     }
 
     fun setFavorite(bool: Boolean) {

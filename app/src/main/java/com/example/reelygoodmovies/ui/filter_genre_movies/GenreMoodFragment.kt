@@ -34,9 +34,9 @@ class GenreMoodFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.movieList?.observe(viewLifecycleOwner) { movies ->
-            if (movies.isNotEmpty()) {
-                viewModelGenre.filterMoviesByGenre(movies)
+        viewModel.movies?.observe(viewLifecycleOwner) { movies ->
+            if (movies.status.data?.isNotEmpty() == true) {
+                viewModelGenre.filterMoviesByGenre(movies.status.data)
             }
         }
 
