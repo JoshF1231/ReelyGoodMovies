@@ -6,20 +6,13 @@
     import android.net.Uri
     import android.os.Bundle
     import android.speech.RecognizerIntent
-    import android.speech.SpeechRecognizer
     import android.view.*
     import android.widget.Button
-    import android.widget.EditText
-    import android.widget.ImageView
     import android.widget.SearchView
-    import android.widget.TextView
     import android.widget.Toast
     import androidx.activity.result.contract.ActivityResultContracts
     import androidx.appcompat.app.AppCompatActivity.RESULT_OK
-    import androidx.core.app.ActivityCompat
-    import androidx.core.content.ContentProviderCompat.requireContext
     import androidx.core.content.ContextCompat
-    import androidx.core.net.toUri
     import androidx.fragment.app.Fragment
     import androidx.fragment.app.activityViewModels
     import androidx.navigation.fragment.findNavController
@@ -28,17 +21,14 @@
     import androidx.recyclerview.widget.RecyclerView
     import com.example.reelygoodmovies.R
     import com.example.reelygoodmovies.data.models.Movie
-    import com.example.reelygoodmovies.data.models.GenreConverter
     import com.example.reelygoodmovies.databinding.AllItemsLayoutBinding
     import com.example.reelygoodmovies.ui.ActivityViewModel
     import com.example.reelygoodmovies.utils.Error
     import com.example.reelygoodmovies.utils.Loading
     import com.example.reelygoodmovies.utils.Success
     import dagger.hilt.android.AndroidEntryPoint
-    import java.util.Locale
     import android.Manifest
     import android.provider.ContactsContract
-    import androidx.core.content.ContentProviderCompat
     import androidx.core.os.bundleOf
     import androidx.fragment.app.viewModels
     import com.bumptech.glide.Glide
@@ -184,8 +174,6 @@
                     movie.favorite = !movie.favorite
                     viewModel.updateMovie(movie)
                     adapter.notifyItemChanged(index) // Ensure UI updates
-
-
 
                 }
             })

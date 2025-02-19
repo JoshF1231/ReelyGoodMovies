@@ -8,15 +8,12 @@
     import androidx.core.os.bundleOf
     import androidx.core.view.isVisible
     import androidx.fragment.app.Fragment
-    import androidx.fragment.app.activityViewModels
     import androidx.fragment.app.viewModels
     import androidx.navigation.fragment.findNavController
     import com.bumptech.glide.Glide
     import com.example.reelygoodmovies.R
-    import com.example.reelygoodmovies.data.models.GenreConverter
     import com.example.reelygoodmovies.data.models.Movie
     import com.example.reelygoodmovies.databinding.DetailedItemLayoutBinding
-    import com.example.reelygoodmovies.ui.ActivityViewModel
     import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
     import com.example.reelygoodmovies.utils.Error
     import com.example.reelygoodmovies.utils.Loading
@@ -66,6 +63,14 @@
                 findNavController().navigate(R.id.action_detailedItemFragment_to_addOrEditItemFragment,
                     bundleOf("id" to (detailedMovieViewModel.movie.value?.status?.data?.id ?: -1)))
             }
+
+            binding.ibItemFavorite.setOnClickListener{
+                val movie = detailedMovieViewModel.movie.value?.status?.data
+                if (movie != null){
+                    movie.favorite = !movie.favorite
+                    detailedMovieViewModel.updateMovie(movie)
+                }
+            }
         }
 
         private fun updateMovie(movie : Movie){
@@ -81,6 +86,12 @@
             binding.tvMovieYear.text = movie.year.toString()
             binding.tvMovieLength.text = movie.length.toString()
             binding.ibMovieEdit.isVisible = movie.localGen
+            val imageResource = if (movie.favorite) {
+                R.drawable.baseline_favorite_24
+            } else {
+                R.drawable.baseline_favorite_border_24
+            }
+            binding.ibItemFavorite.setImageResource(imageResource)
             Glide.with(requireContext())
                 .load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
                 .circleCrop()

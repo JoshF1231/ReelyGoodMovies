@@ -6,11 +6,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.liveData
 import androidx.lifecycle.switchMap
 import com.example.reelygoodmovies.data.models.Movie
-import com.example.reelygoodmovies.utils.Error
-import com.example.reelygoodmovies.utils.Loading
 import com.example.reelygoodmovies.data.repositories.MovieRepository
 import com.example.reelygoodmovies.utils.Resource
-import com.example.reelygoodmovies.utils.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
@@ -79,22 +76,5 @@ class EditViewModel @Inject constructor(movieRepository : MovieRepository) : Vie
 
     fun setFavorite(b: Boolean) {
         _favorite.value = b
-    }
-
-
-    fun updateMovieFields (){
-        when (movie.value?.status){
-            is Error -> return
-            is Loading -> return
-            is Success -> {
-                clearAllData()
-                setSelectedYear(movie.value!!.status.data!!.year)
-                setSelectedRuntimeHours(movie.value!!.status.data!!.length%60)
-                setSelectedRuntimeMinutes(movie.value!!.status.data!!.length/60)
-                setSelectedImageURI(movie.value!!.status.data!!.photo)
-                setFavorite(movie.value!!.status.data!!.favorite)
-            }
-            else -> return
-        }
     }
 }
