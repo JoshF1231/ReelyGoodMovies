@@ -1,5 +1,7 @@
 package com.example.reelygoodmovies.utils
 
+import com.example.reelygoodmovies.R
+import com.example.reelygoodmovies.data.models.GenreConverter
 import com.example.reelygoodmovies.data.models.Movie
 import com.google.gson.JsonDeserializationContext
 import com.google.gson.JsonDeserializer
@@ -25,25 +27,27 @@ class MovieDeserializer : JsonDeserializer<Movie> {
         }
         val releaseDate = jsonObject.get("release_date").asString
         val releaseYear = if (releaseDate.length>1) releaseDate.substring(0,4).toInt() else 0
-        val genreIds : List<Int> = if (jsonObject.has("genres")){
-            jsonObject.getAsJsonArray("genres").map{
-                it.asJsonObject.get("id").asInt
+        val genreIds: List<Int> = when {
+            jsonObject.has("genres") -> {
+                jsonObject.getAsJsonArray("genres").mapNotNull {
+                    it.asJsonObject.get("id")?.asInt
+                }
             }
-        }
-        else if (jsonObject.has("genre_ids")){
-            jsonObject.getAsJsonArray("genre_ids").map{
-                it.asJsonObject.get("id").asInt
+            jsonObject.has("genre_ids") -> {
+                jsonObject.getAsJsonArray("genre_ids").mapNotNull {
+                    it?.asInt
+                }
             }
+            else -> emptyList()
         }
-        else {
-            emptyList()
-        }
+
+        val genreNames = genreIds.mapNotNull { GenreConverter.movieGenres[it]  ?: R.string.unknown_genre }
 
         return Movie(
             title = title,
             plot = overview,
             rate = voteAverage,
-            genre = genreIds,
+            genre = genreNames,
             photo = "",
             year = releaseYear,
             length = movieLength,
