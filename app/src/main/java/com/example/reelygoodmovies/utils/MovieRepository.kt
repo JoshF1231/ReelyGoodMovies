@@ -1,6 +1,7 @@
 package com.example.reelygoodmovies.utils
 
 import com.example.reelygoodmovies.data.local_db.MovieDao
+import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.data.remote_db.MovieRemoteDataSource
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -31,5 +32,24 @@ class MovieRepositoryNew @Inject constructor(
             localDataSource.updateMovie(movieFromApi)
         }
     )
+
+
+    suspend fun addMovie(movie: Movie) {
+        localDataSource.addMovie(movie)
+    }
+
+    suspend fun updateMovie(movie: Movie) {
+        localDataSource.updateMovie(movie)
+    }
+
+    suspend fun deleteMovie(movie: Movie) {
+        localDataSource.deleteMovie(movie)
+    }
+
+    suspend fun deleteAllMovies() {
+        localDataSource.deleteAllMovies()
+    }
+
+    fun getFavoriteMovies() = localDataSource.getFavoriteMovies()
 
 }

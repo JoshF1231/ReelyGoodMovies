@@ -192,13 +192,6 @@
             binding.recycler.adapter = adapter
             binding.recycler.layoutManager = LinearLayoutManager(requireContext())
 
-            viewModel.movieList?.observe(viewLifecycleOwner) { fullMoviesList ->
-                if (binding.searchView.query.isNullOrEmpty()) {
-                    adapter.updateMovies(fullMoviesList)
-                    binding.recycler.visibility = if (fullMoviesList.isEmpty()) View.GONE else View.VISIBLE
-                }
-            }
-
             // Observe filtered movies
             viewModel.filteredMovies.observe(viewLifecycleOwner) { filteredMovies ->
                 adapter.updateMovies(filteredMovies)
