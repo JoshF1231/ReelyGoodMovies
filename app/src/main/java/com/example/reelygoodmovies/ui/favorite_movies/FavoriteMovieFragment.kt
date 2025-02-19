@@ -8,11 +8,13 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.FavoriteLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
+import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
 import com.example.reelygoodmovies.ui.all_movies.ItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -22,6 +24,8 @@ class FavoriteMovieFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
     private lateinit var adapter: ItemAdapter
+    private val editViewModel: EditViewModel by viewModels()
+
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,12 +53,11 @@ class FavoriteMovieFragment : Fragment() {
                 Toast.makeText(requireContext(), movie.title, Toast.LENGTH_SHORT).show()
             }
 
-            override fun onEditButtonClick(index: Int) {
-                val movie = adapter.getItem(index)
-                viewModel.setMovie(movie)
-                viewModel.setEditMode(true)
-                findNavController().navigate(R.id.action_favoriteMovieFragment_to_addOrEditItemFragment)
-            }
+                    override fun onEditButtonClick(index: Int) {
+                        viewModel.setMovie(favoriteMovies[index])
+                        editViewModel.setEditMode(true)
+                        findNavController().navigate(R.id.action_favoriteMovieFragment_to_addOrEditItemFragment)
+                    }
 
             override fun onFavButtonClick(index: Int) {
                 val movie = adapter.getItem(index)

@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
@@ -28,11 +29,11 @@ class AddOrEditItemFragment : Fragment() {
     private var _binding: AddItemLayoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
-
+    private val editViewModel: EditViewModel by viewModels()
     private val pickImageLauncher: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             uri?.let {
-                viewModel.setSelectedImageURI(it.toString())
+                editViewModel.setSelectedImageURI(it.toString())
                 requireActivity().contentResolver.takePersistableUriPermission(
                     it,
                     Intent.FLAG_GRANT_READ_URI_PERMISSION
@@ -50,7 +51,7 @@ class AddOrEditItemFragment : Fragment() {
         setupObservers()
         setupNumberPickers()
 
-        val isEditMode = viewModel.isEditMode.value ?: false
+        val isEditMode = editViewModel.isEditMode.value ?: false
         val movie = viewModel.chosenMovie.value
         setupAddOrEditMode(isEditMode, movie)
 
@@ -64,15 +65,15 @@ class AddOrEditItemFragment : Fragment() {
         }
 
         binding.npHoursPicker.setOnValueChangedListener { _, _, value ->
-            viewModel.setSelectedRuntimeHours(value)
+            editViewModel.setSelectedRuntimeHours(value)
         }
         binding.npMinutesPicker.setOnValueChangedListener { _, _, value ->
-            viewModel.setSelectedRuntimeMinutes(value)
+            editViewModel.setSelectedRuntimeMinutes(value)
         }
         binding.ibItemFavorite.setOnClickListener {
             // הפוך את הערך הנוכחי של favorite
-            val newFavoriteStatus = !(viewModel.favorite.value ?: false)
-            viewModel.setFavorite(newFavoriteStatus)
+            val newFavoriteStatus = !(editViewModel.favorite.value ?: false)
+            editViewModel.setFavorite(newFavoriteStatus)
         }
 
 
@@ -80,19 +81,19 @@ class AddOrEditItemFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.selectedYear.observe(viewLifecycleOwner) {
+        editViewModel.selectedYear.observe(viewLifecycleOwner) {
             binding.tvSelectedYear.text = it?.toString() ?: getString(R.string.selected_year_label)
         }
 
-        viewModel.selectedRuntimeHours.observe(viewLifecycleOwner) {
+        editViewModel.selectedRuntimeHours.observe(viewLifecycleOwner) {
             binding.npHoursPicker.value = it ?: 0
         }
 
-        viewModel.selectedRuntimeMinutes.observe(viewLifecycleOwner) {
+        editViewModel.selectedRuntimeMinutes.observe(viewLifecycleOwner) {
             binding.npMinutesPicker.value = it ?: 0
         }
 
-        viewModel.selectedImageURI.observe(viewLifecycleOwner) { uri ->
+        editViewModel.selectedImageURI.observe(viewLifecycleOwner) { uri ->
             if (uri.isNullOrEmpty()) {
                 binding.ivSelectedImage.setImageResource(R.drawable.movie_picture)
             } else {
@@ -100,7 +101,7 @@ class AddOrEditItemFragment : Fragment() {
             }
         }
 
-        viewModel.favorite.observe(viewLifecycleOwner) {
+        editViewModel.favorite.observe(viewLifecycleOwner) {
             binding.ibItemFavorite.setImageResource(if (it) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
         }
     }
@@ -156,7 +157,7 @@ class AddOrEditItemFragment : Fragment() {
             .setTitle(R.string.choose_year)
             .setView(numberPicker)
             .setPositiveButton(R.string.ok) { _, _ ->
-                viewModel.setSelectedYear(numberPicker.value)
+                editViewModel.setSelectedYear(numberPicker.value)
                 binding.tvSelectedYear.text = numberPicker.value.toString()
             }
             .setNegativeButton(R.string.cancel, null)
@@ -167,28 +168,31 @@ class AddOrEditItemFragment : Fragment() {
         return Movie(
             binding.tvItemTitle.text.toString(),
             binding.etMoviePlot.text.toString(),
-            (viewModel.selectedRuntimeHours.value
-                ?: 0) * 60 + (viewModel.selectedRuntimeMinutes.value ?: 0),
-            viewModel.selectedYear.value ?: 0,
+            (editViewModel.selectedRuntimeHours.value
+                ?: 0) * 60 + (editViewModel.selectedRuntimeMinutes.value ?: 0),
+            editViewModel.selectedYear.value ?: 0,
             binding.rbMovieRating.rating,
             getSelectedGenresForCurrentMovie(),
-            viewModel.selectedImageURI.value,
-            viewModel.favorite.value ?: false,
+            editViewModel.selectedImageURI.value,
+            editViewModel.favorite.value ?: false,
+            localGen = true
         )
     }
 
     private fun setParameters(movie: Movie) {
         binding.tvItemTitle.setText(movie.title)
         binding.etMoviePlot.setText(movie.plot)
-        viewModel.setFavorite(movie.favorite)
+        editViewModel.setFavorite(movie.favorite)
         binding.ibItemFavorite.setImageResource(
             if (movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
         )
         setNumberPickers(movie)
-        viewModel.setSelectedYear(movie.year)
-        binding.rbMovieRating.rating = movie.rate
+
+        editViewModel.setSelectedYear(movie.year)
+        binding.rbMovieRating=.rating = movie.rate.toFloat()
+
         showGenres(movie)
-        viewModel.setSelectedImageURI(movie.photo)
+        editViewModel.setSelectedImageURI(movie.photo)
     }
 
     private fun getSelectedGenresForCurrentMovie(): List<Int> {
@@ -238,8 +242,8 @@ class AddOrEditItemFragment : Fragment() {
 
 
     private fun setNumberPickers(movie: Movie) {
-        viewModel.setSelectedRuntimeHours(movie.length / 60)
-        viewModel.setSelectedRuntimeMinutes(movie.length % 60)
+        editViewModel.setSelectedRuntimeHours(movie.length / 60)
+        editViewModel.setSelectedRuntimeMinutes(movie.length % 60)
     }
 
     private fun isFormValid(): Boolean {

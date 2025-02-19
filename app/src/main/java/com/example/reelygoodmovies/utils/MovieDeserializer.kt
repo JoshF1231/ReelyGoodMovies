@@ -36,7 +36,8 @@
                 photo = posterUrl,
                 year = releaseYear,
                 length = movieLength,
-                id = id
+                id = id,
+                localGen = false,
             )
         }
 
@@ -67,7 +68,6 @@
                 0
             }
         }
-
 
         private fun getGenreNames(jsonObject: JsonObject): List<Int> {
             val genreIds: List<Int> = when {

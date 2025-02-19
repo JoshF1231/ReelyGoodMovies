@@ -5,6 +5,7 @@ import android.view.View
 import android.view.View.OnClickListener
 import android.view.View.OnLongClickListener
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reelygoodmovies.R
@@ -49,6 +50,7 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
         fun bind(movie: Movie) {
             binding.tvItemMovieTitle.text = movie.title
 
+            binding.ibItemEdit.isVisible = movie.localGen
             Glide.with(binding.root)
                 .load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
                 .circleCrop()

@@ -5,6 +5,7 @@
     import android.view.View
     import android.view.ViewGroup
     import android.widget.Toast
+    import androidx.core.view.isVisible
     import androidx.fragment.app.Fragment
     import androidx.fragment.app.activityViewModels
     import androidx.fragment.app.viewModels
@@ -15,6 +16,7 @@
     import com.example.reelygoodmovies.data.models.Movie
     import com.example.reelygoodmovies.databinding.DetailedItemLayoutBinding
     import com.example.reelygoodmovies.ui.ActivityViewModel
+    import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
     import com.example.reelygoodmovies.utils.Error
     import com.example.reelygoodmovies.utils.Loading
     import com.example.reelygoodmovies.utils.Success
@@ -26,6 +28,7 @@
         private var _binding: DetailedItemLayoutBinding? = null
         private val binding get() = _binding!!
         private val viewModel: ActivityViewModel by activityViewModels()
+        private val editViewModel: EditViewModel by viewModels()
         private val detailedMovieViewModel : DetailedMovieViewModel by viewModels()
 
         override fun onCreateView(
@@ -59,9 +62,9 @@
                 detailedMovieViewModel.setId(it)
             }
 
-
+            binding.ibMovieEdit.isVisible = viewModel.chosenMovie.value!!.localGen
             binding.ibMovieEdit.setOnClickListener {
-                viewModel.setEditMode(true)
+                editViewModel.setEditMode(true)
                 findNavController().navigate(R.id.action_detailedItemFragment_to_addOrEditItemFragment)
 
             }

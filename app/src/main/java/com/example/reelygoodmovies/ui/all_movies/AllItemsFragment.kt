@@ -41,12 +41,14 @@
     import androidx.core.content.ContentProviderCompat
     import androidx.core.os.bundleOf
     import com.bumptech.glide.Glide
+    import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
 
     @AndroidEntryPoint
     class AllItemsFragment : Fragment() {
         private var _binding: AllItemsLayoutBinding? = null
         private val binding get() = _binding!!
         private val viewModel: ActivityViewModel by activityViewModels()
+        private val editViewModel: EditViewModel by viewModels()
         private lateinit var adapter: ItemAdapter
         private var currentMovie: Movie? = null
 
@@ -168,15 +170,12 @@
                         }
                     }
 
-
-
-
-                    override fun onEditButtonClick(index: Int) {
-                    val movie = adapter.getItem(index)
-                    viewModel.setMovie(movie)
-                    viewModel.setEditMode(true)
-                    findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
-                }
+                override fun onEditButtonClick(index: Int) {
+                val movie = adapter.getItem(index)
+                viewModel.setMovie(movie)
+                editViewModel.setEditMode(true)
+                findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
+            }
 
                 override fun onFavButtonClick(index: Int) {
                     val movie = adapter.getItem(index)
@@ -225,12 +224,13 @@
                     return true
                 }
             })
+        // Add new movie button
+        binding.fabAddItem.setOnClickListener {
+            editViewModel.setEditMode(false)
+            editViewModel.clearAllData()
+            findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
+        }
 
-            binding.fabAddItem.setOnClickListener {
-                viewModel.setEditMode(false)
-                viewModel.clearAllData()
-                findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
-            }
 
 
         }
@@ -305,13 +305,11 @@
 
         private fun deleteMovieDialog(viewHolder: RecyclerView.ViewHolder) {
             val movieToDelete = adapter.getItem(viewHolder.adapterPosition)
-
             val builder = AlertDialog.Builder(requireContext())
             val dialogView = layoutInflater.inflate(R.layout.delete_item_dialog, null)
             builder.setView(dialogView)
             val dialog = builder.create()
             dialog.setCancelable(false)
-
             dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
                 adapter.notifyItemChanged(viewHolder.adapterPosition)
                 dialog.dismiss()
