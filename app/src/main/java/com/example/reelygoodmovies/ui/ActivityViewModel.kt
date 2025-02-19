@@ -69,8 +69,20 @@ class ActivityViewModel @Inject constructor(
     val recognition : LiveData<String> get() = _recognition
 
 
-    fun setRecognition(string: String){
-        _recognition.value = string
+    fun initializeSearch() {
+        setRecognition("")
+        setFilteredMovies(movieList?.value ?: emptyList())
+    }
+
+    fun filterMovies(query: String) {
+        val filteredMovies = movieList?.value?.filter {
+            it.title.lowercase().contains(query.lowercase())
+        } ?: emptyList()
+        setFilteredMovies(filteredMovies)
+    }
+
+    fun setRecognition(text: String) {
+        _recognition.value = text
     }
 
 
@@ -117,9 +129,20 @@ class ActivityViewModel @Inject constructor(
         viewModelScope.launch { repository.addMovie(movie) }
     }
 
-    fun deleteMovie(movie: Movie) {
-        viewModelScope.launch { repository.deleteMovie(movie) }
+    fun deleteMovie(movie: Movie, query: String?) {
+        viewModelScope.launch {
+            repository.deleteMovie(movie)
+
+            val updatedMovies = movieList?.value?.filter { it.id != movie.id } ?: emptyList()
+            val filteredMovies = if (!query.isNullOrEmpty()) {
+                updatedMovies.filter { it.title.lowercase().contains(query.lowercase()) }
+            } else {
+                updatedMovies
+            }
+            setFilteredMovies(filteredMovies)
+        }
     }
+
 
     fun deleteAllMovies() {
         viewModelScope.launch { repository.deleteAllMovies() }

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -15,12 +16,12 @@ import com.example.reelygoodmovies.ui.ActivityViewModel
 import com.example.reelygoodmovies.ui.all_movies.ItemAdapter
 import dagger.hilt.android.AndroidEntryPoint
 
-
 @AndroidEntryPoint
 class FavoriteMovieFragment : Fragment() {
     private var _binding: FavoriteLayoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
+    private lateinit var adapter: ItemAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,39 +35,41 @@ class FavoriteMovieFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // מאזינים לרשימת הסרטים המועדפים מה-ViewModel
-        viewModel.favoriteMovies?.observe(viewLifecycleOwner) { favoriteMovies ->
-            if (favoriteMovies.isEmpty()) {
-                binding.recycler.visibility = View.GONE
-            } else {
-                binding.recycler.visibility = View.VISIBLE
-                binding.recycler.adapter = ItemAdapter(favoriteMovies, object : ItemAdapter.ItemListener {
-                    override fun onItemClicked(index: Int) {
-                        viewModel.setMovie(favoriteMovies[index])
-                        findNavController().navigate(R.id.action_favoriteMovieFragment_to_detailedItemFragment)
-                    }
-
-                    override fun onItemLongClicked(index: Int) {
-                        Toast.makeText(requireContext(), favoriteMovies[index].title, Toast.LENGTH_SHORT).show()
-                    }
-
-                    override fun onEditButtonClick(index: Int) {
-                        viewModel.setMovie(favoriteMovies[index])
-                        viewModel.setEditMode(true)
-                        findNavController().navigate(R.id.action_favoriteMovieFragment_to_addOrEditItemFragment)
-                    }
-
-                    override fun onFavButtonClick(index: Int) {
-                        viewModel.setMovie(favoriteMovies[index])
-                        viewModel.chosenMovie.value!!.favorite = !viewModel.chosenMovie.value!!.favorite // To update the movie in the movies list
-                        viewModel.updateMovie(viewModel.chosenMovie.value!!) // To update the movie in the DB
-                        binding.recycler.adapter?.notifyItemChanged(index)
-
-
-                    }
-                })
+        adapter = ItemAdapter(emptyList(), object : ItemAdapter.ItemListener {
+            override fun onItemClicked(index: Int) {
+                val movie = adapter.getItem(index)
+                findNavController().navigate(
+                    R.id.action_favoriteMovieFragment_to_detailedItemFragment,
+                    bundleOf("id" to movie.id)
+                )
             }
-            binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+
+            override fun onItemLongClicked(index: Int) {
+                val movie = adapter.getItem(index)
+                Toast.makeText(requireContext(), movie.title, Toast.LENGTH_SHORT).show()
+            }
+
+            override fun onEditButtonClick(index: Int) {
+                val movie = adapter.getItem(index)
+                viewModel.setMovie(movie)
+                viewModel.setEditMode(true)
+                findNavController().navigate(R.id.action_favoriteMovieFragment_to_addOrEditItemFragment)
+            }
+
+            override fun onFavButtonClick(index: Int) {
+                val movie = adapter.getItem(index)
+                movie.favorite = !movie.favorite
+                viewModel.updateMovie(movie)
+                adapter.notifyItemChanged(index) // Ensure UI updates
+            }
+        })
+
+        binding.recycler.layoutManager = LinearLayoutManager(requireContext())
+        binding.recycler.adapter = adapter
+
+        viewModel.favoriteMovies?.observe(viewLifecycleOwner) { favoriteMovies ->
+            adapter.updateMovies(favoriteMovies)
+            binding.recycler.visibility = if (favoriteMovies.isEmpty()) View.GONE else View.VISIBLE
         }
     }
 

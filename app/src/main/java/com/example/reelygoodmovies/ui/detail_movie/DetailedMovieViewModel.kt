@@ -11,14 +11,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class DetailedMovieViewModel  @Inject constructor(
-    private val movieRepositoryNew : MovieRepositoryNew) : ViewModel(){
+class DetailedMovieViewModel @Inject constructor(
+    private val movieRepositoryNew: MovieRepositoryNew
+) : ViewModel() {
     private val _id = MutableLiveData<Int>()
     private val _movie = _id.switchMap {
         movieRepositoryNew.getMovie(it)
     }
-    val movie : LiveData<Resource<Movie>> = _movie
-    fun setId(id: Int){
+    val movie: LiveData<Resource<Movie>> = _movie
+    fun setId(id: Int) {
         _id.value = id
     }
 }

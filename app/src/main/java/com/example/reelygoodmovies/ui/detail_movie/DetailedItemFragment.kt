@@ -67,12 +67,13 @@
             }
         }
 
-        fun updateMovie(movie : Movie){
+        private fun updateMovie(movie : Movie){
             val genreIds = movie.genre
 
             val genreNames = genreIds.joinToString(", ") { genreId ->
                 binding.root.context.getString(genreId)
             }
+            binding.tvMovieTitle.text = movie.title
             binding.tvMovieGenres.text = genreNames
             binding.tvMoviePlot.text = movie.plot
             binding.rbMovieRating.rating = movie.rate
