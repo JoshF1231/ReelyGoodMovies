@@ -8,19 +8,19 @@ import androidx.lifecycle.switchMap
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.utils.Error
 import com.example.reelygoodmovies.utils.Loading
-import com.example.reelygoodmovies.utils.MovieRepositoryNew
+import com.example.reelygoodmovies.data.repositories.MovieRepository
 import com.example.reelygoodmovies.utils.Resource
 import com.example.reelygoodmovies.utils.Success
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 @HiltViewModel
-class EditViewModel @Inject constructor(movieRepositoryNew : MovieRepositoryNew) : ViewModel() {
+class EditViewModel @Inject constructor(movieRepository : MovieRepository) : ViewModel() {
 
     private val _id = MutableLiveData<Int>()
     private val _movie = _id.switchMap { id ->
         if (id > 0) {
-            movieRepositoryNew.getMovie(id)
+            movieRepository.getMovie(id)
         } else {
             liveData { emit(Resource.error("Invalid ID")) }
         }
