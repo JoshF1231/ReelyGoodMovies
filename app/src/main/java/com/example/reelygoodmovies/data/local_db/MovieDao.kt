@@ -15,7 +15,7 @@ interface MovieDao {
     suspend fun addMovie(movie: Movie)
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun addMovies(movies : List <Movie>)
+    suspend fun addMovies(movies: List<Movie>)
 
     @Delete
     suspend fun deleteMovie(vararg movies: Movie)
@@ -37,5 +37,9 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies WHERE favorite = 1")
     suspend fun getFavoriteMoviesSync(): List<Movie>
+
+    @Query("SELECT * FROM movies WHERE id = :id AND favorite = 1")
+    suspend fun getFavoriteMovieById(id: Int): Movie?
+
 
 }

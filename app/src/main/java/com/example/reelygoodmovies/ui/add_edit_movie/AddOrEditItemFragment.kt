@@ -187,8 +187,10 @@ class AddOrEditItemFragment : Fragment() {
             if (movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24
         )
         setNumberPickers(movie)
+
         editViewModel.setSelectedYear(movie.year)
-        binding.rbMovieRating.rating = movie.rate.toFloat()
+        binding.rbMovieRating=.rating = movie.rate.toFloat()
+
         showGenres(movie)
         editViewModel.setSelectedImageURI(movie.photo)
     }

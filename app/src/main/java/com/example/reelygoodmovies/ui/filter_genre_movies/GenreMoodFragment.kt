@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -44,7 +45,9 @@ class GenreMoodFragment : Fragment() {
                 val selectedMovie = viewModelGenre.comedyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
+                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id)
+                    )
                 }
             }
 
@@ -69,7 +72,8 @@ class GenreMoodFragment : Fragment() {
                 val selectedMovie = viewModelGenre.thrillerMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
+                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id))
                 }
             }
 
@@ -94,7 +98,8 @@ class GenreMoodFragment : Fragment() {
                 val selectedMovie = viewModelGenre.fantasyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
+                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id))
                 }
             }
 
@@ -119,7 +124,8 @@ class GenreMoodFragment : Fragment() {
                 val selectedMovie = viewModelGenre.romanceMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
+                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id))
                 }
             }
 
@@ -144,7 +150,8 @@ class GenreMoodFragment : Fragment() {
                 val selectedMovie = viewModelGenre.familyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment)
+                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id))
                 }
             }
 

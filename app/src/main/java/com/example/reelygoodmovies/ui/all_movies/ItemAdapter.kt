@@ -12,8 +12,11 @@ import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.databinding.ItemLayoutBinding
 
+
 class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
+
+    private val movies = ArrayList<Movie>()
 
     interface ItemListener {
         fun onItemClicked(index: Int)
@@ -65,6 +68,7 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
             binding.ibItemFavorite.setImageResource(if(movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
         }
     }
+
 
     fun updateMovies(newMovies: List<Movie>) {
         this.items = newMovies

@@ -70,7 +70,7 @@
             }
         }
 
-        fun updateMovie(movie : Movie){
+        private fun updateMovie(movie : Movie){
             val genreIds = movie.genre
 
             val genreNames = genreIds.joinToString(", ") { genreId ->

@@ -22,10 +22,14 @@ class MovieRepositoryNew @Inject constructor(
     )
 
 
-    fun getMovie (id : Int) = performFetchingAndSaving(
-        {localDataSource.getMovie(id)},
-        {remoteDataSource.getMovie(id)},
-        {localDataSource.addMovie(it)
+    fun getMovie(id: Int) = performFetchingAndSaving(
+        { localDataSource.getMovie(id) },
+        { remoteDataSource.getMovie(id) },
+        { movieFromApi ->
+            val isFavoriteMovie = localDataSource.getFavoriteMovieById(id)
+            movieFromApi.favorite = isFavoriteMovie != null
+            localDataSource.updateMovie(movieFromApi)
         }
     )
+
 }
