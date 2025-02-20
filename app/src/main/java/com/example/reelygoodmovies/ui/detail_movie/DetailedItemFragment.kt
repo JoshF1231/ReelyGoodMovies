@@ -68,15 +68,15 @@ class DetailedItemFragment : Fragment() {
             detailedMovieViewModel.setId(it)
         }
 
-        val movie = detailedMovieViewModel.movie.value?.status?.data
-
         binding.ibMovieEdit.setOnClickListener {
+            val movie = detailedMovieViewModel.movie.value?.status?.data
             movie?.let { viewModel.setMovie(movie) }
             editViewModel.setEditMode(true)
             findNavController().navigate(R.id.action_detailedItemFragment_to_addOrEditItemFragment)
         }
 
         binding.ibItemFavorite.setOnClickListener {
+            val movie = detailedMovieViewModel.movie.value?.status?.data
             movie?.let {
                 movie.favorite = !movie.favorite
                 viewModel.updateMovie(movie)
