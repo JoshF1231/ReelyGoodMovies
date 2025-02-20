@@ -1,32 +1,17 @@
 package com.example.reelygoodmovies.ui.add_edit_movie
 
+import android.app.Application
+import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
-import androidx.lifecycle.switchMap
-import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.data.repositories.MovieRepository
-import com.example.reelygoodmovies.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
-import javax.inject.Inject
+import jakarta.inject.Inject
 
-@HiltViewModel
-class EditViewModel @Inject constructor(movieRepository : MovieRepository) : ViewModel() {
 
-    private val _id = MutableLiveData<Int>()
-    private val _movie = _id.switchMap { id ->
-        if (id > 0) {
-            movieRepository.getMovie(id)
-        } else {
-            liveData { emit(Resource.error("Invalid ID")) }
-        }
-    }
-    val movie: LiveData<Resource<Movie>> = _movie
-
-    fun setId(id: Int) {
-        _id.value = id
-    }
+class EditViewModel(application: Application) : AndroidViewModel(application) {
 
     private val _favorite = MutableLiveData<Boolean>()
     val favorite: LiveData<Boolean> get() = _favorite
@@ -77,4 +62,5 @@ class EditViewModel @Inject constructor(movieRepository : MovieRepository) : Vie
     fun setFavorite(b: Boolean) {
         _favorite.value = b
     }
+
 }

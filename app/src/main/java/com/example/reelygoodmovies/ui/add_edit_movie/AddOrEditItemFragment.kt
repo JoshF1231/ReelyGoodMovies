@@ -15,14 +15,12 @@ import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.databinding.AddItemLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
-import com.example.reelygoodmovies.utils.Error
-import com.example.reelygoodmovies.utils.Loading
-import com.example.reelygoodmovies.utils.Success
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import java.util.Calendar
@@ -32,7 +30,7 @@ class AddOrEditItemFragment : Fragment() {
     private var _binding: AddItemLayoutBinding? = null
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
-    private val editViewModel: EditViewModel by viewModels()
+    private val editViewModel: EditViewModel by activityViewModels()
     private val pickImageLauncher: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             uri?.let {
@@ -57,20 +55,7 @@ class AddOrEditItemFragment : Fragment() {
         val isEditMode = editViewModel.isEditMode.value ?: false
         val movie = viewModel.chosenMovie.value
         setupAddOrEditMode(isEditMode, movie)
-        
-        editViewModel.movie.observe(viewLifecycleOwner){ movie ->
-            when (movie.status){
-                is Error -> setupAddOrEditMode(isEditMode = false)
-                is Loading -> setupAddOrEditMode(isEditMode = false)
-                is Success -> {
-                    setupAddOrEditMode(true,movie.status.data)
-                }
-            }
-        }
 
-        arguments?.getInt("id")?.let{
-            editViewModel.setId(it) // ID received is -1 if the FAB (+) is pressed from AllItems
-        }
 
         binding.btnSelectYear.setOnClickListener {
             showYearPickerDialog()
@@ -87,7 +72,6 @@ class AddOrEditItemFragment : Fragment() {
             editViewModel.setSelectedRuntimeMinutes(value)
         }
         binding.ibItemFavorite.setOnClickListener {
-            // הפוך את הערך הנוכחי של favorite
             val newFavoriteStatus = !(editViewModel.favorite.value ?: false)
             editViewModel.setFavorite(newFavoriteStatus)
         }
@@ -146,6 +130,7 @@ class AddOrEditItemFragment : Fragment() {
                     val addMessage = getString(R.string.movie_added, movieToSave.title)
                     Toast.makeText(requireContext(), addMessage, Toast.LENGTH_SHORT).show()
                 }
+
                 findNavController().navigate(R.id.action_addOrEditItemFragment_to_allItemsFragment2)
             }
         }

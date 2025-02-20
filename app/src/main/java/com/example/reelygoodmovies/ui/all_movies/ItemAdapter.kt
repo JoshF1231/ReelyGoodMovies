@@ -16,7 +16,7 @@ import com.example.reelygoodmovies.databinding.ItemLayoutBinding
 class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
     RecyclerView.Adapter<ItemAdapter.ItemViewHolder>() {
 
-    private val movies = ArrayList<Movie>()
+    //private val movies = ArrayList<Movie>()
 
     interface ItemListener {
         fun onItemClicked(index: Int)
