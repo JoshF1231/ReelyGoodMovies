@@ -86,7 +86,6 @@
     <string name="TVMovie_label">TV-movies</string>
     <string name="western_label">western</string>
     <string name="unknown_genre">Unknown</string>
+    <string name="error_API_from_local_DB">This is from local DB</string>
     <string name="no_movies_found">no movies found</string>
-
-
 </resources>

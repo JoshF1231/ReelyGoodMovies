@@ -63,11 +63,20 @@ class ActivityViewModel @Inject constructor(
     private val _recognition = MutableLiveData<String>()
     val recognition : LiveData<String> get() = _recognition
 
+    private val _searchQuery = MutableLiveData<String>()
+    val searchQuery: LiveData<String> get() = _searchQuery
+
+    fun setSearchQuery(query: String) {
+        _searchQuery.value = query
+    }
+
 
     fun initializeSearch() {
         setRecognition("")
         setFilteredMovies(movies.value?.status?.data ?: emptyList())
+        setSearchQuery("")
     }
+
 
     fun filterMovies(query: String) {
         val filteredMovies = movies.value?.status?.data?.filter {
@@ -90,7 +99,7 @@ class ActivityViewModel @Inject constructor(
 //    }
 
 
-    fun setFilteredMovies(movies: List<Movie>) {
+    private fun setFilteredMovies(movies: List<Movie>) {
         _filteredMovies.value = movies
     }
 

@@ -24,7 +24,4 @@ class DetailedMovieViewModel @Inject constructor(
     fun setId(id: Int) {
         _id.value = id
     }
-    fun updateMovie(movie: Movie) {
-        viewModelScope.launch { movieRepository.updateMovie(movie) }
-    }
 }

@@ -24,7 +24,7 @@ class FavoriteMovieFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
     private lateinit var adapter: ItemAdapter
-    private val editViewModel: EditViewModel by viewModels()
+    private val editViewModel: EditViewModel by activityViewModels()
 
 
     override fun onCreateView(
