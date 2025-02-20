@@ -96,31 +96,28 @@ class AllItemsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
             viewModel.initializeSearch()
-
-        viewModel.movies.observe(viewLifecycleOwner) { result ->
-            when (result.status) {
-                is Loading -> {
-                    binding.progressBar.visibility = View.VISIBLE
-                    binding.recycler.visibility = View.GONE
-                }
-
-                is Error -> {
-                    binding.progressBar.visibility = View.GONE
-                    binding.recycler.visibility = View.GONE
-                    Toast.makeText(requireContext(), result.status.message, Toast.LENGTH_SHORT)
-                        .show()
-                }
-
-                is Success -> {
-                    binding.progressBar.visibility = View.GONE
-                    val movieList = result.status.data
-                    if (movieList.isNullOrEmpty()) {
-                        Toast.makeText(requireContext(), "No movies available", Toast.LENGTH_SHORT)
-                            .show()
+            viewModel.movies.observe(viewLifecycleOwner) { result ->
+                when (result.status) {
+                    is Loading -> {
+                        binding.progressBar.visibility = View.VISIBLE
+                        binding.tvNoMoviesFound.visibility = View.VISIBLE
+                        binding.recycler.visibility = View.GONE
                     }
-                        else {
-                        binding.recycler.visibility = View.VISIBLE
-                        if(!binding.searchView.query.isNullOrEmpty()){
+                    is Error -> {
+                        binding.progressBar.visibility = View.GONE
+                        binding.recycler.visibility = View.GONE
+                        binding.tvNoMoviesFound.visibility = View.VISIBLE
+                        Toast.makeText(requireContext(), result.status.message, Toast.LENGTH_SHORT).show()
+                    }
+                    is Success -> {
+                        binding.progressBar.visibility = View.GONE
+                        val movieList = result.status.data
+                        if (movieList.isNullOrEmpty()) {
+                            Toast.makeText(requireContext(), getString(R.string.no_movies_found), Toast.LENGTH_SHORT).show()
+                        } else {
+                            binding.tvNoMoviesFound.visibility = View.GONE
+                            binding.recycler.visibility = View.VISIBLE
+                          if(!binding.searchView.query.isNullOrEmpty()){
                             viewModel.searchQuery.value?.let { viewModel.filterMovies(it) }
                         }
                         else

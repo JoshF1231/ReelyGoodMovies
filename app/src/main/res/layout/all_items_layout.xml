@@ -20,7 +20,7 @@
             android:id="@+id/title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/newest_movies_label"
+            android:text="@string/all_movies_label"
             android:textSize="22sp"
             android:textStyle="bold"
             android:textColor="@android:color/black"
@@ -67,6 +67,19 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+    <TextView
+        android:id="@+id/tvNoMoviesFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/no_movies_found"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="@android:color/black"
+        app:layout_constraintTop_toBottomOf="@id/title_container"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <!-- רשימת הסרטים -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler"
@@ -85,6 +98,7 @@
         app:layout_constraintStart_toStartOf="@+id/recycler"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.881">
+
 <ProgressBar
     android:id="@+id/progressBar"
     android:layout_width="wrap_content"
@@ -109,8 +123,11 @@
             android:id="@+id/fabAddItem"
             android:layout_width="48dp"
             android:layout_height="48dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="8dp"
             android:src="@drawable/baseline_add_24"
-            android:contentDescription="@string/add_photo_icon" />
+            android:contentDescription="@string/add_photo_icon"
+            app:fabCustomSize="48dp"/>
 
 
         <TextView
@@ -127,43 +144,3 @@
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-
-<!--
-
-<TextView
-android:id="@+id/tv_top20_movies"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:text="Top 20:"
-android:textColor="@android:color/black"
-android:layout_marginTop="8dp"
-android:textSize="18sp"
-android:textStyle="bold"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintTop_toBottomOf="@id/searchView"/>
-<TextView
-android:id="@+id/tv_all_movies"
-android:layout_width="match_parent"
-android:layout_height="wrap_content"
-android:text="All newest movies!!!"
-android:textColor="@android:color/black"
-android:layout_marginTop="8dp"
-android:textSize="18sp"
-android:textStyle="bold"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintTop_toBottomOf="@+id/recycler"/>
-
-    &lt;!&ndash; רשימה נגללת נוספת למטה &ndash;&gt;
-<androidx.recyclerview.widget.RecyclerView
-android:id="@+id/recycler_bottom"
-android:layout_width="match_parent"
-android:layout_height="0dp"
-app:layout_constraintStart_toStartOf="parent"
-app:layout_constraintEnd_toEndOf="parent"
-app:layout_constraintTop_toBottomOf="@id/recycler"
-app:layout_constraintBottom_toBottomOf="parent" />
--->

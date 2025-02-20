@@ -26,7 +26,6 @@
 
     </LinearLayout>
 
-
         <TextView
             android:id="@+id/tv_movie_title"
             android:layout_width="match_parent"
@@ -120,11 +119,13 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_marginBottom="20dp">
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/plot_label"
-                android:textSize="16sp" />
+                android:textSize="16sp"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

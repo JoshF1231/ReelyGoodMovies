@@ -63,7 +63,7 @@
     <string name="like_movie">סרט אהוב</string>
     <string name="mic_talk">בבקשה תדבר לאט ובבהירות"</string>
     <string name="mic_search_button">חיפוש מיקרופון</string>
-    <string name="newest_movies_label">הסרטים החדשים ביותר!</string>
+    <string name="all_movies_label">הסרטים הפופולריים ביותר!</string>
     <string name="add_new_movie_label">הוסף סרט חדש!</string>
     <string name="search_movie_label">חיפוש סרט:</string>
     <string name="favorite_movies_label">הסרטים המעודפים שלך!</string>
@@ -86,6 +86,7 @@
     <string name="TVMovie_label">סרטי טלוויזיה</string>
     <string name="western_label">מערבי</string>
     <string name="unknown_genre">ללא</string>
+    <string name="no_movies_found">לא נמצאו סרטים</string>
 
 
 </resources>
