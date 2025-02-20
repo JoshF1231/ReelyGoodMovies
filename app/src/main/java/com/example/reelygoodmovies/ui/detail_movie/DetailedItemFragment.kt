@@ -79,7 +79,7 @@
             val genreNames = genreIds.joinToString(", ") { genreId ->
                 binding.root.context.getString(genreId)
             }
-            binding.tvMovieTitle.text = movie.title
+            binding.tvMovieTitle.setText(movie.title)
             binding.tvMovieGenres.text = genreNames
             binding.tvMoviePlot.text = movie.plot
             binding.rbMovieRating.rating = movie.rate

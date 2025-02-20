@@ -8,15 +8,27 @@
     <!-- פעולה בין כל המסכים -->
     <action
         android:id="@+id/action_global_favoriteMovieFragment"
-        app:destination="@id/favoriteMovieFragment" />
+        app:destination="@id/favoriteMovieFragment"
+        app:enterAnim="@anim/from_right"
+        app:exitAnim="@anim/to_left"
+        app:popEnterAnim="@anim/from_left"
+        app:popExitAnim="@anim/to_right" />
 
     <action
         android:id="@+id/action_global_allItemsFragment2"
-        app:destination="@id/allItemsFragment2" />
+        app:destination="@id/allItemsFragment2"
+        app:enterAnim="@anim/from_left"
+        app:exitAnim="@anim/to_right"
+        app:popEnterAnim="@anim/from_left"
+        app:popExitAnim="@anim/to_right" />
 
     <action
         android:id="@+id/action_global_genreMoodFragment"
-        app:destination="@id/genreMoodFragment" />
+        app:destination="@id/genreMoodFragment"
+        app:enterAnim="@anim/from_right"
+        app:exitAnim="@anim/to_left"
+        app:popEnterAnim="@anim/from_left"
+        app:popExitAnim="@anim/to_right" />
 
     <fragment
         android:id="@+id/allItemsFragment2"
@@ -46,8 +58,8 @@
         <action
             android:id="@+id/action_addOrEditItemFragment_to_allItemsFragment2"
             app:destination="@id/allItemsFragment2"
-            app:enterAnim="@anim/from_right"
-            app:exitAnim="@anim/to_left"
+            app:enterAnim="@anim/from_left"
+            app:exitAnim="@anim/to_right"
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right"
             app:popUpTo="@id/allItemsFragment2"

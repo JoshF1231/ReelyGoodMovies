@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity() {
 
         // Set up NavigationItemSelectedListener for the NavigationDrawer
         navigationView.setNavigationItemSelectedListener { menuItem ->
-            menuItem.isChecked = true
+            menuItem.isChecked = false
 
             when (menuItem.itemId) {
                 R.id.nav_all_movies -> navController.navigate(R.id.action_global_allItemsFragment2)

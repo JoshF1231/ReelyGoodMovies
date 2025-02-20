@@ -63,7 +63,7 @@
     <string name="like_movie">like movie</string>
     <string name="mic_talk">please talk clearly and slowly"</string>
     <string name="mic_search_button">mic search</string>
-    <string name="newest_movies_label">Newest Movies!</string>
+    <string name="all_movies_label">Most Popular Movies!</string>
     <string name="add_new_movie_label">Add new movie!</string>
     <string name="search_movie_label">Search movie:</string>
     <string name="favorite_movies_label">Your Favorite Movies!</string>
@@ -86,6 +86,7 @@
     <string name="TVMovie_label">TV-movies</string>
     <string name="western_label">western</string>
     <string name="unknown_genre">Unknown</string>
+    <string name="no_movies_found">no movies found</string>
 
 
 </resources>
