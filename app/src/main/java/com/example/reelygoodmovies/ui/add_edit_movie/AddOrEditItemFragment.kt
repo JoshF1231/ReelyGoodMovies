@@ -2,7 +2,6 @@ package com.example.reelygoodmovies.ui.add_edit_movie
 
 import android.app.AlertDialog
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -14,8 +13,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.net.toUri
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import androidx.lifecycle.ViewModel
 import androidx.navigation.fragment.findNavController
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
@@ -31,6 +28,7 @@ class AddOrEditItemFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: ActivityViewModel by activityViewModels()
     private val editViewModel: EditViewModel by activityViewModels()
+
     private val pickImageLauncher: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.OpenDocument()) { uri ->
             uri?.let {

@@ -14,7 +14,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.databinding.GenreMoodFilterLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
+import com.example.reelygoodmovies.utils.Error
+import com.example.reelygoodmovies.utils.ErrorMessages
+import com.example.reelygoodmovies.utils.Loading
+import com.example.reelygoodmovies.utils.Success
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class GenreMoodFragment : Fragment() {
 
     private var _binding: GenreMoodFilterLayoutBinding? = null
@@ -31,21 +37,43 @@ class GenreMoodFragment : Fragment() {
         return binding.root
 
     }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.movies?.observe(viewLifecycleOwner) { movies ->
-            if (movies.status.data?.isNotEmpty() == true) {
-                viewModelGenre.filterMoviesByGenre(movies.status.data)
+        viewModel.movies.observe(viewLifecycleOwner) { result ->
+            when (result.status) {
+                is Loading -> {
+                    binding.progressBar.visibility = View.VISIBLE
+                    binding.tvNoMoviesFound.text = ""
+                }
+
+                is Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.tvNoMoviesFound.visibility = View.VISIBLE
+                    val errorMessage =
+                        ErrorMessages.getErrorMessage(requireContext(), result.status.message)
+                    binding.tvNoMoviesFound.text = errorMessage
+                }
+
+                is Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.tvNoMoviesFound.text = ""
+                    if (result.status.data?.isNotEmpty() == true) {
+                        viewModelGenre.filterMoviesByGenre(result.status.data)
+                    }
+                }
             }
         }
+
 
         val comedyAdapter = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {
                 val selectedMovie = viewModelGenre.comedyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
+                    findNavController().navigate(
+                        R.id.action_genreMoodFragment_to_detailedItemFragment,
                         bundleOf("id" to selectedMovie.id)
                     )
                 }
@@ -57,9 +85,10 @@ class GenreMoodFragment : Fragment() {
                     Toast.makeText(requireContext(), selectedMovie.title, Toast.LENGTH_SHORT).show()
                 }
             }
-            })
+        })
 
-        binding.recyclerFunny.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerFunny.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerFunny.adapter = comedyAdapter
 
@@ -67,13 +96,15 @@ class GenreMoodFragment : Fragment() {
             comedyAdapter.updateMovies(movies)
         }
 
-        val thrillerAdapter  = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
+        val thrillerAdapter = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {
                 val selectedMovie = viewModelGenre.thrillerMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
-                        bundleOf("id" to selectedMovie.id))
+                    findNavController().navigate(
+                        R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id)
+                    )
                 }
             }
 
@@ -85,12 +116,13 @@ class GenreMoodFragment : Fragment() {
             }
         })
 
-        binding.recyclerThriller.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerThriller.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerThriller.adapter = thrillerAdapter
 
         viewModelGenre.thrillerMovies.observe(viewLifecycleOwner) { movies ->
-            thrillerAdapter .updateMovies(movies)
+            thrillerAdapter.updateMovies(movies)
         }
 
         val fantasyAdapter = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
@@ -98,8 +130,10 @@ class GenreMoodFragment : Fragment() {
                 val selectedMovie = viewModelGenre.fantasyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
-                        bundleOf("id" to selectedMovie.id))
+                    findNavController().navigate(
+                        R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id)
+                    )
                 }
             }
 
@@ -111,7 +145,8 @@ class GenreMoodFragment : Fragment() {
             }
         })
 
-        binding.recyclerFantasy.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerFantasy.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerFantasy.adapter = fantasyAdapter
 
@@ -124,8 +159,10 @@ class GenreMoodFragment : Fragment() {
                 val selectedMovie = viewModelGenre.romanceMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
-                        bundleOf("id" to selectedMovie.id))
+                    findNavController().navigate(
+                        R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id)
+                    )
                 }
             }
 
@@ -137,7 +174,8 @@ class GenreMoodFragment : Fragment() {
             }
         })
 
-        binding.recyclerRomantic.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerRomantic.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerRomantic.adapter = romanceAdapter
 
@@ -150,8 +188,10 @@ class GenreMoodFragment : Fragment() {
                 val selectedMovie = viewModelGenre.familyMovies.value?.get(index)
                 if (selectedMovie != null) {
                     viewModel.setMovie(selectedMovie)
-                    findNavController().navigate(R.id.action_genreMoodFragment_to_detailedItemFragment,
-                        bundleOf("id" to selectedMovie.id))
+                    findNavController().navigate(
+                        R.id.action_genreMoodFragment_to_detailedItemFragment,
+                        bundleOf("id" to selectedMovie.id)
+                    )
                 }
             }
 
@@ -163,15 +203,14 @@ class GenreMoodFragment : Fragment() {
             }
         })
 
-        binding.recyclerRelax.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        binding.recyclerRelax.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         binding.recyclerRelax.adapter = familyAdapter
 
         viewModelGenre.familyMovies.observe(viewLifecycleOwner) { movies ->
             familyAdapter.updateMovies(movies)
         }
-
-
     }
 
     override fun onDestroyView() {

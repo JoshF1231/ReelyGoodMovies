@@ -1,15 +1,9 @@
 package com.example.reelygoodmovies.ui.add_edit_movie
 
 import android.app.Application
-import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.reelygoodmovies.data.repositories.MovieRepository
-import dagger.hilt.android.lifecycle.HiltViewModel
-import jakarta.inject.Inject
-
 
 class EditViewModel(application: Application) : AndroidViewModel(application) {
 

@@ -63,6 +63,15 @@
             app:layout_constraintTop_toBottomOf="@id/ll_comedy"/>
 
 
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/ll_comedy"/>
+
+
         <!-- Second Category: Action -->
 
         <LinearLayout
@@ -75,6 +84,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/recycler_funny">
+
+
 
         <TextView
             android:id="@+id/tv_thriller"
@@ -238,6 +249,19 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ll_romance"/>
+
+        <TextView
+            android:id="@+id/tvNoMoviesFound"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_movies_found"
+            android:textSize="22sp"
+            android:textStyle="bold"
+            android:paddingTop="20dp"
+            android:textColor="@android:color/black"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_romantic"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

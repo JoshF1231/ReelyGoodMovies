@@ -1,15 +1,13 @@
 package com.example.reelygoodmovies.ui.filter_genre_movies
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
-import javax.inject.Inject
 
-class GenreMoodViewModel () : ViewModel() {
+
+class GenreMoodViewModel : ViewModel() {
 
     private val _comedyMovies = MutableLiveData<List<Movie>>()
     val comedyMovies: LiveData<List<Movie>> = _comedyMovies

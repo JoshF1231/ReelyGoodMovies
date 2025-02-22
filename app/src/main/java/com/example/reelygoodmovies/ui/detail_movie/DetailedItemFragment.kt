@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
@@ -18,10 +17,10 @@ import com.example.reelygoodmovies.databinding.DetailedItemLayoutBinding
 import com.example.reelygoodmovies.ui.ActivityViewModel
 import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
 import com.example.reelygoodmovies.utils.Error
+import com.example.reelygoodmovies.utils.ErrorMessages
 import com.example.reelygoodmovies.utils.Loading
 import com.example.reelygoodmovies.utils.Success
 import dagger.hilt.android.AndroidEntryPoint
-
 
 @AndroidEntryPoint
 class DetailedItemFragment : Fragment() {
@@ -43,7 +42,6 @@ class DetailedItemFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         detailedMovieViewModel.movie.observe(viewLifecycleOwner) { movie ->
             when (movie.status) {
                 is Error -> {
@@ -52,14 +50,16 @@ class DetailedItemFragment : Fragment() {
                         Toast.makeText(requireContext(),
                             getString(R.string.error_API_from_local_DB), Toast.LENGTH_SHORT)
                             .show()
-                    }else
-                    Toast.makeText(requireContext(), movie.status.message, Toast.LENGTH_SHORT)
-                        .show()
+                    }else{
+                        val errorMessage = ErrorMessages.getErrorMessage(requireContext(), movie.status.message)
+                        binding.tvNoMoviesFound.text = errorMessage
+                    }
                 }
                 is Loading -> binding.progressBar.visibility = View.VISIBLE
                 is Success -> {
+                    binding.tvNoMoviesFound.text = ""
                     binding.progressBar.visibility = View.GONE
-                    updateMovie(movie.status.data!!)
+                    movie.status.data?.let { updateMovie(it) }
                 }
             }
         }

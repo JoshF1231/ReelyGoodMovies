@@ -31,6 +31,8 @@ data class Movie(
     var favorite: Boolean = false,
     @ColumnInfo(name = "localGen")
     var localGen: Boolean = false,
+    @ColumnInfo(name = "trailerUrl")
+    var trailerUrl: String? = null,
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0
 )

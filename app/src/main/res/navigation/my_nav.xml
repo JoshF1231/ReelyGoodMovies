@@ -43,6 +43,13 @@
             app:popEnterAnim="@anim/from_left"
             app:popExitAnim="@anim/to_right" />
         <action
+            android:id="@+id/action_allItemsFragment2_to_trailerFragment"
+            app:destination="@id/trailerFragment"
+            app:enterAnim="@anim/from_right"
+            app:exitAnim="@anim/to_left"
+            app:popEnterAnim="@anim/from_left"
+            app:popExitAnim="@anim/to_right" />
+        <action
             android:id="@+id/action_allItemsFragment2_to_detailedItemFragment"
             app:destination="@id/detailedItemFragment"
             app:enterAnim="@anim/from_right"
@@ -140,4 +147,18 @@
         app:exitAnim="@anim/to_left"
         app:popEnterAnim="@anim/from_left"
         app:popExitAnim="@anim/to_right" />
+    <fragment
+        android:id="@+id/trailerFragment"
+        android:name="com.example.reelygoodmovies.ui.trailer_movie.TrailerFragment"
+        android:label="TrailerFragment"
+        tools:layout="@layout/trailer_layout"/>
+    <action
+        android:id="@+id/action_trailerFragment_to_allItemsFragment2"
+        app:destination="@id/allItemsFragment2"
+        app:enterAnim="@anim/from_left"
+        app:exitAnim="@anim/to_right"
+        app:popEnterAnim="@anim/from_right"
+        app:popExitAnim="@anim/to_left"
+        app:popUpTo="@id/allItemsFragment2"
+        app:popUpToInclusive="true" />
 </navigation>
