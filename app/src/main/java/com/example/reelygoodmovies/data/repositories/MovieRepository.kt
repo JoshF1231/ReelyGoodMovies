@@ -1,5 +1,6 @@
 package com.example.reelygoodmovies.data.repositories
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import androidx.lifecycle.map
@@ -38,8 +39,33 @@ class MovieRepository @Inject constructor(
             localDataSource.updateMovie(movieFromApi)
         }
     )
+//    suspend fun updateMovieTrailer(id: Int, trailerUrl: String) {
+//        localDataSource.updateMovieTrailer(id, trailerUrl)
+//    }
 
-//    WORK IN PROGRESS - JOSH
+    fun getMovieTrailer(id: Int) = performFetchingAndSaving(
+        { localDataSource.getMovieTrailer(id) },
+        { remoteDataSource.getMovieTrailer(id) },
+        { trailerResponse ->
+            val trailerUrl = trailerResponse.results
+                .firstOrNull { it.type == "Trailer" }
+                ?.key?.let { "https://www.youtube.com/watch?v=$it" }
+            if (trailerUrl != null) {
+                localDataSource.updateMovieTrailer(id, trailerUrl)
+            }
+        }
+    )
+
+
+
+
+
+
+
+
+
+
+    //    WORK IN PROGRESS - JOSH
 //    fun getMovie(id: Int): LiveData<Resource<Movie>> = liveData(Dispatchers.IO) {
 //        val localMovie = localDataSource.getMovie(id).value // Get movie from local DB
 //        if (localMovie != null) {
@@ -74,5 +100,6 @@ class MovieRepository @Inject constructor(
         }
 
         fun getFavoriteMovies() = localDataSource.getFavoriteMovies()
+
 
     }

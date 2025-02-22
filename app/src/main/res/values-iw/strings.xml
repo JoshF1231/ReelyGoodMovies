@@ -87,6 +87,13 @@
     <string name="western_label">מערבי</string>
     <string name="unknown_genre">ללא</string>
     <string name="no_movies_found">לא נמצאו סרטים</string>
+    <string name="error_API_from_local_DB">סרט זה נוסף על ידי המשתמש</string>
+    <string name="permission_denied">הרשאה נדחתה</string>
+    <string name="network_error">אין חיבור לאינטרנט. אנא בדוק את החיבור שלך.</string>
+    <string name="not_found_error">לא נמצאו סרטים.</string>
+    <string name="bad_request_error">הבקשה לא תקינה. אנא בדוק את הנתונים והצע שוב.</string>
+    <string name="internal_server_error">אירעה שגיאה בשרת. נסה שוב מאוחר יותר.</string>
+    <string name="unknown_error">אירעה שגיאה לא צפויה. אנא נסה שוב.</string>
 
 
 </resources>

@@ -33,7 +33,7 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
             binding.ibItemEdit.setOnClickListener {
                 callBack.onEditButtonClick(adapterPosition)
             }
-            binding.ibItemFavorite.setOnClickListener{
+            binding.ibItemFavorite.setOnClickListener {
                 callBack.onFavButtonClick(adapterPosition)
             }
         }
@@ -65,7 +65,7 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
             }
             binding.tvItemMovieGenre.text = genreNames
 
-            binding.ibItemFavorite.setImageResource(if(movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
+            binding.ibItemFavorite.setImageResource(if (movie.favorite) R.drawable.baseline_favorite_24 else R.drawable.baseline_favorite_border_24)
         }
     }
 
@@ -94,6 +94,4 @@ class ItemAdapter(private var items: List<Movie>, val callBack: ItemListener) :
     override fun getItemCount(): Int {
         return items.size
     }
-
-
 }

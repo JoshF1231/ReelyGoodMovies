@@ -86,6 +86,13 @@
     <string name="TVMovie_label">TV-movies</string>
     <string name="western_label">western</string>
     <string name="unknown_genre">Unknown</string>
-    <string name="error_API_from_local_DB">This is from local DB</string>
-    <string name="no_movies_found">no movies found</string>
+    <string name="error_API_from_local_DB">This movie was added by the user</string>
+    <string name="no_movies_found">No movies found</string>
+    <string name="permission_denied">Permission denied</string>
+    <string name="network_error">No internet connection. Please check your connection.</string>
+    <string name="not_found_error">No movies found.</string>
+    <string name="bad_request_error">The request was invalid. Please check the data and try again.</string>
+    <string name="internal_server_error">A server error occurred. Please try again later.</string>
+    <string name="unknown_error">An unexpected error occurred. Please try again.</string>
+
 </resources>

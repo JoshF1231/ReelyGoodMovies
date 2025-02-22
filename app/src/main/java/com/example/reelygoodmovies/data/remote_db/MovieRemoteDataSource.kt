@@ -7,4 +7,6 @@ class MovieRemoteDataSource @Inject constructor(
 ) : BaseDataSource() {
     suspend fun getMovies() = getResult { movieService.getAllMovies() }
     suspend fun getMovie(id : Int) = getResult {movieService.getMovie(id)}
+    suspend fun getMovieTrailer(id: Int) = getResult { movieService.getMovieTrailer(id) }
+
 }

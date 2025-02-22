@@ -8,7 +8,6 @@ import android.widget.Toast
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.reelygoodmovies.R
@@ -64,16 +63,22 @@ class FavoriteMovieFragment : Fragment() {
                 val movie = adapter.getItem(index)
                 movie.favorite = !movie.favorite
                 viewModel.updateMovie(movie)
-                adapter.notifyItemChanged(index) // Ensure UI updates
+                adapter.notifyItemChanged(index)
             }
         })
 
         binding.recycler.layoutManager = LinearLayoutManager(requireContext())
         binding.recycler.adapter = adapter
 
-        viewModel.favoriteMovies?.observe(viewLifecycleOwner) { favoriteMovies ->
+        viewModel.favoriteMovies.observe(viewLifecycleOwner) { favoriteMovies ->
             adapter.updateMovies(favoriteMovies)
-            binding.recycler.visibility = if (favoriteMovies.isEmpty()) View.GONE else View.VISIBLE
+            if (favoriteMovies.isEmpty()) {
+                binding.tvNoMoviesFound.text = getString(R.string.no_movies_found)
+                binding.recycler.visibility = View.GONE
+            }else{
+                binding.tvNoMoviesFound.text = ""
+                binding.recycler.visibility = View.VISIBLE
+            }
         }
     }
 

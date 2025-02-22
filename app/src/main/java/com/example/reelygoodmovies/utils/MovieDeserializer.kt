@@ -22,6 +22,7 @@
             val title = jsonObject.get("title").asString
             val overview = jsonObject.get("overview").asString
 
+            val trailerUrl = getTrailerUrl(jsonObject)
             val posterUrl = getPosterUrl(jsonObject)
             val voteAverage = getVoteAverage(jsonObject)
             val movieLength = getMovieLength(jsonObject)
@@ -38,7 +39,17 @@
                 length = movieLength,
                 id = id,
                 localGen = false,
+                trailerUrl = trailerUrl
             )
+        }
+
+        private fun getTrailerUrl(jsonObject: JsonObject): String {
+            val trailer = jsonObject.getAsJsonArray("results")?.find {
+                it.asJsonObject.get("type").asString == "Trailer"
+            }
+            return trailer?.asJsonObject?.get("key")?.asString?.let {
+                "https://www.youtube.com/watch?v=$it"
+            } ?: ""
         }
 
         private fun getPosterUrl(jsonObject: JsonObject): String {

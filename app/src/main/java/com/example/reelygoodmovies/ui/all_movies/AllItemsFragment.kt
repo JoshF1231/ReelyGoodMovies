@@ -3,7 +3,6 @@ package com.example.reelygoodmovies.ui.all_movies
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.Bundle
 import android.speech.RecognizerIntent
 import android.view.*
@@ -28,11 +27,12 @@ import com.example.reelygoodmovies.utils.Loading
 import com.example.reelygoodmovies.utils.Success
 import dagger.hilt.android.AndroidEntryPoint
 import android.Manifest
-import android.provider.ContactsContract
 import androidx.core.os.bundleOf
-import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
+import com.example.reelygoodmovies.utils.ErrorMessages
+import com.example.reelygoodmovies.utils.ErrorType
+
 
 @AndroidEntryPoint
 class AllItemsFragment : Fragment() {
@@ -63,7 +63,11 @@ class AllItemsFragment : Fragment() {
                     showContactsDialog(requireContext(), it)
                 }
             } else {
-                Toast.makeText(requireContext(), "Permission denied", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.permission_denied),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 
@@ -95,33 +99,36 @@ class AllItemsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-            viewModel.initializeSearch()
-            viewModel.movies.observe(viewLifecycleOwner) { result ->
-                when (result.status) {
-                    is Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.tvNoMoviesFound.visibility = View.VISIBLE
-                        binding.recycler.visibility = View.GONE
-                    }
-                    is Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        binding.recycler.visibility = View.GONE
-                        binding.tvNoMoviesFound.visibility = View.VISIBLE
-                        Toast.makeText(requireContext(), result.status.message, Toast.LENGTH_SHORT).show()
-                    }
-                    is Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        val movieList = result.status.data
-                        if (movieList.isNullOrEmpty()) {
-                            Toast.makeText(requireContext(), getString(R.string.no_movies_found), Toast.LENGTH_SHORT).show()
-                        } else {
-                            binding.tvNoMoviesFound.visibility = View.GONE
-                            binding.recycler.visibility = View.VISIBLE
-                          if(!binding.searchView.query.isNullOrEmpty()){
+        viewModel.initializeSearch()
+
+        viewModel.movies.observe(viewLifecycleOwner) { result ->
+            when (result.status) {
+                is Loading -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.recycler.visibility = View.GONE
+                }
+
+                is Error -> {
+                    binding.progressBar.visibility = View.GONE
+                    binding.recycler.visibility = View.GONE
+                    val errorMessage =
+                        ErrorMessages.getErrorMessage(requireContext(), result.status.message)
+                    binding.tvNoMoviesFound.text = errorMessage
+                }
+
+                is Success -> {
+                    binding.progressBar.visibility = View.GONE
+                    val movieList = result.status.data
+                    if (movieList.isNullOrEmpty()) {
+                        binding.tvNoMoviesFound.text = getString(R.string.no_movies_found)
+                    } else {
+                        binding.tvNoMoviesFound.text = ""
+                        binding.recycler.visibility = View.VISIBLE
+                        if (!binding.searchView.query.isNullOrEmpty()) {
                             viewModel.searchQuery.value?.let { viewModel.filterMovies(it) }
+                        } else {
+                            adapter.updateMovies(movieList)
                         }
-                        else
-                        adapter.updateMovies(movieList)
                     }
                 }
             }
@@ -191,7 +198,7 @@ class AllItemsFragment : Fragment() {
 
         viewModel.filteredMovies.observe(viewLifecycleOwner) { filteredMovies ->
             adapter.updateMovies(filteredMovies)
-                // binding.recycler.visibility = if (filteredMovies.isEmpty()) View.GONE else View.VISIBLE
+
         }
 
         ItemTouchHelper(object :
@@ -203,7 +210,15 @@ class AllItemsFragment : Fragment() {
             ): Boolean = false
 
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-                deleteMovieDialog(viewHolder)
+                val movie = adapter.getItem(viewHolder.adapterPosition)
+                if (movie.localGen)
+                    deleteMovieDialog(viewHolder)
+                else
+                findNavController().navigate(
+                        R.id.action_allItemsFragment2_to_trailerFragment,
+                        bundleOf("id" to movie.id)
+                    )
+
             }
         }).attachToRecyclerView(binding.recycler)
 
@@ -214,8 +229,12 @@ class AllItemsFragment : Fragment() {
             }
 
             override fun onQueryTextChange(newText: String?): Boolean {
-                //viewModel.setSearchQuery(newText.orEmpty()) // עדכון המילת חיפוש ב-ViewModel
                 viewModel.filterMovies(newText.orEmpty())
+                if (viewModel.filteredMovies.value?.isEmpty() == true) {
+                    binding.tvNoMoviesFound.text = getString(R.string.no_movies_found)
+                } else
+                    binding.tvNoMoviesFound.text = ""
+
                 return true
             }
         })
@@ -269,37 +288,3 @@ class AllItemsFragment : Fragment() {
         _binding = null
     }
 }
-
-
-/*
-private fun deleteAllMoviesDialog() {
-        val builder = AlertDialog.Builder(requireContext())
-        val dialogView = layoutInflater.inflate(R.layout.delete_item_dialog, null)
-        builder.setView(dialogView)
-        val dialog = builder.create()
-        dialog.setCancelable(false)
-
-        dialogView.findViewById<Button>(R.id.btnCancel).setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialogView.findViewById<Button>(R.id.btnDelete).setOnClickListener {
-            viewModel.deleteAllMovies()
-            Toast.makeText(
-                requireActivity(),
-                getString(R.string.all_movies_deleted_confirmation),
-                Toast.LENGTH_SHORT
-            ).show()
-            dialog.dismiss()
-        }
-
-        dialogView.findViewById<TextView>(R.id.tv_delete_message).text =
-            dialogView.context.getText(R.string.delete_all_message)
-        dialog.show()
-    }
-}
-*/
-
-
-
-

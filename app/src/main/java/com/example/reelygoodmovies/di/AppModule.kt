@@ -59,5 +59,6 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideCharacterDao(database : MovieDataBase) = database.movieDao()
-}
+    fun provideMovieDao(database: MovieDataBase) = database.movieDao()
+
+    }

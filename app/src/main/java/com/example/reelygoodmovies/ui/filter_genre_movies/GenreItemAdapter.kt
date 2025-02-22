@@ -10,8 +10,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.databinding.ItemGenreLayoutBinding
-import com.example.reelygoodmovies.databinding.ItemLayoutBinding
-import com.example.reelygoodmovies.ui.all_movies.ItemAdapter
 
 class GenreItemAdapter(
     private var items: List<Movie>,
