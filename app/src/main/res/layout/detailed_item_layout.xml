@@ -33,6 +33,7 @@
             android:text="@string/movie_name_label"
             android:textSize="24sp"
             android:textStyle="bold"
+            android:textColor="@color/black"
             android:gravity="center|bottom"
             android:layout_marginBottom="20dp" />
 
