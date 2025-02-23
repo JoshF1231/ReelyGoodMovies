@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
@@ -12,7 +11,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <!-- Movie Title -->
         <TextView
             android:id="@+id/tv_item_movie_title"
             android:layout_width="wrap_content"
@@ -24,8 +22,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-
-        <!-- Movie Image -->
         <ImageView
             android:id="@+id/iv_item_movie_image"
             android:layout_width="80dp"
@@ -36,7 +32,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_item_movie_title" />
 
-        <!-- Movie Rating (Stars) -->
         <RatingBar
             android:id="@+id/rb_item_movie_rating"
             style="@android:style/Widget.Holo.Light.RatingBar.Indicator"

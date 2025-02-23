@@ -4,5 +4,4 @@
     android:layout_height="300dp"
     android:background="@drawable/app_logo">
 
-
 </LinearLayout>

@@ -30,17 +30,11 @@ interface MovieDao {
     @Query("SELECT * FROM movies WHERE id = :id")
     fun getMovie(id: Int): LiveData<Movie>
 
-
     @Query("SELECT trailerUrl FROM movies WHERE id = :id")
     fun getMovieTrailer(id: Int): LiveData<String?>
 
     @Query("UPDATE movies SET trailerUrl = :trailerUrl WHERE id = :id")
     suspend fun updateMovieTrailer(id: Int, trailerUrl: String)
-
-
-
-    @Query("DELETE FROM movies")
-    suspend fun deleteAllMovies()
 
     @Query("SELECT * FROM movies WHERE favorite = 1")
     fun getFavoriteMovies(): LiveData<List<Movie>>

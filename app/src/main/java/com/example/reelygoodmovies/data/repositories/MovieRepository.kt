@@ -1,22 +1,16 @@
 package com.example.reelygoodmovies.data.repositories
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.liveData
-import androidx.lifecycle.map
 import com.example.reelygoodmovies.data.local_db.MovieDao
 import com.example.reelygoodmovies.data.models.Movie
 import com.example.reelygoodmovies.data.remote_db.MovieRemoteDataSource
-import com.example.reelygoodmovies.utils.Resource
 import com.example.reelygoodmovies.utils.performFetchingAndSaving
-import kotlinx.coroutines.Dispatchers
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class MovieRepository @Inject constructor(
-    private val remoteDataSource : MovieRemoteDataSource,
-    private val localDataSource : MovieDao
+    private val remoteDataSource: MovieRemoteDataSource,
+    private val localDataSource: MovieDao
 ) {
 
     fun getMovies() = performFetchingAndSaving(
@@ -29,7 +23,6 @@ class MovieRepository @Inject constructor(
         }
     )
 
-
     fun getMovie(id: Int) = performFetchingAndSaving(
         { localDataSource.getMovie(id) },
         { remoteDataSource.getMovie(id) },
@@ -39,9 +32,6 @@ class MovieRepository @Inject constructor(
             localDataSource.updateMovie(movieFromApi)
         }
     )
-//    suspend fun updateMovieTrailer(id: Int, trailerUrl: String) {
-//        localDataSource.updateMovieTrailer(id, trailerUrl)
-//    }
 
     fun getMovieTrailer(id: Int) = performFetchingAndSaving(
         { localDataSource.getMovieTrailer(id) },
@@ -49,21 +39,12 @@ class MovieRepository @Inject constructor(
         { trailerResponse ->
             val trailerUrl = trailerResponse.results
                 .firstOrNull { it.type == "Trailer" }
-                ?.key?.let { "https://www.youtube.com/watch?v=$it" }
+                ?.key
             if (trailerUrl != null) {
                 localDataSource.updateMovieTrailer(id, trailerUrl)
             }
         }
     )
-
-
-
-
-
-
-
-
-
 
     //    WORK IN PROGRESS - JOSH
 //    fun getMovie(id: Int): LiveData<Resource<Movie>> = liveData(Dispatchers.IO) {
@@ -83,23 +64,18 @@ class MovieRepository @Inject constructor(
 //            )
 //        }
 //    }
-        suspend fun addMovie(movie: Movie) {
-            localDataSource.addMovie(movie)
-        }
 
-        suspend fun updateMovie(movie: Movie) {
-            localDataSource.updateMovie(movie)
-        }
-
-        suspend fun deleteMovie(movie: Movie) {
-            localDataSource.deleteMovie(movie)
-        }
-
-        suspend fun deleteAllMovies() {
-            localDataSource.deleteAllMovies()
-        }
-
-        fun getFavoriteMovies() = localDataSource.getFavoriteMovies()
-
-
+    suspend fun addMovie(movie: Movie) {
+        localDataSource.addMovie(movie)
     }
+
+    suspend fun updateMovie(movie: Movie) {
+        localDataSource.updateMovie(movie)
+    }
+
+    suspend fun deleteMovie(movie: Movie) {
+        localDataSource.deleteMovie(movie)
+    }
+
+    fun getFavoriteMovies() = localDataSource.getFavoriteMovies()
+}
