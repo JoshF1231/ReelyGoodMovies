@@ -44,6 +44,4 @@ interface MovieDao {
 
     @Query("SELECT * FROM movies WHERE id = :id AND favorite = 1")
     suspend fun getFavoriteMovieById(id: Int): Movie?
-
-
 }

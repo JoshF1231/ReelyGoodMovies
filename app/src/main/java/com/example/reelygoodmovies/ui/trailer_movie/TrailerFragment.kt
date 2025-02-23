@@ -54,6 +54,7 @@ class TrailerFragment : Fragment() {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.tvError.visibility = View.GONE
                 }
+
                 is Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.tvError.visibility = View.GONE
@@ -79,6 +80,7 @@ class TrailerFragment : Fragment() {
                     binding.progressBar.visibility = View.VISIBLE
                     binding.tvError.visibility = View.GONE
                 }
+
                 is Success -> {
                     binding.progressBar.visibility = View.GONE
                     binding.tvError.visibility = View.GONE
@@ -86,11 +88,13 @@ class TrailerFragment : Fragment() {
                     if (movie != null) {
                         binding.tvMovieTitle.text = movie.title
                         Glide.with(requireContext())
-                            .load(movie.photo.takeIf { !it.isNullOrEmpty() } ?: R.drawable.movie_picture)
+                            .load(movie.photo.takeIf { !it.isNullOrEmpty() }
+                                ?: R.drawable.movie_picture)
                             .circleCrop()
                             .into(binding.ivMoviePic)
                     }
                 }
+
                 is Error -> {
                     binding.progressBar.visibility = View.GONE
                     binding.tvError.visibility = View.VISIBLE
@@ -99,8 +103,8 @@ class TrailerFragment : Fragment() {
                     binding.tvError.text = errorMessage
                 }
 
-                }
             }
+        }
     }
 
     private fun openYouTube(videoId: String) {
@@ -110,15 +114,24 @@ class TrailerFragment : Fragment() {
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 
             val packageManager = requireContext().packageManager
-            val resolveInfo = packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
+            val resolveInfo =
+                packageManager.queryIntentActivities(intent, PackageManager.MATCH_DEFAULT_ONLY)
 
             if (resolveInfo.isNotEmpty()) {
                 startActivity(intent)
             } else {
-                Toast.makeText(requireContext(), getString(R.string.open_youtube_error), Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.open_youtube_error),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         } catch (e: Exception) {
-            Toast.makeText(requireContext(), getString(R.string.error_opening_video, e.message), Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                requireContext(),
+                getString(R.string.error_opening_video, e.message),
+                Toast.LENGTH_SHORT
+            ).show()
         }
     }
 

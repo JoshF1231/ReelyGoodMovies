@@ -46,25 +46,6 @@ class MovieRepository @Inject constructor(
         }
     )
 
-    //    WORK IN PROGRESS - JOSH
-//    fun getMovie(id: Int): LiveData<Resource<Movie>> = liveData(Dispatchers.IO) {
-//        val localMovie = localDataSource.getMovie(id).value // Get movie from local DB
-//        if (localMovie != null) {
-//            emit(Resource.success(localMovie)) //Emit a copy of the local data
-//        }
-//        if (localMovie == null || !localMovie.localGen) { // If not locally generated, attempt to retrieve from remote
-//            performFetchingAndSaving(
-//                { localDataSource.getMovie(id) },
-//                { remoteDataSource.getMovie(id) },
-//                { movieFromApi ->
-//                    val isFavoriteMovie = localDataSource.getFavoriteMovieById(id)
-//                    movieFromApi.favorite = isFavoriteMovie != null
-//                    localDataSource.updateMovie(movieFromApi)
-//                }
-//            )
-//        }
-//    }
-
     suspend fun addMovie(movie: Movie) {
         localDataSource.addMovie(movie)
     }

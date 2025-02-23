@@ -5,7 +5,6 @@
     android:id="@+id/my_nav"
     app:startDestination="@id/allItemsFragment2">
 
-    <!-- פעולה בין כל המסכים -->
     <action
         android:id="@+id/action_global_favoriteMovieFragment"
         app:destination="@id/favoriteMovieFragment"
