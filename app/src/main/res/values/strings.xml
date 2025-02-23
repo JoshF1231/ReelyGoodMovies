@@ -99,7 +99,7 @@
     <string name="english">English</string>
     <string name="share_movie_title">Choose a contact to share the movie</string>
     <string name="share_movie_error">Error sending message</string>
-    <string name="sms_body">Hey, check out this movie: %1$s\n\nPlot: %2$s\n\nRating: %.1f/5</string>
+    <string name="sms_body">Hey, check out this movie: %1$s\n\nPlot: %2$s\n\nRating: %3$.1f/5</string>
     <string name="cancel_button">Cancel</string>
     <string name="trailer_not_available">Trailer not available</string>
     <string name="error_opening_video">Error opening the video: %1$s</string>

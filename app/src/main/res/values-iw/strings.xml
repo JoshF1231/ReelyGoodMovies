@@ -99,7 +99,7 @@
     <string name="english">אנגלית</string>
     <string name="share_movie_title">בחר איש קשר לשלוח לו את הסרט</string>
     <string name="share_movie_error">שגיאה בשליחת ההודעה</string>
-    <string name="sms_body">היי, תראה את הסרט הזה: %1$s\n\nעלילה: %2$s\n\nדירוג:  %.1f/5</string>
+    <string name="sms_body">היי, תראה את הסרט הזה: %1$s\n\nעלילה: %2$s\n\nדירוג: %3$.1f/5</string>
     <string name="cancel_button">ביטול</string>
     <string name="trailer_not_available">הטריילר לא זמין</string>
     <string name="error_opening_video">שגיאה בפתיחת הסרטון: %1$s</string>
