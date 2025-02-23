@@ -1,7 +1,6 @@
 package com.example.reelygoodmovies.utils
 
 import android.content.Context
-import androidx.annotation.StringRes
 import com.example.reelygoodmovies.R
 
 object ErrorMessages {

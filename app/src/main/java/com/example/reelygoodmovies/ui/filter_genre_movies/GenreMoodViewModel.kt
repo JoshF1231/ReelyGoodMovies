@@ -6,7 +6,6 @@ import androidx.lifecycle.ViewModel
 import com.example.reelygoodmovies.R
 import com.example.reelygoodmovies.data.models.Movie
 
-
 class GenreMoodViewModel : ViewModel() {
 
     private val _comedyMovies = MutableLiveData<List<Movie>>()

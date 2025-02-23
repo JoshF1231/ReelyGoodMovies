@@ -31,7 +31,6 @@ import androidx.core.os.bundleOf
 import com.bumptech.glide.Glide
 import com.example.reelygoodmovies.ui.add_edit_movie.EditViewModel
 import com.example.reelygoodmovies.utils.ErrorMessages
-import com.example.reelygoodmovies.utils.ErrorType
 
 
 @AndroidEntryPoint
@@ -42,7 +41,6 @@ class AllItemsFragment : Fragment() {
     private val editViewModel: EditViewModel by activityViewModels()
     private lateinit var adapter: ItemAdapter
     private var currentMovie: Movie? = null
-
 
     private val recognizeSpeechLauncher =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
@@ -71,7 +69,6 @@ class AllItemsFragment : Fragment() {
             }
         }
 
-
     private fun requestContactPermission(movie: Movie) {
         currentMovie = movie
 
@@ -85,7 +82,6 @@ class AllItemsFragment : Fragment() {
             requestPermissionLauncher.launch(Manifest.permission.READ_CONTACTS)
         }
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -119,9 +115,7 @@ class AllItemsFragment : Fragment() {
                 is Success -> {
                     binding.progressBar.visibility = View.GONE
                     val movieList = result.status.data
-                    if (movieList.isNullOrEmpty()) {
-                        binding.tvNoMoviesFound.text = getString(R.string.no_movies_found)
-                    } else {
+                    if (!movieList.isNullOrEmpty()) {
                         binding.tvNoMoviesFound.text = ""
                         binding.recycler.visibility = View.VISIBLE
                         if (!binding.searchView.query.isNullOrEmpty()) {
@@ -139,14 +133,7 @@ class AllItemsFragment : Fragment() {
         }
 
         binding.ibMicSearch.setOnClickListener {
-            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
-                putExtra(
-                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-                )
-                putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mic_talk))
-            }
-            recognizeSpeechLauncher.launch(intent)
+            askLanguagePreference()
         }
 
         adapter = ItemAdapter(
@@ -213,11 +200,12 @@ class AllItemsFragment : Fragment() {
                 val movie = adapter.getItem(viewHolder.adapterPosition)
                 if (movie.localGen)
                     deleteMovieDialog(viewHolder)
-                else
-                findNavController().navigate(
+                else {
+                    findNavController().navigate(
                         R.id.action_allItemsFragment2_to_trailerFragment,
                         bundleOf("id" to movie.id)
                     )
+                }
 
             }
         }).attachToRecyclerView(binding.recycler)
@@ -248,8 +236,6 @@ class AllItemsFragment : Fragment() {
             editViewModel.clearAllData()
             findNavController().navigate(R.id.action_allItemsFragment2_to_addOrEditItemFragment)
         }
-
-
     }
 
     private fun deleteMovieDialog(viewHolder: RecyclerView.ViewHolder) {
@@ -280,6 +266,33 @@ class AllItemsFragment : Fragment() {
                 ?: R.drawable.baseline_warning_red_24)
             .into(dialogView.findViewById(R.id.iv_warning_image_movie))
         dialog.show()
+    }
+
+    private fun askLanguagePreference() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setMessage(getString(R.string.language_speak))
+            .setPositiveButton(getString(R.string.hebrew)) { dialog, _ ->
+                startSpeechRecognition("he-IL")
+                dialog.dismiss()
+            }
+            .setNegativeButton(getString(R.string.english)) { dialog, _ ->
+                startSpeechRecognition("en-US")
+                dialog.dismiss()
+            }
+
+        builder.create().show()
+    }
+
+    private fun startSpeechRecognition(languageCode: String) {
+        val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
+            putExtra(
+                RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+            )
+            putExtra(RecognizerIntent.EXTRA_LANGUAGE, languageCode)
+            putExtra(RecognizerIntent.EXTRA_PROMPT, getString(R.string.mic_talk))
+        }
+        recognizeSpeechLauncher.launch(intent)
     }
 
 

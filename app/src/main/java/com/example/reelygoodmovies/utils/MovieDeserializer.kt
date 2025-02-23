@@ -47,9 +47,7 @@
             val trailer = jsonObject.getAsJsonArray("results")?.find {
                 it.asJsonObject.get("type").asString == "Trailer"
             }
-            return trailer?.asJsonObject?.get("key")?.asString?.let {
-                "https://www.youtube.com/watch?v=$it"
-            } ?: ""
+            return trailer?.asJsonObject?.get("key")?.asString ?: ""
         }
 
         private fun getPosterUrl(jsonObject: JsonObject): String {

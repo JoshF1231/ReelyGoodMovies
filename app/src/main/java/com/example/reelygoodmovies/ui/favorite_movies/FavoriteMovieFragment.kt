@@ -25,7 +25,6 @@ class FavoriteMovieFragment : Fragment() {
     private lateinit var adapter: ItemAdapter
     private val editViewModel: EditViewModel by activityViewModels()
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -52,12 +51,12 @@ class FavoriteMovieFragment : Fragment() {
                 Toast.makeText(requireContext(), movie.title, Toast.LENGTH_SHORT).show()
             }
 
-                    override fun onEditButtonClick(index: Int) {
-                        val movie = adapter.getItem(index)
-                        viewModel.setMovie(movie)
-                        editViewModel.setEditMode(true)
-                        findNavController().navigate(R.id.action_favoriteMovieFragment_to_addOrEditItemFragment)
-                    }
+            override fun onEditButtonClick(index: Int) {
+                val movie = adapter.getItem(index)
+                viewModel.setMovie(movie)
+                editViewModel.setEditMode(true)
+                findNavController().navigate(R.id.action_favoriteMovieFragment_to_addOrEditItemFragment)
+            }
 
             override fun onFavButtonClick(index: Int) {
                 val movie = adapter.getItem(index)
@@ -75,7 +74,7 @@ class FavoriteMovieFragment : Fragment() {
             if (favoriteMovies.isEmpty()) {
                 binding.tvNoMoviesFound.text = getString(R.string.no_movies_found)
                 binding.recycler.visibility = View.GONE
-            }else{
+            } else {
                 binding.tvNoMoviesFound.text = ""
                 binding.recycler.visibility = View.VISIBLE
             }

@@ -94,5 +94,20 @@
     <string name="bad_request_error">The request was invalid. Please check the data and try again.</string>
     <string name="internal_server_error">A server error occurred. Please try again later.</string>
     <string name="unknown_error">An unexpected error occurred. Please try again.</string>
+    <string name="language_speak">Please choose the language you want to speak</string>
+    <string name="hebrew">Hebrew</string>
+    <string name="english">English</string>
+    <string name="share_movie_title">Choose a contact to share the movie</string>
+    <string name="share_movie_error">Error sending message</string>
+    <string name="sms_body">Hey, check out this movie: %1$s\n\nPlot: %2$s\n\nRating: %.1f/5</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="trailer_not_available">Trailer not available</string>
+    <string name="error_opening_video">Error opening the video: %1$s</string>
+    <string name="open_youtube_error">Error opening YouTube</string>
+    <string name="all_movies_label_menu">All movies</string>
+    <string name="your_favorites_label_menu">Your Favorites</string>
+    <string name="your_mood_label_menu">Your Mood</string>
+    <string name="trailer_movie_title">Trailer</string>
+    <string name="trailer_text">Hope you enjoy watching the trailer! if you liked it put it in favorite or share with your contacts!</string>
 
 </resources>

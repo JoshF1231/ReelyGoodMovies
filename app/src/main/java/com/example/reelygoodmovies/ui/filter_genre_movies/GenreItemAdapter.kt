@@ -56,8 +56,6 @@ class GenreItemAdapter(
         notifyDataSetChanged()
     }
 
-    fun itemAt(position: Int) = items[position]
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemViewHolder {
         return ItemViewHolder(
             ItemGenreLayoutBinding.inflate(

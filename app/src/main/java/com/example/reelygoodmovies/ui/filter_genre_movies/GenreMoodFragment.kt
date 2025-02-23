@@ -35,7 +35,6 @@ class GenreMoodFragment : Fragment() {
     ): View {
         _binding = GenreMoodFilterLayoutBinding.inflate(inflater, container, false)
         return binding.root
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -65,7 +64,6 @@ class GenreMoodFragment : Fragment() {
                 }
             }
         }
-
 
         val comedyAdapter = GenreItemAdapter(emptyList(), object : GenreItemAdapter.ItemListener {
             override fun onItemClicked(index: Int) {

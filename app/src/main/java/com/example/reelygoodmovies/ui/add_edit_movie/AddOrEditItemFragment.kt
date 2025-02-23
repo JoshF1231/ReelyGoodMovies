@@ -134,7 +134,6 @@ class AddOrEditItemFragment : Fragment() {
         }
     }
 
-
     private fun setupNumberPickers() {
         binding.npHoursPicker.minValue = 0
         binding.npHoursPicker.maxValue = 4
@@ -187,8 +186,7 @@ class AddOrEditItemFragment : Fragment() {
         setNumberPickers(movie)
 
         editViewModel.setSelectedYear(movie.year)
-        binding.rbMovieRating.rating = movie.rate.toFloat()
-
+        binding.rbMovieRating.rating = movie.rate
         showGenres(movie)
         editViewModel.setSelectedImageURI(movie.photo)
     }
