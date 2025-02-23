@@ -9,7 +9,6 @@
     import dagger.hilt.android.lifecycle.HiltViewModel
     import javax.inject.Inject
 
-    // ב-ViewModel
     @HiltViewModel
     class TrailerViewModel @Inject constructor(
         private val movieRepository: MovieRepository

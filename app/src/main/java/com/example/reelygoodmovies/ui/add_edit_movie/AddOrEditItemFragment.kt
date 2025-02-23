@@ -54,7 +54,6 @@ class AddOrEditItemFragment : Fragment() {
         val movie = viewModel.chosenMovie.value
         setupAddOrEditMode(isEditMode, movie)
 
-
         binding.btnSelectYear.setOnClickListener {
             showYearPickerDialog()
         }
@@ -73,7 +72,6 @@ class AddOrEditItemFragment : Fragment() {
             val newFavoriteStatus = !(editViewModel.favorite.value ?: false)
             editViewModel.setFavorite(newFavoriteStatus)
         }
-
 
         return binding.root
     }
@@ -235,7 +233,6 @@ class AddOrEditItemFragment : Fragment() {
             checkbox.isChecked = genreIds.contains(genreId)
         }
     }
-
 
     private fun setNumberPickers(movie: Movie) {
         editViewModel.setSelectedRuntimeHours(movie.length / 60)
